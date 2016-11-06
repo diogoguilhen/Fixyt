@@ -28,12 +28,11 @@ import java.util.Objects;
 
 public class Registrar_1 extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG = "Registrar_1";
     private Button botaoProximo1;
     private EditText confirmaSenha;
     private ProgressDialog dialogoProgresso;
     private Cadastro cadastroMotorista;
-
-    private static final String TAG = "Registrar_1";
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
 
@@ -46,11 +45,12 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         firebasAuth = FirebaseAuth.getInstance();
 
         dialogoProgresso = new ProgressDialog(this);
-        //cadastroMotorista = new Cadastro();
+        cadastroMotorista = new Cadastro();
 
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         cadastroMotorista.setNome((EditText) findViewById(R.id.campoNome));
         cadastroMotorista.setSobrenome((EditText) findViewById(R.id.campoSobrenome));
+        cadastroMotorista.setPais((EditText) findViewById(R.id.campoPais));
         cadastroMotorista.setTelefone((EditText) findViewById(R.id.campoTelefone));
         cadastroMotorista.setEmail((EditText) findViewById(R.id.campoEmail));
         cadastroMotorista.setSenha((EditText) findViewById(R.id.campoSenha));
