@@ -64,16 +64,42 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         if(v == botaoProximo1){
             //completa o primeiro passo do cadastro
             registrar1();
-            startActivity(new Intent(getApplicationContext(), Registrar_2.class));
-            dialogoProgresso.dismiss();
         }
     }
 
     private void registrar1(){
         String email = cadastroMotorista.getEmail().toString().trim();
         String senha = cadastroMotorista.getSenha().toString().trim();
+        String nome = cadastroMotorista.getNome().toString().trim();
+        String sobrenome = cadastroMotorista.getSobrenome().toString().trim();
+        String pais = cadastroMotorista.getPais().toString().trim();
+        String telefone = cadastroMotorista.getTelefone().toString().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
 
+        if(TextUtils.isEmpty(nome)){
+            //email vazio
+            Toast.makeText(this, "Ingresse um nome!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(sobrenome)){
+            //email vazio
+            Toast.makeText(this, "Ingresse um sobrenome!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(pais)){
+            //email vazio
+            Toast.makeText(this, "Ingresse um pais!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(telefone)){
+            //email vazio
+            Toast.makeText(this, "Ingresse um telefone!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
         if(TextUtils.isEmpty(email)){
             //email vazio
             Toast.makeText(this, "Ingresse um Email Válido!", Toast.LENGTH_SHORT).show();
@@ -86,14 +112,23 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
+        if(TextUtils.isEmpty(senha)){
+            //senha vazia
+            Toast.makeText(this, "Ingresse uma Senha!" , Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
         if(!ConfSen.equals(senha)){
             //senha não está igual em ambos os campos
-            Toast.makeText(this, "Verifique a senha e a confirmação novamente!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Verifique a senha e a confirmação novamente!" , Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
         dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
+
+        startActivity(new Intent(this, Registrar_2.class));
+        dialogoProgresso.dismiss();
     }
 }

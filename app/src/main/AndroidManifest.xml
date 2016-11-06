@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".Registrar_1" />
+        <activity android:name=".Registrar_2" />
+        <activity android:name=".Registrar_3" />
         <activity android:name=".Perfil" />
         <activity android:name=".Main"></activity>
     </application>
