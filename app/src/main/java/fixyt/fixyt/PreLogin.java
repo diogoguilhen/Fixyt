@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class PreLogin extends AppCompatActivity {
 
-    //Diogo bicha
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
     private Button entrarUsuario;
