@@ -4,7 +4,6 @@ import android.widget.EditText;
 
 public class AddVeiculo {
 
-
     private EditText veiculoTipo;
     private EditText veiculoMarca;
     private EditText veiculoAnoFabricacao;
