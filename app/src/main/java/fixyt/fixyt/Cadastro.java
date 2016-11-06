@@ -61,6 +61,7 @@ public class Cadastro {
 //
 //    }
 
+
     public EditText getNome() {
         return nome;
     }
@@ -165,6 +166,14 @@ public class Cadastro {
         this.cidade = cidade;
     }
 
+    public EditText getPais() {
+        return pais;
+    }
+
+    public void setPais(EditText pais) {
+        this.pais = pais;
+    }
+
     public EditText getVeiculoTipo() {
         return veiculoTipo;
     }
@@ -236,14 +245,4 @@ public class Cadastro {
     public void setDataNascimento(EditText dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-
-    public EditText getPais() {
-        return pais;
-    }
-
-    public void setPais(EditText pais) {
-        this.pais = pais;
-    }
-
-
 }
