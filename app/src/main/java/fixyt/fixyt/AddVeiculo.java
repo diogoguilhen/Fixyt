@@ -2,7 +2,6 @@ package fixyt.fixyt;
 
 import android.widget.EditText;
 
-
 public class AddVeiculo {
 
     private EditText veiculoTipo;
