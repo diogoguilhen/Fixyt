@@ -61,6 +61,7 @@ public class Cadastro {
 
     public Cadastro () {
 
+
     }
 
     public EditText getNome() {
