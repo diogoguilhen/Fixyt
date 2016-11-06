@@ -31,7 +31,7 @@ public class Cadastro {
     private EditText veiculoCor;
     private EditText dataNascimento;
 
-    public Cadastro(EditText nome, EditText sobrenome, EditText telefone, EditText email, EditText senha, EditText cpf, EditText rg, EditText sexo, EditText enderecoCompleto, EditText cep, EditText bairro, EditText uf, EditText cidade, EditText pais, EditText veiculoTipo, EditText veiculoMarca, EditText veiculoAnoFabricacao, EditText veiculoAnoModelo, EditText veiculoPlaca, EditText veiculoRenavam, EditText veiculoKilometragem, EditText veiculoCor, EditText dataNascimento) {
+    public Cadastro(EditText nome, EditText sobrenome, EditText pais, EditText telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
