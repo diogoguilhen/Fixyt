@@ -55,89 +55,18 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
         //Preparando os botões e menus para receber clicks
-        menuEstado.setOnItemSelectedListener(this);
         botaoProximo.setOnClickListener(this);
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("SP");
-        categories.add("RJ");
-        categories.add("SC");
-        categories.add("AL");
-        categories.add("MG");
-        categories.add("CE");
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        menuEstado.setAdapter(dataAdapter);
-
     }
-
-    //Spinner------------------------------------------------------------------
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
-    //Spinner--------------------------------------------------------------------
 
     @Override
     public void onClick(View v) {
         if (v == botaoProximo){
-            //completar o cadastro.
-            registrar2();
-            startActivity(new Intent(getApplicationContext(), Registrar_3.class));
+            //Finalizar Cadastro, salvar no banco de dados associando o User aos dados e ir para Main
+
         }
 
     }
 
-    private void registrar2() {
-        String CPF = campoCPF.getText().toString().trim();
-        String dataNasc = campoDataNascimento.getText().toString().trim();
-        String UF = menuEstado.getSelectedItem().toString();
-        String Cidade = campoCidade.getText().toString().trim();
 
-        if(TextUtils.isEmpty(CPF)){
-            //CPF vazio
-            Toast.makeText(this, "Insira seu CPF!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }
-        if(TextUtils.isEmpty(dataNasc)){
-            //data de nascimento vazia
-            Toast.makeText(this, "Insira sua data de nascimento!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }
-        if(TextUtils.isEmpty(UF)){
-            //UF vazia
-            Toast.makeText(this, "Insira o estado!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }
-        if(TextUtils.isEmpty(Cidade)){
-            //Cidade vazia
-            Toast.makeText(this, "Insira sua cidade!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }
-        // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
-        dialogoProgresso.setMessage("Registrando...");
-        dialogoProgresso.show();
-        registrar2().addOnCompleteListener()
-
-
-
-    }
 }
