@@ -39,6 +39,11 @@ public class Cadastro {
        // this.pais = pais;
         this.telefone = telefone;
     }
+
+    public Cadastro () {
+
+    }
+
     public EditText getNome() {
         return nome;
     }
