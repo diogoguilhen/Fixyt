@@ -2,9 +2,6 @@ package fixyt.fixyt;
 
 import android.widget.EditText;
 
-/**
- * Created by sguil on 06/11/2016.
- */
 
 public class AddVeiculo {
 
@@ -55,6 +52,7 @@ public class AddVeiculo {
     public EditText getVeiculoAnoModelo() {
         return veiculoAnoModelo;
     }
+
 
     public void setVeiculoAnoModelo(EditText veiculoAnoModelo) {
         this.veiculoAnoModelo = veiculoAnoModelo;
