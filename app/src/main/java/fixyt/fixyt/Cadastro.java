@@ -33,11 +33,30 @@ public class Cadastro {
     private EditText veiculoCor;
     private EditText dataNascimento;
 
-    public Cadastro(EditText nome, EditText sobrenome, EditText pais, EditText telefone) {
+      public Cadastro(EditText nome, EditText sobrenome, EditText telefone, EditText email, EditText senha, EditText cpf, EditText rg, EditText sexo, EditText enderecoCompleto, EditText cep, EditText bairro, EditText uf, EditText cidade, EditText pais, EditText veiculoTipo, EditText veiculoMarca, EditText veiculoAnoFabricacao, EditText veiculoAnoModelo, EditText veiculoPlaca, EditText veiculoRenavam, EditText veiculoKilometragem, EditText veiculoCor, EditText dataNascimento) {
         this.nome = nome;
         this.sobrenome = sobrenome;
-       // this.pais = pais;
         this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.sexo = sexo;
+        this.enderecoCompleto = enderecoCompleto;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.uf = uf;
+        this.cidade = cidade;
+        this.pais = pais;
+        this.veiculoTipo = veiculoTipo;
+        this.veiculoMarca = veiculoMarca;
+        this.veiculoAnoFabricacao = veiculoAnoFabricacao;
+        this.veiculoAnoModelo = veiculoAnoModelo;
+        this.veiculoPlaca = veiculoPlaca;
+        this.veiculoRenavam = veiculoRenavam;
+        this.veiculoKilometragem = veiculoKilometragem;
+        this.veiculoCor = veiculoCor;
+        this.dataNascimento = dataNascimento;
     }
 
     public Cadastro () {
