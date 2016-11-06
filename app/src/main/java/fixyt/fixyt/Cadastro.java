@@ -33,11 +33,8 @@ public class Cadastro {
     private EditText veiculoCor;
     private EditText dataNascimento;
 
-    public Cadastro(EditText nome, EditText sobrenome, EditText pais, EditText telefone) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-       // this.pais = pais;
-        this.telefone = telefone;
+    public Cadastro() {
+
     }
     public EditText getNome() {
         return nome;
