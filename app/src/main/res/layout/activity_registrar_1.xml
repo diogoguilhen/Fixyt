@@ -24,6 +24,71 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoNome"
+                android:hint="Nome"
+                android:inputType="text"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@android:color/background_light"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoSobrenome"
+                android:hint="Sobrenome"
+                android:inputType="text"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@android:color/background_light"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoDdi"
+                android:hint="+55"
+                android:inputType="number"
+                android:maxLength="3"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@android:color/background_light"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoTelefone"
+                android:hint="(11) 92345-6789"
+                android:maxLength="11"
+                android:inputType="number"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@android:color/background_light"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
         <EditText
             android:layout_margin="15dp"
             android:id="@+id/campoEmail"

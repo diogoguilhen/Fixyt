@@ -29,10 +29,9 @@ import java.util.Objects;
 public class Registrar_1 extends AppCompatActivity implements OnClickListener{
 
     private Button botaoProximo1;
-    private EditText campoEmail;
-    private EditText campoSenha;
     private EditText confirmaSenha;
     private ProgressDialog dialogoProgresso;
+    private Cadastro cadastroMotorista;
 
     private static final String TAG = "Registrar_1";
     // Declarar API Firabase Auth
@@ -49,8 +48,8 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
         dialogoProgresso = new ProgressDialog(this);
 
         botaoProximo1 = (Button) findViewById(R.id.botRegistrar);
-        campoEmail = (EditText) findViewById(R.id.campoEmail);
-        campoSenha = (EditText) findViewById(R.id.campoSenha);
+        cadastroMotorista.setEmail((EditText) findViewById(R.id.campoEmail));
+        cadastroMotorista.setSenha((EditText) findViewById(R.id.campoSenha));
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);
 
         botaoProximo1.setOnClickListener(this);
@@ -61,14 +60,14 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
         if(v == botaoProximo1){
             //completa o primeiro passo do cadastro
             registrar1();
-            dialogoProgresso.dismiss();
             startActivity(new Intent(getApplicationContext(), Registrar_2.class));
+            dialogoProgresso.dismiss();
         }
     }
 
     private void registrar1(){
-        String email = campoEmail.getText().toString().trim();
-        String senha = campoSenha.getText().toString().trim();
+        String email = cadastroMotorista.getEmail().toString().trim();
+        String senha = cadastroMotorista.getSenha().toString().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
@@ -90,7 +89,7 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage("Registrando Usuário...");
+        dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
     }
 }

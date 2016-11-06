@@ -57,29 +57,29 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         dialogoProgresso = new ProgressDialog(this);
 
         menuEstado = (Spinner) findViewById(R.id.campoEstado);
-        botaoProximo = (Button) findViewById(R.id.botFinalizar);
+        botaoRegistrar = (Button) findViewById(R.id.botFinalizar);
         campoCPF = (EditText) findViewById(R.id.campoCpfCnpj);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
         //Preparando os botões e menus para receber clicks
-        botaoProximo.setOnClickListener(this);
+        botaoRegistrar.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v == botaoProximo){
+        if (v == botaoRegistrar){
             //Finalizar Cadastro, salvar no banco de dados associando o User aos dados e ir para Main
 
         }
 
     }
 
-    private void registrar1(){
-        String email = campoEmail.;
-        String senha = campoSenha.getText().toString().trim();
-        String ConfSen = confirmaSenha.getText().toString().trim();
+    private void registrar3(){
+        String email = Cadastro;
+        String senha = Cadastro;
+        String ConfSen = confirmaSenha;
 
         if(TextUtils.isEmpty(email)){
             //email vazio
