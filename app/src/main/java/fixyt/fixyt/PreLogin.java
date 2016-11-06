@@ -9,7 +9,9 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PreLogin extends AppCompatActivity {
-//// sergio cagao
+
+
+    // Tinea Pelionela
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
     private Button entrarUsuario;
