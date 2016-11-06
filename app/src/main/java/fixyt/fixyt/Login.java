@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 
+    //SERGIO BIXINHA
     private Button botaoLogar;
     private TextView textoRegistrar;
     private EditText campoEmail;

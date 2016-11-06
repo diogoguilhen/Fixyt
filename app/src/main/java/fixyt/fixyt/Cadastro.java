@@ -1,13 +1,17 @@
 package fixyt.fixyt;
 
-public class CadastroMotorista {
+/**
+ * Created by sguil on 06/11/2016.
+ */
+
+public class Cadastro {
 
     private String nome;
     private String sobrenome;
     private String pais;
     private String telefone;
 
-    public CadastroMotorista(String nome, String sobrenome, String pais, String telefone) {
+    public Cadastro(String nome, String sobrenome, String pais, String telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.pais = pais;
