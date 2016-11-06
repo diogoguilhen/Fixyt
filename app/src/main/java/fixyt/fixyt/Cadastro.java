@@ -3,7 +3,7 @@ package fixyt.fixyt;
 import android.widget.EditText;
 
 import java.util.Date;
-
+//teste de commit
 public class Cadastro {
 
     // Tipo String
