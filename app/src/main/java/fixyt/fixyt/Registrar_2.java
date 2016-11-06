@@ -35,45 +35,17 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registrar_2 extends AppCompatActivity implements View.OnClickListener{
+public class Registrar_2 extends AppCompatActivity implements View.OnClickListener ,OnItemSelectedListener {
 
-    private Button botaoFinalizar;
+    private Button botaoProximo;
     private EditText campoDataNascimento;
     private EditText campoCPF;
     private EditText campoCidade;
-    private Spinner campoEstado;
+    private Spinner menuEstado;
     private ProgressDialog dialogoProgresso;
 
-// SPINNER ----------------------------------
-    // Spinner element
-    Spinner UF = (Spinner) findViewById(R.id.UF);
-
-    // Spinner click listener
-    UF.setOnItemSelectedListener(this);
-
-    // Spinner Drop down elements
-    List<String> categories = new ArrayList<String>();
-    categories.add("SP");
-    categories.add("RJ");
-    categories.add("SC");
-    categories.add("AL");
-    categories.add("MG");
-    categories.add("CE");
-
-    // Creating adapter for spinner
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-    // attaching data adapter to spinner
-    UF.setAdapter(dataAdapter);
-
-// SPINNER ----------------------------------
-    private static final String TAG = "Registrar_2";
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,39 +63,57 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
 
-        botaoFinalizar = (Button) findViewById(R.id.botFinalizar);
-        campoCPF = (EditText) findViewById(R.id.campoCPF);
+        menuEstado = (Spinner) findViewById(R.id.campoEstado);
+        botaoProximo = (Button) findViewById(R.id.botFinalizar);
+        campoCPF = (EditText) findViewById(R.id.campoCpfCnpj);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
-        UF = (EditText) findViewById(R.id.campoUF);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
+        //Preparando os botões e menus para receber clicks
+        menuEstado.setOnItemSelectedListener((OnItemSelectedListener) Registrar_2.this);
+        botaoProximo.setOnClickListener(this);
 
-        //Spinner------------------------------------------------------------------
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            // On selecting a spinner item
-            String item = parent.getItemAtPosition(position).toString();
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("SP");
+        categories.add("RJ");
+        categories.add("SC");
+        categories.add("AL");
+        categories.add("MG");
+        categories.add("CE");
 
-            // Showing selected spinner item
-            Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-            // TODO Auto-generated method stub
-        }
-        //Spinner--------------------------------------------------------------------
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
-        botaoFinalizar.setOnClickListener(this);
+        // attaching data adapter to spinner
+        menuEstado.setAdapter(dataAdapter);
 
     }
 
+    //Spinner------------------------------------------------------------------
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+    //Spinner--------------------------------------------------------------------
 
     @Override
     public void onClick(View v) {
-        if (v == botaoFinalizar){
-            //logar
+        if (v == botaoProximo){
+            //completar o cadastro.
             registrar2();
+            dialogoProgresso.dismiss();
+            startActivity(new Intent(getApplicationContext(), Registrar_3.class));
         }
 
     }
@@ -131,72 +121,35 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     private void registrar2() {
         String CPF = campoCPF.getText().toString().trim();
         String dataNasc = campoDataNascimento.getText().toString().trim();
-        String UF = UF.getText().toString().trim();
+        String UF = menuEstado.getSelectedItem().toString();
         String Cidade = campoCidade.getText().toString().trim();
-
-
-
-
-
-
 
         if(TextUtils.isEmpty(CPF)){
             //CPF vazio
             Toast.makeText(this, "Insira seu CPF!", Toast.LENGTH_SHORT).show();
-            //parar a execu��o do c�digo
+            //parar a execução do código
             return;
         }
         if(TextUtils.isEmpty(dataNasc)){
             //data de nascimento vazia
             Toast.makeText(this, "Insira sua data de nascimento!", Toast.LENGTH_SHORT).show();
-            //parar a execu��o do c�digo
+            //parar a execução do código
             return;
         }
         if(TextUtils.isEmpty(UF)){
             //UF vazia
             Toast.makeText(this, "Insira o estado!", Toast.LENGTH_SHORT).show();
-            //parar a execu��o do c�digo
+            //parar a execução do código
             return;
         }
         if(TextUtils.isEmpty(Cidade)){
-            //cidade vazia
+            //Cidade vazia
             Toast.makeText(this, "Insira sua cidade!", Toast.LENGTH_SHORT).show();
-            //parar a execu��o do c�digo
+            //parar a execução do código
             return;
         }
-        // Ap�s validar que cadastro2 est� OK um dialogo de progresso � mostrada
-        dialogoProgresso.setMessage("Registrando...");
+        // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
+        dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
-
-        // Chamando Signin
-        /*firebasAuth.
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Se tarefa � completada
-                        if(task.isSuccessful()){
-                            //usuario logou corretamente
-                            finish();
-                            //inicializar tela principal
-                            startActivity(new Intent(getApplicationContext(), Main.class));
-                            //mostrar mensagem para usuario indicando sucesso
-                            Toast.makeText(Registrar_2.this, "Logado com sucesso!", Toast.LENGTH_SHORT).show();
-                            dialogoProgresso.dismiss();
-                        }
-                        else{
-                            try {
-                                throw task.getException();
-                            } catch(FirebaseAuthInvalidUserException e) {
-                                Toast.makeText(Registrar_2.this, "O usuario digitado n�o existe ou foi bloqueado.", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(FirebaseAuthInvalidCredentialsException e) {
-                                Toast.makeText(Registrar_2.this, "Senha incorreta! Digite novamente.", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(Exception e) {
-                                Log.e(TAG, e.getMessage());
-                            }
-                        }
-                    }
-                });*/
     }
 }

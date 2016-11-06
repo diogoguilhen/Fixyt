@@ -50,7 +50,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/campoEstado"
             android:layout_margin="15dp"
             android:text="Estado:"
             android:textColorLink="@android:color/holo_blue_dark"
@@ -62,9 +61,12 @@
 
 
         <Spinner
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner" />
+            android:id="@+id/campoEstado"
+            android:dropDownSelector="@android:color/background_light"
+            android:background="@android:drawable/btn_dropdown"
+            android:layout_marginLeft="15dp" />
 
         <EditText
             android:layout_margin="15dp"
