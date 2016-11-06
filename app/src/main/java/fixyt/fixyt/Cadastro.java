@@ -1,20 +1,33 @@
 package fixyt.fixyt;
 
-/**
- * Created by sguil on 06/11/2016.
- */
+import java.util.Date;
 
 public class Cadastro {
 
     private String nome;
     private String sobrenome;
-    private String pais;
     private String telefone;
+    private String email;
+    private String senha;
+    private String cpf;
+    private String rg;
+    private String sexo;
+    private String enderecoCompleto;
+    private String cep;
+    private String bairro;
+    private String uf;
+    private String cidade;
+    private String veiculoTipo;
+    private String veiculoMarca;
+    private String veiculoAnoFabricacao;
+    private String veiculoAnoModelo
+            ;
+    private Date dataNascimento;
 
     public Cadastro(String nome, String sobrenome, String pais, String telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
-        this.pais = pais;
+       // this.pais = pais;
         this.telefone = telefone;
     }
 
@@ -34,14 +47,6 @@ public class Cadastro {
         this.sobrenome = sobrenome;
     }
 
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -49,4 +54,126 @@ public class Cadastro {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getEnderecoCompleto() {
+        return enderecoCompleto;
+    }
+
+    public void setEnderecoCompleto(String enderecoCompleto) {
+        this.enderecoCompleto = enderecoCompleto;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getVeiculoTipo() {
+        return veiculoTipo;
+    }
+
+    public void setVeiculoTipo(String veiculoTipo) {
+        this.veiculoTipo = veiculoTipo;
+    }
+
+    public String getVeiculoMarca() {
+        return veiculoMarca;
+    }
+
+    public void setVeiculoMarca(String veiculoMarca) {
+        this.veiculoMarca = veiculoMarca;
+    }
+
+    public String getVeiculoAnoFabricacao() {
+        return veiculoAnoFabricacao;
+    }
+
+    public void setVeiculoAnoFabricacao(String veiculoAnoFabricacao) {
+        this.veiculoAnoFabricacao = veiculoAnoFabricacao;
+    }
+
+    public String getVeiculoAnoModelo() {
+        return veiculoAnoModelo;
+    }
+
+    public void setVeiculoAnoModelo(String veiculoAnoModelo) {
+        this.veiculoAnoModelo = veiculoAnoModelo;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+
 }
