@@ -23,12 +23,13 @@ public class PreLogin extends AppCompatActivity {
         firebasAuth = FirebaseAuth.getInstance();
         if(firebasAuth.getCurrentUser() != null){
             finish();
-            startActivity(new Intent(this, Perfil.class));
+            startActivity(new Intent(this, Main.class));
         }
 
 
         entrarUsuario = (Button) findViewById(R.id.BotaoEntrar);
         registrarUsuario = (Button) findViewById(R.id.BotaoRegistrar);
+
         registrarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

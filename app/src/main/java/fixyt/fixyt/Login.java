@@ -7,6 +7,7 @@ import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import org.w3c.dom.Text;
 
@@ -29,6 +32,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private EditText campoSenha;
     private ProgressDialog dialogoProgresso;
 
+    private static final String TAG = "Login";
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
 
@@ -42,6 +46,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         firebasAuth = FirebaseAuth.getInstance();
         if(firebasAuth.getCurrentUser() != null){
             //ir para tela main ou perfil
+            finish();
+            //inicializar tela principal
+            startActivity(new Intent(getApplicationContext(), Main.class));
         }
 
         dialogoProgresso = new ProgressDialog(this);
@@ -95,17 +102,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //Se tarefa é completada
-                        if(task.isComplete()){
+                        if(task.isSuccessful()){
                             //usuario logou corretamente
                             finish();
-                            //inicializar cadastro de perfil
+                            //inicializar tela principal
                             startActivity(new Intent(getApplicationContext(), Main.class));
                             //mostrar mensagem para usuario indicando sucesso
                             Toast.makeText(Login.this, "Logado com sucesso!", Toast.LENGTH_SHORT).show();
                             dialogoProgresso.dismiss();
                         }
                         else{
-                            Toast.makeText(Login.this, "Não foi possível logar. Tente novamente!", Toast.LENGTH_SHORT).show();
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidUserException e) {
+                                Toast.makeText(Login.this, "O usuario digitado não existe ou foi bloqueado.", Toast.LENGTH_LONG).show();
+                                dialogoProgresso.dismiss();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(Login.this, "Senha incorreta! Digite novamente.", Toast.LENGTH_LONG).show();
+                                dialogoProgresso.dismiss();
+                            } catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
                         }
                     }
                 });
