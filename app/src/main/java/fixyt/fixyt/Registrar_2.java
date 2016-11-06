@@ -35,7 +35,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registrar_2 extends AppCompatActivity implements View.OnClickListener {
+public class Registrar_2 extends AppCompatActivity implements View.OnClickListener ,OnItemSelectedListener {
 
     private Button botaoProximo;
     private EditText campoDataNascimento;
@@ -43,8 +43,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     private EditText campoCidade;
     private Spinner menuEstado;
     private ProgressDialog dialogoProgresso;
-
-    private static final String TAG = "Registrar_2";
 
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
@@ -72,7 +70,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
         //Preparando os botões e menus para receber clicks
-        menuEstado.setOnItemSelectedListener(this);
+        menuEstado.setOnItemSelectedListener((OnItemSelectedListener) Registrar_2.this);
         botaoProximo.setOnClickListener(this);
 
         // Spinner Drop down elements
