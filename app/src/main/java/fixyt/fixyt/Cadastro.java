@@ -4,6 +4,7 @@ import android.widget.EditText;
 
 public class Cadastro {
 
+
     // Tipo String
     private EditText nome;
     private EditText sobrenome;
