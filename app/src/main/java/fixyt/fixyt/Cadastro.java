@@ -3,6 +3,7 @@ package fixyt.fixyt;
 import java.util.Date;
 
 public class Cadastro {
+
     // Tipo String
     private String nome;
     private String sobrenome;
@@ -17,10 +18,16 @@ public class Cadastro {
     private String bairro;
     private String uf;
     private String cidade;
+
+    // Precisa criar um tipo de cadastro de Veiculo.
     private String veiculoTipo;
     private String veiculoMarca;
     private String veiculoAnoFabricacao;
     private String veiculoAnoModelo;
+    private String veiculoPlaca;
+    private String veiculoRenavam;
+    private String veiculoKilometragem;
+    private String veiculoCor;
 
     // Tipo Date
     private Date dataNascimento;
