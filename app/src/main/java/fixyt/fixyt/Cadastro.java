@@ -1,5 +1,5 @@
 package fixyt.fixyt;
-//Negao da Piroca
+//Negao da Pirocakn
 import android.widget.EditText;
 
 import java.util.Date;
