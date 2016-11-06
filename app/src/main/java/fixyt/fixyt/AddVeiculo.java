@@ -13,6 +13,7 @@ public class AddVeiculo {
     private EditText veiculoKilometragem;
     private EditText veiculoCor;
 
+
     public AddVeiculo(EditText veiculoTipo, EditText veiculoMarca, EditText veiculoAnoFabricacao, EditText veiculoAnoModelo, EditText veiculoPlaca, EditText veiculoRenavam, EditText veiculoKilometragem, EditText veiculoCor) {
         this.veiculoTipo = veiculoTipo;
         this.veiculoMarca = veiculoMarca;
