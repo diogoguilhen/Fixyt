@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fixyt.fixyt.Login">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back_tela"
+        android:id="@+id/imageView"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_margin="15dp"
+            android:id="@+id/campoCpfCnpj"
+            android:hint="CPF/CNPJ"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:textColorHint="@android:color/background_light"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:layout_margin="15dp"
+            android:id="@+id/campoDataNascimento"
+            android:hint="Data de nascimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:textColorHint="@android:color/background_light"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColor="@android:color/white"
+            android:inputType="date" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/campoEstado"
+            android:layout_margin="15dp"
+            android:text="Estado:"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:textColorHint="@android:color/background_light"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner" />
+
+        <EditText
+            android:layout_margin="15dp"
+            android:id="@+id/campoCidade"
+            android:hint="Cidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:textColorHint="@android:color/background_light"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColor="@android:color/white"
+            android:inputType="text" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/icone_fixyt"
+        android:layout_marginTop="27dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Ola, falta pouco para se registrar!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textColorHighlight="@android:color/background_light"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
+
+
+    <Button
+        android:id="@+id/botFinalizar"
+        android:text="Finalizar"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
