@@ -46,7 +46,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         firebasAuth = FirebaseAuth.getInstance();
 
         dialogoProgresso = new ProgressDialog(this);
-        cadastroMotorista = new Cadastro();
+        //cadastroMotorista = new Cadastro();
 
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         cadastroMotorista.setNome((EditText) findViewById(R.id.campoNome));
