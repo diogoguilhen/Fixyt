@@ -76,7 +76,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    private void registrar3(){
+    /*private void registrar3(){
         String email = Cadastro;
         String senha = Cadastro;
         String ConfSen = confirmaSenha;
@@ -137,5 +137,5 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                 });
     }
 
-
+*/
 }

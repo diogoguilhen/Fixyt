@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import java.util.Objects;
 
-public class Registrar_1 extends AppCompatActivity implements OnClickListener{
+public class Registrar_1 extends AppCompatActivity implements View.OnClickListener{
 
     private Button botaoProximo1;
     private EditText confirmaSenha;
@@ -47,7 +47,10 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
 
         dialogoProgresso = new ProgressDialog(this);
 
-        botaoProximo1 = (Button) findViewById(R.id.botRegistrar);
+        botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
+        cadastroMotorista.setNome((EditText) findViewById(R.id.campoNome));
+        cadastroMotorista.setSobrenome((EditText) findViewById(R.id.campoSobrenome));
+        cadastroMotorista.setTelefone((EditText) findViewById(R.id.campoTelefone));
         cadastroMotorista.setEmail((EditText) findViewById(R.id.campoEmail));
         cadastroMotorista.setSenha((EditText) findViewById(R.id.campoSenha));
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);

@@ -64,9 +64,8 @@
             <EditText
                 android:layout_margin="15dp"
                 android:id="@+id/campoDdi"
-                android:hint="+55"
-                android:inputType="number"
-                android:maxLength="3"
+                android:hint="Pais"
+                android:inputType="text"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:textColorLink="@android:color/holo_blue_dark"
