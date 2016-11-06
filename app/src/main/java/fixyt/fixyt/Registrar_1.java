@@ -28,7 +28,7 @@ import java.util.Objects;
 
 public class Registrar_1 extends AppCompatActivity implements OnClickListener{
 
-    private Button botaoRegistrar;
+    private Button botaoProximo1;
     private EditText campoEmail;
     private EditText campoSenha;
     private EditText confirmaSenha;
@@ -48,15 +48,25 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
 
         dialogoProgresso = new ProgressDialog(this);
 
-        botaoRegistrar = (Button) findViewById(R.id.botRegistrar);
+        botaoProximo1 = (Button) findViewById(R.id.botRegistrar);
         campoEmail = (EditText) findViewById(R.id.campoEmail);
         campoSenha = (EditText) findViewById(R.id.campoSenha);
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);
 
-        botaoRegistrar.setOnClickListener(this);
+        botaoProximo1.setOnClickListener(this);
     }
 
-    private void registrarUsuario(){
+    @Override
+    public void onClick(View v) {
+        if(v == botaoProximo1){
+            //completa o primeiro passo do cadastro
+            registrar1();
+            dialogoProgresso.dismiss();
+            startActivity(new Intent(getApplicationContext(), Registrar_2.class));
+        }
+    }
+
+    private void registrar1(){
         String email = campoEmail.getText().toString().trim();
         String senha = campoSenha.getText().toString().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
@@ -82,45 +92,5 @@ public class Registrar_1 extends AppCompatActivity implements OnClickListener{
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
         dialogoProgresso.setMessage("Registrando Usuário...");
         dialogoProgresso.show();
-
-        firebasAuth.createUserWithEmailAndPassword(email,senha)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Se tarefa é completada
-                        if(task.isSuccessful()){
-                            //usuario registrou corretamente
-                            finish();
-                            //inicializar cadastro de perfil
-                            startActivity(new Intent(getApplicationContext(), Perfil.class));
-                            //mostrar mensagem para usuario indicando sucesso
-                            Toast.makeText(Registrar_1.this, "Registrado com Sucesso.", Toast.LENGTH_SHORT).show();
-                            dialogoProgresso.dismiss();
-                        }
-                        else{
-                            try {
-                                throw task.getException();
-                            } catch(FirebaseAuthWeakPasswordException e) {
-                                Toast.makeText(Registrar_1.this, "A senha utilizada deve ter no mínimo 6 caracteres.", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(FirebaseAuthInvalidCredentialsException e) {
-                                Toast.makeText(Registrar_1.this, "As credenciais utilizadas expiraram. Contate o administrador", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(FirebaseAuthUserCollisionException e) {
-                                Toast.makeText(Registrar_1.this, "O usuário escolhido já está cadastrado. Escolha outro!", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(Exception e) {
-                                Log.e(TAG, e.getMessage());
-                            }
-                        }
-                    }
-                });
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == botaoRegistrar){
-            registrarUsuario();
-        }
     }
 }

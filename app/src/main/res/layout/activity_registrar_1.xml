@@ -62,8 +62,8 @@
 
         <Button
             android:layout_margin="15dp"
-            android:id="@+id/botRegistrar"
-            android:text="Registrar Usuario"
+            android:id="@+id/botaoProximo1"
+            android:text="Próximo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
