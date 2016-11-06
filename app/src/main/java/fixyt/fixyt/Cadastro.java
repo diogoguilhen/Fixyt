@@ -4,7 +4,6 @@ import android.widget.EditText;
 
 public class Cadastro {
 
-
     // Tipo String
     private EditText nome;
     private EditText sobrenome;
@@ -58,9 +57,9 @@ public class Cadastro {
         this.dataNascimento = dataNascimento;
     }
 
-    public Cadastro () {
-
-    }
+//    public Cadastro () {
+//
+//    }
 
     public EditText getNome() {
         return nome;
