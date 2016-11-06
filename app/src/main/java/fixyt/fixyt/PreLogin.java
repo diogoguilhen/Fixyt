@@ -11,8 +11,13 @@ import com.google.firebase.auth.FirebaseAuth;
 public class PreLogin extends AppCompatActivity {
 
 
-    //SERGIO BIXA DO MATO
 
+
+
+
+
+
+    //SERGIO BIXA DO MATO
     // Tinea Pelionela
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
