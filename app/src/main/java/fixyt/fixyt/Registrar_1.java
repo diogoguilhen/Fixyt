@@ -28,7 +28,6 @@ import java.util.Objects;
 
 public class Registrar_1 extends AppCompatActivity implements OnClickListener{
 
-
     private Button botaoRegistrar;
     private EditText campoEmail;
     private EditText campoSenha;
