@@ -20,6 +20,7 @@ public class Cadastro {
     private EditText bairro;
     private EditText uf;
     private EditText cidade;
+    private EditText pais;
 
     // Precisa criar um tipo de cadastro de Veiculo.
     private EditText veiculoTipo;
@@ -212,6 +213,14 @@ public class Cadastro {
 
     public void setDataNascimento(EditText dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public EditText getPais() {
+        return pais;
+    }
+
+    public void setPais(EditText pais) {
+        this.pais = pais;
     }
 
 
