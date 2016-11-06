@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Cadastro {
 
+
     private String nome;
     private String sobrenome;
     private String telefone;
