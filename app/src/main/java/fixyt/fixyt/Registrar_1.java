@@ -42,10 +42,11 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_1);
 
-        //Chamando FIrebase Auth
+        //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
 
         dialogoProgresso = new ProgressDialog(this);
+        cadastroMotorista = new Cadastro();
 
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         cadastroMotorista.setNome((EditText) findViewById(R.id.campoNome));
