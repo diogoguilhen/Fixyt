@@ -3,39 +3,22 @@ package fixyt.fixyt;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import java.util.ArrayList;
-import java.util.List;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registrar_2 extends AppCompatActivity implements View.OnClickListener {
+public class Registrar_3 extends AppCompatActivity implements View.OnClickListener {
 
     private Button botaoProximo;
     private EditText campoDataNascimento;
@@ -114,7 +97,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         if (v == botaoProximo){
             //completar o cadastro.
             registrar2();
-            dialogoProgresso.dismiss();
             startActivity(new Intent(getApplicationContext(), Registrar_3.class));
         }
 
@@ -151,7 +133,11 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
-        dialogoProgresso.setMessage("Aguarde...");
+        dialogoProgresso.setMessage("Registrando...");
         dialogoProgresso.show();
+        registrar2().addOnCompleteListener()
+
+
+
     }
 }
