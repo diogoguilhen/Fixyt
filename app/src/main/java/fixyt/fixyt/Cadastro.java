@@ -1,11 +1,10 @@
 package fixyt.fixyt;
-
+//Negao da Pirocakn
 import android.widget.EditText;
 
 public class Cadastro {
 
-
-    // Tipo EditText
+    // Tipo String
     private EditText nome;
     private EditText sobrenome;
     private EditText telefone;
