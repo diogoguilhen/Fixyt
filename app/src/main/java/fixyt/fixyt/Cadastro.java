@@ -3,7 +3,7 @@ package fixyt.fixyt;
 import java.util.Date;
 
 public class Cadastro {
-
+    // Tipo String
     private String nome;
     private String sobrenome;
     private String telefone;
@@ -20,8 +20,9 @@ public class Cadastro {
     private String veiculoTipo;
     private String veiculoMarca;
     private String veiculoAnoFabricacao;
-    private String veiculoAnoModelo
-            ;
+    private String veiculoAnoModelo;
+
+    // Tipo Date
     private Date dataNascimento;
 
     public Cadastro(String nome, String sobrenome, String pais, String telefone) {
