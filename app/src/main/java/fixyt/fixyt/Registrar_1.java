@@ -128,10 +128,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage("Aguarde..." + tSenha + " + " + ConfSen);
+        dialogoProgresso.setMessage(
+                "email " + email + "senha " + senha + "nome " + nome +
+                        "sobrenome " + sobrenome + "pais " + pais + "telefone " + telefone
+        );
         dialogoProgresso.show();
 
-        startActivity(new Intent(this, Registrar_2.class));
-        dialogoProgresso.dismiss();
+        //   startActivity(new Intent(this, Registrar_2.class));
+        //   dialogoProgresso.dismiss();
     }
 }
