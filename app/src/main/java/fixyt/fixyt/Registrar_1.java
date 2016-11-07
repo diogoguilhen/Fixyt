@@ -11,8 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private ProgressDialog dialogoProgresso;
     private CadastroMotorista cadastroMotorista;
 
+    private Spinner spinnerPais;
+    private ArrayAdapter adaptador;
+
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
 
@@ -54,11 +60,16 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
         cadastroMotorista = new CadastroMotorista();
+        //Teste do SPINNER PAIS
+        spinnerPais = (Spinner) findViewById(R.id.spinnerPais);
+        adaptador = ArrayAdapter.createFromResource(this, R.array.Paises, android.R.layout.simple_spinner_item);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPais.setAdapter(adaptador);
 
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         nome = (EditText) findViewById(R.id.campoNome);
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
-        pais = (EditText) findViewById(R.id.campoPais);
+        //pais = (EditText) findViewById(R.id.campoPais);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
 
@@ -85,7 +96,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private void registrar1(){
         cadastroMotorista.setNome(nome.getText().toString().trim());
         cadastroMotorista.setSobrenome(sobrenome.getText().toString().trim());
-        cadastroMotorista.setPais(pais.getText().toString().trim());
+        //cadastroMotorista.setPais(pais.getText().toString().trim());
         cadastroMotorista.setTelefone(telefone.getText().toString().trim());
         cadastroMotorista.setEmail(email.getText().toString().trim());
         cadastroMotorista.setSenha(digSenha.getText().toString().trim());
@@ -111,12 +122,12 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
-        if(TextUtils.isEmpty(pais)){
+        /*if(TextUtils.isEmpty(pais)){
             //email vazio
             Toast.makeText(this, "Ingresse um pais!", Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
-        }
+        }*/
         if(TextUtils.isEmpty(telefone)){
             //email vazio
             Toast.makeText(this, "Ingresse um telefone!", Toast.LENGTH_SHORT).show();

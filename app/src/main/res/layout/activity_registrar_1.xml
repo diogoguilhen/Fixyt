@@ -61,17 +61,34 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/campoPais"
-                android:layout_width="80dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:hint="Pais"
-                android:inputType="text"
-                android:textColor="@android:color/white"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="@android:color/holo_blue_dark" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pais"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@android:color/white"/>
+
+                <Spinner
+                    android:id="@+id/spinnerPais"
+                    android:layout_width="130dp"
+                    android:layout_height="37dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:entries="@array/Paises"
+                    android:background="@android:drawable/btn_dropdown">
+
+                </Spinner>
+
+
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/campoTelefone"
@@ -81,10 +98,12 @@
                 android:hint="(11) 92345-6789"
                 android:inputType="number"
                 android:maxLength="14"
+                android:layout_gravity="center_vertical"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
                 android:textColorHint="@android:color/background_light"
-                android:textColorLink="@android:color/holo_blue_dark" />
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textAlignment="center" />
 
         </LinearLayout>
 

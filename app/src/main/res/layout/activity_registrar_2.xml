@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/campoEstado"
             android:dropDownSelector="@android:color/background_light"
-            android:background="@android:drawable/btn_dropdown"
+            android:background="@android:color/holo_blue_light"
             android:layout_marginLeft="15dp" />
 
         <EditText

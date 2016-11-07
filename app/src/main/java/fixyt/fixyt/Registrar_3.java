@@ -58,7 +58,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
 
         menuEstado = (Spinner) findViewById(R.id.campoEstado);
         botaoRegistrar = (Button) findViewById(R.id.botFinalizar);
-        campoCPF = (EditText) findViewById(R.id.campoCpfCnpj);
+        campoCPF = (EditText) findViewById(R.id.campoCpf);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 

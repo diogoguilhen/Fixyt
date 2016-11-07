@@ -65,7 +65,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
 
         menuEstado = (Spinner) findViewById(R.id.campoEstado);
         botaoProximo = (Button) findViewById(R.id.botFinalizar);
-        campoCPF = (EditText) findViewById(R.id.campoCpfCnpj);
+        campoCPF = (EditText) findViewById(R.id.campoCpf);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
@@ -105,9 +105,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
@@ -131,10 +128,20 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         String UF = menuEstado.getSelectedItem().toString();
         String Cidade = campoCidade.getText().toString().trim();
 
+
         if(TextUtils.isEmpty(CPF)){
             //CPF vazio
             Toast.makeText(this, "Insira seu CPF!", Toast.LENGTH_SHORT).show();
             //parar a execução do código
+            return;
+        }
+        //Verificação de CPF válido pelo frontend para posteriormente verificar na Receita a existencia do CPF.
+        if (ValidaCPF.isCPF(CPF) == true) {
+            Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Validado!", Toast.LENGTH_SHORT).show();
+            //System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
+        }
+        else {
+            Toast.makeText(this, "CPF Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(dataNasc)){
@@ -155,8 +162,10 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
+
         // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
         dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
+
     }
 }
