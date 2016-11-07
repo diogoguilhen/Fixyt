@@ -159,12 +159,16 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso.show();
         dialogoProgresso.setMessage("Aguarde...");
-        startActivity(new Intent(this, Registrar_2.class));
+
+        //Passando dados para a tela REGISTRAR 2
+        Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
+        intentReg1.putExtra("nome", cadastroMotorista.getNome().trim());
+        intentReg1.putExtra("sobrenome", cadastroMotorista.getSobrenome().trim());
+        intentReg1.putExtra("pais", cadastroMotorista.getPais().trim());
+        intentReg1.putExtra("telefone", cadastroMotorista.getTelefone().trim());
+        intentReg1.putExtra("email", cadastroMotorista.getEmail().trim());
+        intentReg1.putExtra("senha", cadastroMotorista.getSenha().trim());
+        startActivity(intentReg1);
         dialogoProgresso.dismiss();
-
-        // Enviando objeto CadastroMotorista preenchido para a próxima tela
-
-
-
     }
 }
