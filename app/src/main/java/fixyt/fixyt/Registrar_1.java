@@ -38,8 +38,11 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private EditText digSenha;
     private ProgressDialog dialogoProgresso;
     private CadastroMotorista cadastroMotorista;
+
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +61,15 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         pais = (EditText) findViewById(R.id.campoPais);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
+
         //Apropriando os valores dos EditText para os STRINGS do objeto CADASTRO.
+
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);
         digSenha = (EditText) findViewById(R.id.campoSenha);
+
+        //Utilizando mascaras para os campos devidos
+        MaskEditTextChangedListener maskTEL = new MaskEditTextChangedListener("(##)####-####", telefone);
+        telefone.addTextChangedListener(maskTEL);
 
         botaoProximo1.setOnClickListener(this);
     }
@@ -143,5 +152,10 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         dialogoProgresso.show();
         startActivity(new Intent(this, Registrar_2.class));
         dialogoProgresso.dismiss();
+
+        // Enviando objeto CadastroMotorista preenchido para a próxima tela
+
+
+
     }
 }
