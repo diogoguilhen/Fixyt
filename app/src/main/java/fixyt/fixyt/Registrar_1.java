@@ -31,6 +31,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private static final String TAG = "Registrar_1";
     private Button botaoProximo1;
     private EditText confirmaSenha;
+    private EditText DigSenha;
     private ProgressDialog dialogoProgresso;
     private Cadastro cadastroMotorista;
     // Declarar API Firabase Auth
@@ -55,6 +56,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         cadastroMotorista.setEmail((EditText) findViewById(R.id.campoEmail));
         cadastroMotorista.setSenha((EditText) findViewById(R.id.campoSenha));
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);
+        DigSenha =      (EditText) findViewById(R.id.campoSenha);
 
         botaoProximo1.setOnClickListener(this);
     }
@@ -75,6 +77,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         String pais = cadastroMotorista.getPais().toString().trim();
         String telefone = cadastroMotorista.getTelefone().toString().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
+        String tSenha = DigSenha.getText().toString().trim();
 
         if(TextUtils.isEmpty(nome)){
             //email vazio
@@ -118,14 +121,14 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
-        if(!ConfSen.equals(senha)){
+        if(!ConfSen.equals(tSenha)){
             //senha não está igual em ambos os campos
-            Toast.makeText(this, "Verifique a senha e a confirmação novamente!" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Verifique a senha e a confirmação novamente!" + tSenha + "+" + ConfSen, Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage("Aguarde...");
+        dialogoProgresso.setMessage("Aguarde..." + tSenha + " + " + ConfSen);
         dialogoProgresso.show();
 
         startActivity(new Intent(this, Registrar_2.class));

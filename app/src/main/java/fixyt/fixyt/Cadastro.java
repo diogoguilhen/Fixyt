@@ -101,6 +101,8 @@ public class Cadastro {
         this.senha = senha;
     }
 
+
+
     public EditText getCpf() {
         return cpf;
     }

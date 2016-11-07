@@ -13,7 +13,6 @@
         <activity android:name=".PreLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -22,7 +21,8 @@
         <activity android:name=".Registrar_2" />
         <activity android:name=".Registrar_3" />
         <activity android:name=".Perfil" />
-        <activity android:name=".Main"></activity>
+        <activity android:name=".Main"/>
+
     </application>
 
 </manifest>
