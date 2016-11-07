@@ -11,15 +11,35 @@
         <item>Argentina</item>
         <item>Peru</item>
         <item>Bolivia</item>
-        <item>EUA</item>
 
     </string-array>
     <string-array name="Estados">
-        <item>SP</item>
-        <item>RJ</item>
+        <item>AC</item>
+        <item>AL</item>
+        <item>AM</item>
+        <item>AP</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
         <item>MG</item>
+        <item>MS</item>
+        <item>MT</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PE</item>
+        <item>PI</item>
         <item>PR</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RO</item>
         <item>RS</item>
+        <item>SC</item>
+        <item>SE</item>
+        <item>SP</item>
+        <item>TO</item>
 
     </string-array>
 

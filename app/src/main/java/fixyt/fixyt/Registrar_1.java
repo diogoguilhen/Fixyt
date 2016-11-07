@@ -3,6 +3,7 @@ package fixyt.fixyt;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_1);
 
+
+
         //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
 
@@ -106,7 +109,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         String senha = cadastroMotorista.getSenha().trim();
         String nome = cadastroMotorista.getNome().trim();
         String sobrenome = cadastroMotorista.getSobrenome().trim();
-        String pais = cadastroMotorista.getPais().trim();
         String telefone = cadastroMotorista.getTelefone().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
         String tSenha = digSenha.getText().toString().trim();
@@ -154,13 +156,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage(email + " " + senha + " " + pais + " " + nome + " " + sobrenome + " " + telefone);
-        dialogoProgresso.show();
 
-        /*startActivity(new Intent(this, Registrar_2.class));
+        dialogoProgresso.show();
+        dialogoProgresso.setMessage("Aguarde...");
+        startActivity(new Intent(this, Registrar_2.class));
         dialogoProgresso.dismiss();
 
-        // Enviando objeto CadastroMotorista preenchido para a próxima tela*/
+        // Enviando objeto CadastroMotorista preenchido para a próxima tela
 
 
 

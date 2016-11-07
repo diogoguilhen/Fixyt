@@ -101,6 +101,8 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     }
 
     private void registrar2() {
+
+
         String CPF = campoCPF.getText().toString().trim();
         String dataNasc = campoDataNascimento.getText().toString().trim();
         String UF = menuEstado.getSelectedItem().toString();
@@ -136,7 +138,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         }
 
         // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
-        dialogoProgresso.setMessage("Aguarde...");
+        dialogoProgresso.setMessage(CPF + " " + dataNasc + " " + UF + " " + Cidade);
         dialogoProgresso.show();
 
     }
