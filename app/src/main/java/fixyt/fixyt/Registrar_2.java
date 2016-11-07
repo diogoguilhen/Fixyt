@@ -73,6 +73,13 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         menuEstado.setOnItemSelectedListener((OnItemSelectedListener) Registrar_2.this);
         botaoProximo.setOnClickListener(this);
 
+        //Mascarando Campo de CPF
+        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", campoCPF);
+        campoCPF.addTextChangedListener(maskCPF);
+
+        MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/##", campoDataNascimento);
+        campoDataNascimento.addTextChangedListener(maskDataNasc);
+
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("SP");
