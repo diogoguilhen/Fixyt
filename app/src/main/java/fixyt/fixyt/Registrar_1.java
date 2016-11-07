@@ -68,7 +68,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         digSenha = (EditText) findViewById(R.id.campoSenha);
 
         //Utilizando mascaras para os campos devidos
-        MaskEditTextChangedListener maskTEL = new MaskEditTextChangedListener("(##)####-####", telefone);
+        MaskEditTextChangedListener maskTEL = new MaskEditTextChangedListener("(##)#####-####", telefone);
         telefone.addTextChangedListener(maskTEL);
 
         botaoProximo1.setOnClickListener(this);

@@ -80,7 +80,7 @@
                 android:layout_margin="15dp"
                 android:hint="(11) 92345-6789"
                 android:inputType="number"
-                android:maxLength="11"
+                android:maxLength="14"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
                 android:textColorHint="@android:color/background_light"
