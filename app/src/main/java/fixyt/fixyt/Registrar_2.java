@@ -35,7 +35,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registrar_2 extends AppCompatActivity implements View.OnClickListener ,OnItemSelectedListener {
+public class Registrar_2 extends AppCompatActivity implements View.OnClickListener  {
 
     private Button botaoProximo;
     private EditText campoDataNascimento;
@@ -64,14 +64,18 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
 
-        menuEstado = (Spinner) findViewById(R.id.campoEstado);
+        // Spinner de Estado
+        menuEstado = (Spinner) findViewById(R.id.spinnerEstado);
+        adaptador = ArrayAdapter.createFromResource(this,R.array.Estados, android.R.layout.simple_spinner_item);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        menuEstado.setAdapter(adaptador);
+
         botaoProximo = (Button) findViewById(R.id.botFinalizar);
         campoCPF = (EditText) findViewById(R.id.campoCpf);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
         //Preparando os botões e menus para receber clicks
-        menuEstado.setOnItemSelectedListener((OnItemSelectedListener) Registrar_2.this);
         botaoProximo.setOnClickListener(this);
 
         //Mascarando Campo de CPF
@@ -81,23 +85,9 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/##", campoDataNascimento);
         campoDataNascimento.addTextChangedListener(maskDataNasc);
 
-        // Creating adapter for spinner
-        adaptador = ArrayAdapter.createFromResource(this,R.array.Estados, android.R.layout.simple_spinner_item);
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        menuEstado.setAdapter(adaptador);
+
 
     }
-
-    //Spinner------------------------------------------------------------------
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-    }
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
-    //Spinner--------------------------------------------------------------------
 
     @Override
     public void onClick(View v) {
@@ -124,7 +114,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         //Verificação de CPF válido pelo frontend para posteriormente verificar na Receita a existencia do CPF.
-        if (ValidaCPF.isCPF(CPF) == true) {
+        if (ValidaCPF.isCPF(CPF)) {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Validado!", Toast.LENGTH_SHORT).show();
             //System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
         }
@@ -135,12 +125,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         if(TextUtils.isEmpty(dataNasc)){
             //data de nascimento vazia
             Toast.makeText(this, "Insira sua data de nascimento!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }
-        if(TextUtils.isEmpty(UF)){
-            //UF vazia
-            Toast.makeText(this, "Insira o estado!", Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
         }

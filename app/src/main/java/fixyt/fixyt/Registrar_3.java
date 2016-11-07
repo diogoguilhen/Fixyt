@@ -56,7 +56,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
 
-        menuEstado = (Spinner) findViewById(R.id.campoEstado);
+        //menuEstado = (Spinner) findViewById(R.id.campoEstado);
         botaoRegistrar = (Button) findViewById(R.id.botFinalizar);
         campoCPF = (EditText) findViewById(R.id.campoCpf);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);

@@ -60,7 +60,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
         cadastroMotorista = new CadastroMotorista();
-        //Teste do SPINNER PAIS
+
+        //Implementação do Spinner de Pais
         spinnerPais = (Spinner) findViewById(R.id.spinnerPais);
         adaptador = ArrayAdapter.createFromResource(this, R.array.Paises, android.R.layout.simple_spinner_item);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,7 +97,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private void registrar1(){
         cadastroMotorista.setNome(nome.getText().toString().trim());
         cadastroMotorista.setSobrenome(sobrenome.getText().toString().trim());
-        //cadastroMotorista.setPais(pais.getText().toString().trim());
+        cadastroMotorista.setPais(spinnerPais.getSelectedItem().toString().trim());
         cadastroMotorista.setTelefone(telefone.getText().toString().trim());
         cadastroMotorista.setEmail(email.getText().toString().trim());
         cadastroMotorista.setSenha(digSenha.getText().toString().trim());
@@ -122,12 +123,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
-        /*if(TextUtils.isEmpty(pais)){
-            //email vazio
-            Toast.makeText(this, "Ingresse um pais!", Toast.LENGTH_SHORT).show();
-            //parar a execução do código
-            return;
-        }*/
         if(TextUtils.isEmpty(telefone)){
             //email vazio
             Toast.makeText(this, "Ingresse um telefone!", Toast.LENGTH_SHORT).show();
@@ -159,12 +154,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage("Aguarde...");
+        dialogoProgresso.setMessage(email + " " + senha + " " + pais + " " + nome + " " + sobrenome + " " + telefone);
         dialogoProgresso.show();
-        startActivity(new Intent(this, Registrar_2.class));
+
+        /*startActivity(new Intent(this, Registrar_2.class));
         dialogoProgresso.dismiss();
 
-        // Enviando objeto CadastroMotorista preenchido para a próxima tela
+        // Enviando objeto CadastroMotorista preenchido para a próxima tela*/
 
 
 
