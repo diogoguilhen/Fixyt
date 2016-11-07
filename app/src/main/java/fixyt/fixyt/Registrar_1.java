@@ -1,5 +1,5 @@
 package fixyt.fixyt;
-//kkjijij
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -28,12 +28,16 @@ import java.util.Objects;
 
 public class Registrar_1 extends AppCompatActivity implements View.OnClickListener{
 
-    private static final String TAG = "Registrar_1";
     private Button botaoProximo1;
+    private EditText nome;
+    private EditText sobrenome;
+    private EditText pais;
+    private EditText telefone;
+    private EditText email;
     private EditText confirmaSenha;
-    private EditText DigSenha;
+    private EditText digSenha;
     private ProgressDialog dialogoProgresso;
-    private Cadastro cadastroMotorista;
+    private CadastroMotorista cadastroMotorista;
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
 
@@ -46,17 +50,17 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         firebasAuth = FirebaseAuth.getInstance();
 
         dialogoProgresso = new ProgressDialog(this);
-        cadastroMotorista = new Cadastro();
+        cadastroMotorista = new CadastroMotorista();
 
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
-        cadastroMotorista.setNome((EditText) findViewById(R.id.campoNome));
-        cadastroMotorista.setSobrenome((EditText) findViewById(R.id.campoSobrenome));
-        cadastroMotorista.setPais((EditText) findViewById(R.id.campoPais));
-        cadastroMotorista.setTelefone((EditText) findViewById(R.id.campoTelefone));
-        cadastroMotorista.setEmail((EditText) findViewById(R.id.campoEmail));
-        cadastroMotorista.setSenha((EditText) findViewById(R.id.campoSenha));
+        nome = (EditText) findViewById(R.id.campoNome);
+        sobrenome = (EditText) findViewById(R.id.campoSobrenome);
+        pais = (EditText) findViewById(R.id.campoPais);
+        telefone = (EditText) findViewById(R.id.campoTelefone);
+        email = (EditText) findViewById(R.id.campoEmail);
+        //Apropriando os valores dos EditText para os STRINGS do objeto CADASTRO.
         confirmaSenha = (EditText) findViewById(R.id.confirmaSenha);
-        DigSenha =      (EditText) findViewById(R.id.campoSenha);
+        digSenha = (EditText) findViewById(R.id.campoSenha);
 
         botaoProximo1.setOnClickListener(this);
     }
@@ -70,14 +74,21 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     }
 
     private void registrar1(){
-        String email = cadastroMotorista.getEmail().toString().trim();
-        String senha = cadastroMotorista.getSenha().toString().trim();
-        String nome = cadastroMotorista.getNome().toString().trim();
-        String sobrenome = cadastroMotorista.getSobrenome().toString().trim();
-        String pais = cadastroMotorista.getPais().toString().trim();
-        String telefone = cadastroMotorista.getTelefone().toString().trim();
+        cadastroMotorista.setNome(nome.getText().toString().trim());
+        cadastroMotorista.setSobrenome(sobrenome.getText().toString().trim());
+        cadastroMotorista.setPais(pais.getText().toString().trim());
+        cadastroMotorista.setTelefone(telefone.getText().toString().trim());
+        cadastroMotorista.setEmail(email.getText().toString().trim());
+        cadastroMotorista.setSenha(digSenha.getText().toString().trim());
+
+        String email = cadastroMotorista.getEmail().trim();
+        String senha = cadastroMotorista.getSenha().trim();
+        String nome = cadastroMotorista.getNome().trim();
+        String sobrenome = cadastroMotorista.getSobrenome().trim();
+        String pais = cadastroMotorista.getPais().trim();
+        String telefone = cadastroMotorista.getTelefone().trim();
         String ConfSen = confirmaSenha.getText().toString().trim();
-        String tSenha = DigSenha.getText().toString().trim();
+        String tSenha = digSenha.getText().toString().trim();
 
         if(TextUtils.isEmpty(nome)){
             //email vazio
@@ -128,13 +139,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage(
-                "email " + email + "senha " + senha + "nome " + nome +
-                        "sobrenome " + sobrenome + "pais " + pais + "telefone " + telefone
-        );
+        dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
-
-        //   startActivity(new Intent(this, Registrar_2.class));
-        //   dialogoProgresso.dismiss();
+        startActivity(new Intent(this, Registrar_2.class));
+        dialogoProgresso.dismiss();
     }
 }
