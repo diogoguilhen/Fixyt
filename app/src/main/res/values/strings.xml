@@ -14,4 +14,13 @@
         <item>EUA</item>
 
     </string-array>
+    <string-array name="Estados">
+        <item>SP</item>
+        <item>RJ</item>
+        <item>MG</item>
+        <item>PR</item>
+        <item>RS</item>
+
+    </string-array>
+
 </resources>

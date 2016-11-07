@@ -42,6 +42,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     private EditText campoCPF;
     private EditText campoCidade;
     private Spinner menuEstado;
+    private ArrayAdapter adaptador;
     private ProgressDialog dialogoProgresso;
 
     // Declarar API Firabase Auth
@@ -80,23 +81,10 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/##", campoDataNascimento);
         campoDataNascimento.addTextChangedListener(maskDataNasc);
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("SP");
-        categories.add("RJ");
-        categories.add("SC");
-        categories.add("AL");
-        categories.add("MG");
-        categories.add("CE");
-
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        menuEstado.setAdapter(dataAdapter);
+        adaptador = ArrayAdapter.createFromResource(this,R.array.Estados, android.R.layout.simple_spinner_item);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        menuEstado.setAdapter(adaptador);
 
     }
 

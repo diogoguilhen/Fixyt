@@ -14,6 +14,39 @@
         android:id="@+id/imageView"
         android:scaleType="centerCrop" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/icone_fixyt"
+        android:layout_marginTop="27dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Ola, falta pouco para se registrar!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textColorHighlight="@android:color/background_light"
+        android:textColorHint="@android:color/background_light"
+        android:textColor="@android:color/background_light"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
+
+
+    <Button
+        android:id="@+id/botFinalizar"
+        android:text="Finalizar"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,12 +95,14 @@
 
 
         <Spinner
-            android:layout_width="241dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/campoEstado"
-            android:dropDownSelector="@android:color/background_light"
-            android:background="@android:color/holo_blue_light"
-            android:layout_marginLeft="15dp" />
+            android:id="@+id/spinnerEstado"
+            android:layout_width="130dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center_vertical"
+            android:entries="@array/Estados"
+            android:background="@android:drawable/btn_dropdown"/>
 
         <EditText
             android:layout_margin="15dp"
@@ -83,38 +118,5 @@
 
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/icone_fixyt"
-        android:layout_marginTop="27dp"
-        android:id="@+id/imageView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Ola, falta pouco para se registrar!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textColorHighlight="@android:color/background_light"
-        android:textColorHint="@android:color/background_light"
-        android:textColor="@android:color/background_light"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_centerHorizontal="true" />
-
-
-
-    <Button
-        android:id="@+id/botFinalizar"
-        android:text="Finalizar"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
