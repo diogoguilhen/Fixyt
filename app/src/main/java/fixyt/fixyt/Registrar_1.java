@@ -154,8 +154,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         }
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
 
-        dialogoProgresso.show();
         dialogoProgresso.setMessage("Aguarde...");
+        dialogoProgresso.show();
 
         //Passando dados para a tela REGISTRAR 2
         Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
