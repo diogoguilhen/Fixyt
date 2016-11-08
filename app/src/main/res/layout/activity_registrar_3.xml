@@ -222,7 +222,7 @@
                     android:layout_marginLeft="15dp"
                     android:id="@+id/campoPlacaVeiculo"
                     android:hint="Placa Veiculo"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:maxLength="8"
                     android:layout_width="155dp"
                     android:layout_height="wrap_content"

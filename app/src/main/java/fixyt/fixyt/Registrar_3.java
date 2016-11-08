@@ -132,8 +132,8 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         String tipoVeiculo = campoTpVeiculo.getSelectedItem().toString().trim();
         String marcaVeiculo = campoMarcaVeiculo.getSelectedItem().toString().trim();
         String modeloVeiculo = campoModeloVeiculo.getText().toString().trim();
-        String AnoFabVeiculo = campoAnoFabVeiculo.getSelectedItem().toString().trim();
-        String AnoModVeiculo = campoAnoModVeiculo.getSelectedItem().toString().trim();
+        String anoFabVeiculo = campoAnoFabVeiculo.getSelectedItem().toString().trim();
+        String anoModVeiculo = campoAnoModVeiculo.getSelectedItem().toString().trim();
         String placaVeiculo = campoPlacaVeiculo.getText().toString().trim();
         String renavamVeiculo = campoRenavam.getText().toString().trim();
         String kmVeiculo = campoKmVeiculo.getText().toString().trim();
@@ -147,10 +147,17 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         }
 
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
+        /*dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
+        dialogoProgresso.show();*/
+
+        dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
+                + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + cadastroMotorista.getCpf() + " " + cadastroMotorista.getRg() + " " + cadastroMotorista.getDataNascimento() + " " +
+                cadastroMotorista.getSexo() + " " + cadastroMotorista.getTpLogradouro() + " " + cadastroMotorista.getEndereco() + " " + cadastroMotorista.getCep() + " " + cadastroMotorista.getBairro() + " " + cadastroMotorista.getUf() + " " + cadastroMotorista.getCidade() +
+                " Tela 3: " + tipoVeiculo + " " + marcaVeiculo + " " + modeloVeiculo + " " + anoFabVeiculo + " " + anoModVeiculo + " " + placaVeiculo + " " +
+                renavamVeiculo + " " + kmVeiculo + " " + corVeiculo);
         dialogoProgresso.show();
 
-        firebasAuth.createUserWithEmailAndPassword(cadastroMotorista.getEmail(),cadastroMotorista.getSenha())
+        /*firebasAuth.createUserWithEmailAndPassword(cadastroMotorista.getEmail(),cadastroMotorista.getSenha())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -181,7 +188,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                             }
                         }
                     }
-                });
+                });*/
     }
 
 }
