@@ -11,7 +11,6 @@
         <item>Argentina</item>
         <item>Peru</item>
         <item>Bolivia</item>
-
     </string-array>
     <string-array name="Estados">
         <item>AC</item>
@@ -40,7 +39,16 @@
         <item>SE</item>
         <item>SP</item>
         <item>TO</item>
-
+    </string-array>
+    <string-array name="Sexo">
+    <item>Masculino</item>
+    <item>Femenino</item>
+    </string-array>
+    <string-array name="TipoLogradouro">
+        <item>Av.</item>
+        <item>R.</item>
+        <item>Pç.</item>
+        <item>Jd.</item>
     </string-array>
 
 </resources>

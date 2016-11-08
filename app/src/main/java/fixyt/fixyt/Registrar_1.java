@@ -148,7 +148,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         }
         if(!ConfSen.equals(tSenha)){
             //senha não está igual em ambos os campos
-            Toast.makeText(this, "Verifique a senha e a confirmação novamente!" + tSenha + "+" + ConfSen, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Verifique a confirmação de senha novamente!" , Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
         }

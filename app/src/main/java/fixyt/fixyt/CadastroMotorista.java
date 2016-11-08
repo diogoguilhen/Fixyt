@@ -14,7 +14,8 @@ public class CadastroMotorista implements Parcelable{
     private String cpf;
     private String rg;
     private String sexo;
-    private String enderecoCompleto;
+    private String tpLogradouro;
+    private String endereco;
     private String cep;
     private String bairro;
     private String uf;
@@ -47,7 +48,8 @@ public class CadastroMotorista implements Parcelable{
         this.cpf=parcel.readString();
         this.rg=parcel.readString();
         this.sexo=parcel.readString();
-        this.enderecoCompleto=parcel.readString();
+        this.tpLogradouro=parcel.readString();
+        this.endereco=parcel.readString();
         this.cep=parcel.readString();
         this.bairro=parcel.readString();
         this.uf=parcel.readString();
@@ -84,7 +86,8 @@ public class CadastroMotorista implements Parcelable{
         parcel.writeString(this.cpf);
         parcel.writeString(this.rg);
         parcel.writeString(this.sexo);
-        parcel.writeString(this.enderecoCompleto);
+        parcel.writeString(this.tpLogradouro);
+        parcel.writeString(this.endereco);
         parcel.writeString(this.cep);
         parcel.writeString(this.bairro);
         parcel.writeString(this.uf);
@@ -179,12 +182,20 @@ public class CadastroMotorista implements Parcelable{
         this.sexo = sexo;
     }
 
-    public String getEnderecoCompleto() {
-        return enderecoCompleto;
+    public String getTpLogradouro() {
+        return tpLogradouro;
     }
 
-    public void setEnderecoCompleto(String enderecoCompleto) {
-        this.enderecoCompleto = enderecoCompleto;
+    public void setTpLogradouro(String tpLogradouro) {
+        this.tpLogradouro = tpLogradouro;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public String getCep() {

@@ -37,12 +37,21 @@ import java.util.List;
 
 public class Registrar_2 extends AppCompatActivity implements View.OnClickListener  {
 
-    private Button botaoProximo;
+    private Button botaoProximo2;
+    private EditText campoCpf;
+    private EditText campoRg;
     private EditText campoDataNascimento;
-    private EditText campoCPF;
-    private EditText campoCidade;
+    private Spinner campoSexo;
+    private Spinner campoTpLogradouro;
+    private EditText campoEndereco;
+    private EditText campoCep;
+    private EditText campoBairro;
     private Spinner menuEstado;
-    private ArrayAdapter adaptador;
+    private EditText campoCidade;
+
+    private ArrayAdapter adaptadorEstado;
+    private ArrayAdapter adaptadorSexo;
+    private ArrayAdapter adaptadorTpLogradouro;
     private ProgressDialog dialogoProgresso;
 
     // Declarar API Firabase Auth
@@ -66,24 +75,47 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
 
         // Spinner de Estado
         menuEstado = (Spinner) findViewById(R.id.spinnerEstado);
-        adaptador = ArrayAdapter.createFromResource(this,R.array.Estados, android.R.layout.simple_spinner_item);
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        menuEstado.setAdapter(adaptador);
+        adaptadorEstado = ArrayAdapter.createFromResource(this,R.array.Estados, android.R.layout.simple_spinner_item);
+        adaptadorEstado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        menuEstado.setAdapter(adaptadorEstado);
 
-        botaoProximo = (Button) findViewById(R.id.botFinalizar);
-        campoCPF = (EditText) findViewById(R.id.campoCpf);
+        //Spinner do Sexo
+        campoSexo = (Spinner) findViewById(R.id.spinnerSexo);
+        adaptadorSexo = ArrayAdapter.createFromResource(this,R.array.Sexo, android.R.layout.simple_spinner_item);
+        adaptadorSexo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        campoSexo.setAdapter(adaptadorSexo);
+
+        //Spinner do tipo de logradouro
+        campoTpLogradouro = (Spinner) findViewById(R.id.spinnerTpLogradouro);
+        adaptadorTpLogradouro = ArrayAdapter.createFromResource(this,R.array.TipoLogradouro, android.R.layout.simple_spinner_item);
+        adaptadorTpLogradouro.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        campoTpLogradouro.setAdapter(adaptadorTpLogradouro);
+
+
+        botaoProximo2 = (Button) findViewById(R.id.botProximo2);
+        campoCpf = (EditText) findViewById(R.id.campoCpf);
+        campoRg = (EditText) findViewById(R.id.campoRg);
         campoDataNascimento = (EditText) findViewById(R.id.campoDataNascimento);
+        campoEndereco = (EditText) findViewById(R.id.campoEndereco);
+        campoCep = (EditText) findViewById(R.id.campoCep);
+        campoBairro = (EditText) findViewById(R.id.campoBairro);
         campoCidade = (EditText) findViewById(R.id.campoCidade);
 
         //Preparando os botões e menus para receber clicks
-        botaoProximo.setOnClickListener(this);
+        botaoProximo2.setOnClickListener(this);
 
-        //Mascarando Campo de CPF
-        MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", campoCPF);
-        campoCPF.addTextChangedListener(maskCPF);
+        //Mascarando Campos de CPF, RG, CEP e Data Nascimento,
+        MaskEditTextChangedListener maskCpf = new MaskEditTextChangedListener("###.###.###-##", campoCpf);
+        campoCpf.addTextChangedListener(maskCpf);
+
+        MaskEditTextChangedListener maskRg = new MaskEditTextChangedListener("###.###.###-#", campoRg);
+        campoRg.addTextChangedListener(maskRg);
 
         MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/####", campoDataNascimento);
         campoDataNascimento.addTextChangedListener(maskDataNasc);
+
+        MaskEditTextChangedListener maskCep = new MaskEditTextChangedListener("#####-###", campoCep);
+        campoCep.addTextChangedListener(maskCep);
 
 
 
@@ -91,7 +123,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v == botaoProximo){
+        if (v == botaoProximo2){
             //completar o cadastro.
             registrar2();
             //dialogoProgresso.dismiss();
@@ -106,15 +138,26 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getParcelableExtra("cadastro");
 
         //Apropriando os valores aos campos seguintes.
-        cadastroMotorista.setCpf(campoCPF.getText().toString().trim());
+        cadastroMotorista.setCpf(campoCpf.getText().toString().trim());
+        cadastroMotorista.setRg(campoRg.getText().toString().trim());
         cadastroMotorista.setDataNascimento(campoDataNascimento.getText().toString().trim());
+        cadastroMotorista.setSexo(campoSexo.getSelectedItem().toString().trim());
+        cadastroMotorista.setTpLogradouro(campoTpLogradouro.getSelectedItem().toString().trim());
+        cadastroMotorista.setEndereco(campoEndereco.getText().toString().trim());
+        cadastroMotorista.setCep(campoCep.getText().toString().trim());
+        cadastroMotorista.setBairro(campoBairro.getText().toString().trim());
         cadastroMotorista.setUf(menuEstado.getSelectedItem().toString().trim());
         cadastroMotorista.setCidade(campoCidade.getText().toString().trim());
 
-        //enviar o numero de CPF retirando os caracteres para validação.
-        String CPF = campoCPF.getText().toString().trim().replaceAll("[.-]", "");
-
+        //Retirar mascaras para salvamento no banco de dados (incluindo Cpf para validação no frontend)
+        String CPF = campoCpf.getText().toString().trim().replaceAll("[.-]", "");
+        String RG = campoRg.getText().toString().trim().replaceAll("[.-]", "");
         String dataNasc = campoDataNascimento.getText().toString().trim();
+        String sexo = campoSexo.getSelectedItem().toString();
+        String tipoLogradouro = campoTpLogradouro.getSelectedItem().toString();
+        String endereco = campoEndereco.getText().toString().trim();
+        String CEP = campoCep.getText().toString().trim().replaceAll("[.-]", "");
+        String bairro = campoBairro.getText().toString().trim();
         String UF = menuEstado.getSelectedItem().toString();
         String Cidade = campoCidade.getText().toString().trim();
 
@@ -134,9 +177,33 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(TextUtils.isEmpty(RG)){
+            //RG vazio
+            Toast.makeText(this, "Insira seu RG!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
         if(TextUtils.isEmpty(dataNasc)){
             //data de nascimento vazia
             Toast.makeText(this, "Insira sua data de nascimento!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(endereco)){
+            //endereço vazio
+            Toast.makeText(this, "Insira um endereço!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(CEP)){
+            //CEP vazio
+            Toast.makeText(this, "Insira um CEP!", Toast.LENGTH_SHORT).show();
+            //parar a execução do código
+            return;
+        }
+        if(TextUtils.isEmpty(bairro)){
+            //Bairro vazio
+            Toast.makeText(this, "Insira um bairro!", Toast.LENGTH_SHORT).show();
             //parar a execução do código
             return;
         }
@@ -150,7 +217,8 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
 
         dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
-        + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + "Tela 2: " + CPF + " " + dataNasc + " " + UF + " " + Cidade);
+        + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + "Tela 2: " + CPF + " " + RG + " " + dataNasc + " " +
+                sexo + " " + tipoLogradouro + " " + endereco + " " + CEP + " " + bairro + " " + UF + " " + Cidade);
         dialogoProgresso.show();
 
     }

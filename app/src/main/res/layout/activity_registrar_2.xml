@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/icone_fixyt"
         android:layout_marginTop="27dp"
-        android:id="@+id/imageView2"
+        android:id="@+id/iconeFixyt"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -29,18 +29,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
+        android:layout_below="@+id/iconeFixyt"
         android:textColorHighlight="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
         android:textColor="@android:color/background_light"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:layout_above="@+id/linearLayout2"
+
         android:layout_centerHorizontal="true" />
 
 
 
     <Button
-        android:id="@+id/botFinalizar"
-        android:text="Finalizar"
+        android:id="@+id/botProximo2"
+        android:text="Próximo"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -51,70 +52,241 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="130dp"
         android:id="@+id/linearLayout2"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <EditText
-            android:layout_margin="15dp"
-            android:id="@+id/campoCpf"
-            android:hint="CPF"
-            android:inputType="number"
-            android:maxLength="14"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorLink="@android:color/holo_blue_dark"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:textColorHighlight="@android:color/background_light"
-            android:textColor="@android:color/white" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:layout_margin="15dp"
-            android:id="@+id/campoDataNascimento"
-            android:hint="Data de nascimento"
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoCpf"
+                android:hint="CPF"
+                android:inputType="number"
+                android:maxLength="14"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoRg"
+                android:hint="RG"
+                android:inputType="text"
+                android:maxLength="13"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorLink="@android:color/holo_blue_dark"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:textColorHighlight="@android:color/background_light"
-            android:textColor="@android:color/white"
-            android:inputType="number" />
+            android:orientation="horizontal">
 
-        <TextView
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoDataNascimento"
+                android:hint="Data nascimento"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white"
+                android:inputType="number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Sexo:"
+                    android:textColorLink="@android:color/holo_blue_dark"
+                    android:textColorHint="@android:color/background_light"
+                    android:textColorHighlight="@android:color/background_light"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    android:id="@+id/textView2" />
+
+                <Spinner
+                    android:id="@+id/spinnerSexo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:entries="@array/Sexo"
+                    android:background="@android:drawable/btn_dropdown"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="Estado:"
-            android:textColorLink="@android:color/holo_blue_dark"
-            android:textColorHint="@android:color/background_light"
-            android:textColorHighlight="@android:color/background_light"
-            android:textColor="@android:color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="Tp. Logr.:"
+                    android:textColorLink="@android:color/holo_blue_dark"
+                    android:textColorHint="@android:color/background_light"
+                    android:textColorHighlight="@android:color/background_light"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp" />
 
 
-        <Spinner
-            android:id="@+id/spinnerEstado"
-            android:layout_width="130dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:entries="@array/Estados"
-            android:background="@android:drawable/btn_dropdown"/>
+                <Spinner
+                    android:id="@+id/spinnerTpLogradouro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:entries="@array/TipoLogradouro"
+                    android:background="@android:drawable/btn_dropdown"/>
 
-        <EditText
-            android:layout_margin="15dp"
-            android:id="@+id/campoCidade"
-            android:hint="Cidade"
+            </LinearLayout>
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/campoEndereco"
+                android:hint="Endereço"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white"
+                android:inputType="text" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorLink="@android:color/holo_blue_dark"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:textColorHighlight="@android:color/background_light"
-            android:textColor="@android:color/white"
-            android:inputType="text" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/campoCep"
+                    android:hint="CEP"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textColorLink="@android:color/holo_blue_dark"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textColorHighlight="@android:color/background_light"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_marginLeft="15dp"
+                android:id="@+id/campoBairro"
+                android:hint="Bairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white"
+                android:inputType="text" />
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Estado:"
+                    android:textColorLink="@android:color/holo_blue_dark"
+                    android:textColorHint="@android:color/background_light"
+                    android:textColorHighlight="@android:color/background_light"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp" />
+
+
+                <Spinner
+                    android:id="@+id/spinnerEstado"
+                    android:layout_width="130dp"
+                    android:layout_height="37dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:entries="@array/Estados"
+                    android:background="@android:drawable/btn_dropdown"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_marginLeft="15dp"
+                android:id="@+id/campoCidade"
+                android:hint="Cidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorLink="@android:color/holo_blue_dark"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@android:color/background_light"
+                android:textColor="@android:color/white"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+
+
+
 
 
     </LinearLayout>
