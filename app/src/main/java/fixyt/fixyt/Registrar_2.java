@@ -82,7 +82,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", campoCPF);
         campoCPF.addTextChangedListener(maskCPF);
 
-        MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/##", campoDataNascimento);
+        MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/####", campoDataNascimento);
         campoDataNascimento.addTextChangedListener(maskDataNasc);
 
 
@@ -94,14 +94,22 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         if (v == botaoProximo){
             //completar o cadastro.
             registrar2();
-            dialogoProgresso.dismiss();
-            startActivity(new Intent(getApplicationContext(), Registrar_3.class));
+            //dialogoProgresso.dismiss();
+            //startActivity(new Intent(getApplicationContext(), Registrar_3.class));
         }
 
     }
 
     private void registrar2() {
 
+        //Recebendo cadastro da tela Registrar_1
+        CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getSerializableExtra("cadastro");
+
+        //Apropriando os valores aos campos seguintes.
+        cadastroMotorista.setCpf(campoCPF.getText().toString().trim());
+        cadastroMotorista.setDataNascimento(campoDataNascimento.getText().toString().trim());
+        cadastroMotorista.setUf(menuEstado.getSelectedItem().toString().trim());
+        cadastroMotorista.setCidade(campoCidade.getText().toString().trim());
 
         String CPF = campoCPF.getText().toString().trim();
         String dataNasc = campoDataNascimento.getText().toString().trim();
@@ -138,7 +146,9 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         }
 
         // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
-        dialogoProgresso.setMessage(CPF + " " + dataNasc + " " + UF + " " + Cidade);
+
+        dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
+        + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + "Tela 2: " + CPF + " " + dataNasc + " " + UF + " " + Cidade);
         dialogoProgresso.show();
 
     }
