@@ -39,7 +39,7 @@
                 android:inputType="text"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:textColorLink="@android:color/holo_blue_dark" />
 
             <EditText
@@ -51,7 +51,7 @@
                 android:inputType="text"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:textColorLink="@android:color/holo_blue_dark" />
 
         </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:textColorLink="@android:color/holo_blue_dark"
                 android:textAlignment="center" />
 
@@ -116,7 +116,7 @@
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@android:color/background_light"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <EditText
@@ -128,7 +128,7 @@
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@android:color/background_light"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <EditText
@@ -140,7 +140,7 @@
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@android:color/background_light"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <Button
