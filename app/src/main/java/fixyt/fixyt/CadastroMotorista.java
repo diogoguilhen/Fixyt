@@ -26,6 +26,7 @@ public class CadastroMotorista implements Parcelable{
     // Precisa criar um tipo de cadastro de Veiculo.
     private String veiculoTipo;
     private String veiculoMarca;
+    private String veiculoModelo;
     private String veiculoAnoFabricacao;
     private String veiculoAnoModelo;
     private String veiculoPlaca;
@@ -60,6 +61,7 @@ public class CadastroMotorista implements Parcelable{
         //Sobre o veiculo do motorista
         this.veiculoTipo=parcel.readString();
         this.veiculoMarca=parcel.readString();
+        this.veiculoModelo=parcel.readString();
         this.veiculoAnoFabricacao=parcel.readString();
         this.veiculoAnoModelo=parcel.readString();
         this.veiculoPlaca=parcel.readString();
@@ -98,6 +100,7 @@ public class CadastroMotorista implements Parcelable{
         //Sobre o veiculo do motorista
         parcel.writeString(this.veiculoTipo);
         parcel.writeString(this.veiculoMarca);
+        parcel.writeString(this.veiculoModelo);
         parcel.writeString(this.veiculoAnoFabricacao);
         parcel.writeString(this.veiculoAnoModelo);
         parcel.writeString(this.veiculoPlaca);
@@ -252,6 +255,14 @@ public class CadastroMotorista implements Parcelable{
 
     public void setVeiculoMarca(String veiculoMarca) {
         this.veiculoMarca = veiculoMarca;
+    }
+
+    public String getVeiculoModelo() {
+        return veiculoModelo;
+    }
+
+    public void setVeiculoModelo(String veiculoModelo) {
+        this.veiculoModelo = veiculoModelo;
     }
 
     public String getVeiculoAnoFabricacao() {

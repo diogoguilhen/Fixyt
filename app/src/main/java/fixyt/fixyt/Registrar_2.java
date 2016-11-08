@@ -124,10 +124,8 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v == botaoProximo2){
-            //completar o cadastro.
+            //completa o segundo passo do cadastro.
             registrar2();
-            //dialogoProgresso.dismiss();
-            //startActivity(new Intent(getApplicationContext(), Registrar_3.class));
         }
 
     }
