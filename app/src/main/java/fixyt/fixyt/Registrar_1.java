@@ -56,13 +56,10 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_1);
 
-
-
         //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
 
         dialogoProgresso = new ProgressDialog(this);
-        cadastroMotorista = new CadastroMotorista();
 
         //Implementação do Spinner de Pais
         spinnerPais = (Spinner) findViewById(R.id.spinnerPais);
@@ -73,7 +70,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         nome = (EditText) findViewById(R.id.campoNome);
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
-        //pais = (EditText) findViewById(R.id.campoPais);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
 
@@ -98,6 +94,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     }
 
     private void registrar1(){
+        cadastroMotorista = new CadastroMotorista();
         cadastroMotorista.setNome(nome.getText().toString().trim());
         cadastroMotorista.setSobrenome(sobrenome.getText().toString().trim());
         cadastroMotorista.setPais(spinnerPais.getSelectedItem().toString().trim());
@@ -162,12 +159,12 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         //Passando dados para a tela REGISTRAR 2
         Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
-        intentReg1.putExtra("nome", cadastroMotorista.getNome().trim());
+        /*intentReg1.putExtra("nome", cadastroMotorista.getNome().trim());
         intentReg1.putExtra("sobrenome", cadastroMotorista.getSobrenome().trim());
         intentReg1.putExtra("pais", cadastroMotorista.getPais().trim());
         intentReg1.putExtra("telefone", cadastroMotorista.getTelefone().trim());
         intentReg1.putExtra("email", cadastroMotorista.getEmail().trim());
-        intentReg1.putExtra("senha", cadastroMotorista.getSenha().trim());
+        intentReg1.putExtra("senha", cadastroMotorista.getSenha().trim());*/
         startActivity(intentReg1);
         dialogoProgresso.dismiss();
     }

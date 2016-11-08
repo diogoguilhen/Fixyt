@@ -1,6 +1,9 @@
 package fixyt.fixyt;
 
-public class CadastroMotorista {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CadastroMotorista implements Parcelable{
 
     // Tipo String
     private String nome;
@@ -17,6 +20,7 @@ public class CadastroMotorista {
     private String uf;
     private String cidade;
     private String pais;
+    private String dataNascimento;
 
     // Precisa criar um tipo de cadastro de Veiculo.
     private String veiculoTipo;
@@ -27,11 +31,89 @@ public class CadastroMotorista {
     private String veiculoRenavam;
     private String veiculoKilometragem;
     private String veiculoCor;
-    private String dataNascimento;
 
     public CadastroMotorista() {
-
+        super();
     }
+
+    // Utilizando objetos como parcelável
+    public CadastroMotorista(Parcel parcel){
+        //Sobre o motorista
+        this.nome=parcel.readString();
+        this.sobrenome=parcel.readString();
+        this.telefone=parcel.readString();
+        this.email=parcel.readString();
+        this.senha=parcel.readString();
+        this.cpf=parcel.readString();
+        this.rg=parcel.readString();
+        this.sexo=parcel.readString();
+        this.enderecoCompleto=parcel.readString();
+        this.cep=parcel.readString();
+        this.bairro=parcel.readString();
+        this.uf=parcel.readString();
+        this.cidade=parcel.readString();
+        this.pais=parcel.readString();
+        this.dataNascimento=parcel.readString();
+
+        //Sobre o veiculo do motorista
+        this.veiculoTipo=parcel.readString();
+        this.veiculoMarca=parcel.readString();
+        this.veiculoAnoFabricacao=parcel.readString();
+        this.veiculoAnoModelo=parcel.readString();
+        this.veiculoPlaca=parcel.readString();
+        this.veiculoRenavam=parcel.readString();
+        this.veiculoKilometragem=parcel.readString();
+        this.veiculoCor=parcel.readString();
+    }
+
+    //Metodo de descrição de conteudo do Parcelable
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    //Metodo de escrita para os campos da "parcela"
+    @Override
+    public void writeToParcel(Parcel parcel, int i){
+        //Sobre o Motorista
+        parcel.writeString(this.nome);
+        parcel.writeString(this.sobrenome);
+        parcel.writeString(this.telefone);
+        parcel.writeString(this.email);
+        parcel.writeString(this.senha);
+        parcel.writeString(this.cpf);
+        parcel.writeString(this.rg);
+        parcel.writeString(this.sexo);
+        parcel.writeString(this.enderecoCompleto);
+        parcel.writeString(this.cep);
+        parcel.writeString(this.bairro);
+        parcel.writeString(this.uf);
+        parcel.writeString(this.cidade);
+        parcel.writeString(this.pais);
+        parcel.writeString(this.dataNascimento);
+
+        //Sobre o veiculo do motorista
+        parcel.writeString(this.veiculoTipo);
+        parcel.writeString(this.veiculoMarca);
+        parcel.writeString(this.veiculoAnoFabricacao);
+        parcel.writeString(this.veiculoAnoModelo);
+        parcel.writeString(this.veiculoPlaca);
+        parcel.writeString(this.veiculoRenavam);
+        parcel.writeString(this.veiculoKilometragem);
+        parcel.writeString(this.veiculoCor);
+    }
+
+    public static final Creator<CadastroMotorista> CREATOR=new Creator<CadastroMotorista>() {
+        @Override
+        public CadastroMotorista createFromParcel(Parcel source) {
+            return new CadastroMotorista(source);
+        }
+
+        @Override
+        public CadastroMotorista[] newArray(int size) {
+            return new CadastroMotorista[size];
+        }
+    };
 
     public String getNome() {
         return nome;
