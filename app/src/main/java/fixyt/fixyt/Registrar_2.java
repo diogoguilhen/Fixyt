@@ -108,7 +108,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         MaskEditTextChangedListener maskCpf = new MaskEditTextChangedListener("###.###.###-##", campoCpf);
         campoCpf.addTextChangedListener(maskCpf);
 
-        MaskEditTextChangedListener maskRg = new MaskEditTextChangedListener("###.###.###-#", campoRg);
+        MaskEditTextChangedListener maskRg = new MaskEditTextChangedListener("##.###.###-#", campoRg);
         campoRg.addTextChangedListener(maskRg);
 
         MaskEditTextChangedListener maskDataNasc = new MaskEditTextChangedListener("##/##/####", campoDataNascimento);
