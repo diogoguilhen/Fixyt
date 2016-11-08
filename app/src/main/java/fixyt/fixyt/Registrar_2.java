@@ -103,7 +103,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     private void registrar2() {
 
         //Recebendo cadastro da tela Registrar_1
-        CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getSerializableExtra("cadastro");
+        CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getParcelableExtra("cadastro");
 
         //Apropriando os valores aos campos seguintes.
         cadastroMotorista.setCpf(campoCPF.getText().toString().trim());
@@ -111,7 +111,9 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         cadastroMotorista.setUf(menuEstado.getSelectedItem().toString().trim());
         cadastroMotorista.setCidade(campoCidade.getText().toString().trim());
 
-        String CPF = campoCPF.getText().toString().trim();
+        //enviar o numero de CPF retirando os caracteres para validação.
+        String CPF = campoCPF.getText().toString().trim().replaceAll("[.-]", "");
+
         String dataNasc = campoDataNascimento.getText().toString().trim();
         String UF = menuEstado.getSelectedItem().toString();
         String Cidade = campoCidade.getText().toString().trim();
@@ -129,7 +131,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             //System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
         }
         else {
-            Toast.makeText(this, "CPF Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(dataNasc)){

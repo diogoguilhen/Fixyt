@@ -35,7 +35,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
     private Spinner menuEstado;
     private ProgressDialog dialogoProgresso;
 
-    private static final String TAG = "Registrar_2";
+    private static final String TAG = "Registrar_3";
 
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
@@ -43,7 +43,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrar_2);
+        setContentView(R.layout.activity_registrar_3);
 
         //Chamando FIrebase Auth
         firebasAuth = FirebaseAuth.getInstance();
