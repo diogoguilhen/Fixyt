@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +29,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -48,6 +52,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
+    // Declarar a referencia à banco de dados
+    private DatabaseReference dbFixyt;
 
 
 
@@ -58,6 +64,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
+        //Inicializando banco de dados
+        dbFixyt = FirebaseDatabase.getInstance().getReference();
 
         dialogoProgresso = new ProgressDialog(this);
 
@@ -72,6 +80,22 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                email.setError( "Digite um email!" );
+            }
+        });
 
         //Apropriando os valores dos EditText para os STRINGS do objeto CADASTRO.
 
