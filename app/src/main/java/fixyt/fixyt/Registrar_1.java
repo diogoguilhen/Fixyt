@@ -93,6 +93,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(email.getText().toString()))
                 email.setError( "Digite um email!" );
             }
         });
