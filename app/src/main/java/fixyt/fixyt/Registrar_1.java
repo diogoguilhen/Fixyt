@@ -22,6 +22,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Registrar_1 extends AppCompatActivity implements View.OnClickListener{
@@ -52,9 +57,11 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
-    // Declarar a referencia à banco de dados
-    private DatabaseReference dbFixyt;
 
+    // Banco de dados Firebase
+    private Firebase mRef;
+    //Emailbd
+    private String emailBd;
 
 
     @Override
@@ -64,8 +71,27 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
-        //Inicializando banco de dados
-        dbFixyt = FirebaseDatabase.getInstance().getReference();
+        //Inicializando Base
+        mRef = new Firebase("https://fixyt-b2af0.firebaseio.com/");
+
+        //atribuindo email do banco ao emailBd.
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, String> emailMap = dataSnapshot.getValue(Map.class);
+
+                String emailBd = emailMap.get("email");
+
+
+                Log.v("E_VALUE", "Email:" + emailMap);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 
         dialogoProgresso = new ProgressDialog(this);
 
@@ -93,8 +119,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(TextUtils.isEmpty(email.getText().toString()))
-                email.setError( "Digite um email!" );
+                if(TextUtils.isEmpty(email.getText().toString())){
+                    email.setError( "Digite um email!" );
+                }
+                if((email.getText().toString()).equals(emailBd)){
+                    email.setError( "Email Já existe! Digite outro!");
+                }
+
             }
         });
 
