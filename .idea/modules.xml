@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fixyt.iml" filepath="$PROJECT_DIR$/Fixyt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fixyt.iml" filepath="$PROJECT_DIR$/Fixyt.iml" />
       <module fileurl="file://$PROJECT_DIR$/FixytGit.iml" filepath="$PROJECT_DIR$/FixytGit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

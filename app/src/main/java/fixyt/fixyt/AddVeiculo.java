@@ -3,6 +3,7 @@ package fixyt.fixyt;
 import android.widget.EditText;
 
 public class AddVeiculo {
+    /* testando o Git Diogo*/
 
     private EditText veiculoTipo;
     private EditText veiculoMarca;
