@@ -22,6 +22,7 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth firebaseAuth;
     private Button logOut;
+    private Button finalizarAgendamento;
     private Button perfilUser;
     private Button escolherData;
     private Button escolherHora;
@@ -45,9 +46,11 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
 
         logOut = (Button) findViewById(R.id.botaoLogout);
         perfilUser = (Button) findViewById(R.id.botaoPerfil);
+        finalizarAgendamento = (Button) findViewById(R.id.botFinalizarAgendamento);
 
         logOut.setOnClickListener(this);
         perfilUser.setOnClickListener(this);
+        finalizarAgendamento.setOnClickListener(this);
 
         //Botoes e campos Texto da data e hora de agendamento
         escolherData= (Button) findViewById(R.id.bData);
@@ -108,6 +111,10 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
                 }
             },hora,minuto,false);
             timePickerDialog.show();
+        }
+        if(v == finalizarAgendamento){
+            //Finalizar o agendamento, enviar os dados para o FixyT e notificar usuário do agendamento
+
         }
 
 
