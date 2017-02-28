@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -26,6 +28,8 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
     private TextView eDate;
     private TextView eHour;
     private int ano,mes,dia,hora,minuto;
+    private Spinner menuTipoAgendamento;
+    private ArrayAdapter adaptadorTipoAgendamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,12 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
 
         escolherData.setOnClickListener(this);
         escolherHora.setOnClickListener(this);
+
+        //Spinner do tipo de agendamento
+        menuTipoAgendamento = (Spinner) findViewById(R.id.tipoAgendamento);
+        adaptadorTipoAgendamento = ArrayAdapter.createFromResource(this,R.array.KitsAgendamento, android.R.layout.simple_spinner_item);
+        adaptadorTipoAgendamento.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        menuTipoAgendamento.setAdapter(adaptadorTipoAgendamento);
 
     }
 

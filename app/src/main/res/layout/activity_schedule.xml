@@ -87,5 +87,28 @@
         android:layout_alignLeft="@+id/eHora"
         android:layout_alignStart="@+id/eHora" />
 
+    <TextView
+        android:text="Qual o tipo de serviço desejado?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pacRevisao"
+        android:textSize="18sp"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/bHora"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp" />
+
+    <Spinner
+        android:id="@+id/tipoAgendamento"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+
+        android:layout_gravity="center_vertical"
+        android:entries="@array/KitsAgendamento"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_below="@+id/pacRevisao"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
+
 
 </RelativeLayout>
