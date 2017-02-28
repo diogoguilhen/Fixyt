@@ -77,5 +77,29 @@
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_bright" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/QCarro"
+        android:layout_marginTop="106dp"
+        android:id="@+id/button4"
+        android:layout_alignLeft="@+id/CarroAtual"
+        android:layout_alignStart="@+id/CarroAtual"
+        android:layout_alignRight="@+id/botaoPerfil"
+        android:layout_alignEnd="@+id/botaoPerfil"
+        android:text="Pedir Ajuda" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/AgendarServico"
+        android:text="Agendar Serviço"
+        android:layout_below="@+id/button4"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4"
+        android:layout_alignRight="@+id/button4"
+        android:layout_alignEnd="@+id/button4" />
+
 
 </RelativeLayout>
