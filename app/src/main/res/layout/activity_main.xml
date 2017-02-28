@@ -52,54 +52,24 @@
         android:layout_below="@+id/botaoLogout"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Carro Atual: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/CarroAtual"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_blue_bright"
-        android:fontFamily="sans-serif"
-        android:layout_below="@+id/BotaoCarro"
-        android:layout_toLeftOf="@+id/BotaoCarro"
-        android:layout_toStartOf="@+id/BotaoCarro"
-        android:layout_marginTop="11dp" />
-
-    <TextView
-        android:text="@Carro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/QCarro"
-        android:layout_alignBaseline="@+id/CarroAtual"
-        android:layout_alignBottom="@+id/CarroAtual"
-        android:layout_centerHorizontal="true"
-        android:textStyle="normal|bold"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_blue_bright" />
-
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/QCarro"
-        android:layout_marginTop="106dp"
         android:id="@+id/button4"
-        android:layout_alignLeft="@+id/CarroAtual"
-        android:layout_alignStart="@+id/CarroAtual"
-        android:layout_alignRight="@+id/botaoPerfil"
-        android:layout_alignEnd="@+id/botaoPerfil"
-        android:text="Pedir Ajuda" />
+        android:text="Pedir Ajuda"
+        android:elevation="0dp"
+        android:layout_marginTop="183dp"
+        android:layout_below="@+id/BotaoCarro"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/AgendarServico"
+        android:id="@+id/scheduleService"
         android:text="Agendar Serviço"
         android:layout_below="@+id/button4"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignStart="@+id/button4"
-        android:layout_alignRight="@+id/button4"
-        android:layout_alignEnd="@+id/button4" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
