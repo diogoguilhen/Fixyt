@@ -43,5 +43,39 @@
         android:layout_marginRight="28dp"
         android:layout_marginEnd="28dp" />
 
+    <Button
+        android:text="Trocar Carro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/BotaoCarro"
+        android:layout_below="@+id/botaoLogout"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Carro Atual: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CarroAtual"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_blue_bright"
+        android:fontFamily="sans-serif"
+        android:layout_below="@+id/BotaoCarro"
+        android:layout_toLeftOf="@+id/BotaoCarro"
+        android:layout_toStartOf="@+id/BotaoCarro"
+        android:layout_marginTop="11dp" />
+
+    <TextView
+        android:text="@Carro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/QCarro"
+        android:layout_alignBaseline="@+id/CarroAtual"
+        android:layout_alignBottom="@+id/CarroAtual"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_blue_bright" />
+
 
 </RelativeLayout>
