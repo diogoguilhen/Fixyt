@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "162798574591",
-    "firebase_url": "https://fixyt-b2af0.firebaseio.com",
-    "project_id": "fixyt-b2af0",
-    "storage_bucket": "fixyt-b2af0.appspot.com"
+    "project_number": "122346724610",
+    "firebase_url": "https://fixyt-20066.firebaseio.com",
+    "project_id": "fixyt-20066",
+    "storage_bucket": "fixyt-20066.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:162798574591:android:dcd3d967d28dab3e",
+        "mobilesdk_app_id": "1:122346724610:android:dcd3d967d28dab3e",
         "android_client_info": {
           "package_name": "fixyt.fixyt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "162798574591-j8sii3j887a7omji74v8cv82vgqq5gfr.apps.googleusercontent.com",
+          "client_id": "122346724610-dc8nfhff1c8o5ie8oq6lik7h1gp8j40c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fixyt.fixyt",
+            "certificate_hash": "debdbf32692fec07ddca60d5a6de7cc813b860ea"
+          }
+        },
+        {
+          "client_id": "122346724610-4oqq0f34oi65uai0adjr422jesvt14ol.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOHME4nZHjEC4WfoR3DmFyM65t71PIGnA"
+          "current_key": "AIzaSyA_MDdL7bahiHFH3L_0eKTDDcaHMIyyOTI"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122346724610-4oqq0f34oi65uai0adjr422jesvt14ol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
