@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_schedule"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fixyt.fixyt.Schedule"
+    android:orientation="vertical">
+
+
+    <Button
+        android:text="Log Out"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/botaoLogout"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp" />
+
+    <Button
+        android:text="Perfil"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/botaoPerfil"
+        android:layout_alignBaseline="@+id/botaoLogout"
+        android:layout_alignBottom="@+id/botaoLogout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginEnd="28dp" />
+
+    <Button
+        android:text="Escolher Data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:id="@+id/bData"
+        android:layout_below="@+id/botaoLogout"
+        android:layout_alignLeft="@+id/botaoLogout"
+        android:layout_alignStart="@+id/botaoLogout" />
+
+    <Button
+        android:text="Escolher Hora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:id="@+id/bHora"
+        android:layout_below="@+id/bData"
+        android:layout_alignLeft="@+id/bData"
+        android:layout_alignStart="@+id/bData" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/principal_back"
+        android:id="@+id/imageView8"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eHora"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_alignBaseline="@+id/bHora"
+        android:layout_alignBottom="@+id/bHora"
+        android:layout_toRightOf="@+id/bHora"
+        android:layout_toEndOf="@+id/bHora" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eData"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_alignBaseline="@+id/bData"
+        android:layout_alignBottom="@+id/bData"
+        android:layout_alignLeft="@+id/eHora"
+        android:layout_alignStart="@+id/eHora" />
+
+    <TextView
+        android:text="Qual o tipo de serviço desejado?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pacRevisao"
+        android:textSize="18sp"
+        android:textColor="@android:color/background_light"
+        android:layout_below="@+id/bHora"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp" />
+
+    <Spinner
+        android:id="@+id/tipoAgendamento"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+
+        android:layout_gravity="center_vertical"
+        android:entries="@array/KitsAgendamento"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_below="@+id/pacRevisao"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
+
+    <Button
+        android:id="@+id/botFinalizarAgendamento"
+        android:text="Finalizar"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/tipoAgendamento"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

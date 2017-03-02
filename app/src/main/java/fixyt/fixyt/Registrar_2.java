@@ -212,14 +212,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-        // Apos validar que os campos de cadastro2 estão OK um dialogo de progresso é mostrado
-
-
-        dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
-                + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + CPF + " " + RG + " " + dataNasc + " " +
-                sexo + " " + tipoLogradouro + " " + endereco + " " + CEP + " " + bairro + " " + UF + " " + Cidade);
-        dialogoProgresso.show();
-
         //Passando dados para a tela REGISTRAR 3
         Intent intentReg2 = new Intent(Registrar_2.this, Registrar_3.class);
         intentReg2.putExtra("cadastro", cadastroMotorista);
