@@ -52,6 +52,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private ProgressDialog dialogoProgresso;
     private CadastroMotorista cadastroMotorista;
 
+
+    private static final String TAG = "Registrar_1";
     private Spinner spinnerPais;
     private ArrayAdapter adaptador;
 
@@ -72,7 +74,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         //Chamando Firebase Auth
         firebasAuth = FirebaseAuth.getInstance();
         //Inicializando Base
-        mRef = new Firebase("https://fixyt-b2af0.firebaseio.com/");
+        mRef = new Firebase("https://fixyt-20066.firebaseio.com/");
 
         //atribuindo email do banco ao emailBd.
         mRef.addValueEventListener(new ValueEventListener() {
@@ -106,6 +108,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
+        /*
+        VERIFICAÇÃO DE EMAIL "ONLINE" DESATIVADA, PORQUE O FIREBASE IRA TRATAR ISSO QUANDO DER OK!
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -127,7 +131,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                 }
 
             }
-        });
+        });*/
 
         //Apropriando os valores dos EditText para os STRINGS do objeto CADASTRO.
 
@@ -212,6 +216,39 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso.setMessage("Aguarde...");
         dialogoProgresso.show();
+
+        firebasAuth.createUserWithEmailAndPassword(cadastroMotorista.getEmail(),cadastroMotorista.getSenha())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Se tarefa é completada
+                        if(task.isSuccessful()){
+                            //usuario registrou corretamente
+                            finish();
+                            //inicializar cadastro de perfil
+                            startActivity(new Intent(getApplicationContext(), Main.class));
+                            //mostrar mensagem para usuario indicando sucesso
+                            Toast.makeText(Registrar_1.this, "Registrado com Sucesso.", Toast.LENGTH_SHORT).show();
+                            dialogoProgresso.dismiss();
+                        }
+                        else{
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthWeakPasswordException e) {
+                                Toast.makeText(Registrar_1.this, "A senha utilizada deve ter no mínimo 6 caracteres.", Toast.LENGTH_LONG).show();
+                                dialogoProgresso.dismiss();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(Registrar_1.this, "As credenciais utilizadas expiraram. Contate o administrador", Toast.LENGTH_LONG).show();
+                                dialogoProgresso.dismiss();
+                            } catch(FirebaseAuthUserCollisionException e) {
+                                Toast.makeText(Registrar_1.this, "O usuário escolhido já está cadastrado. Escolha outro!", Toast.LENGTH_LONG).show();
+                                dialogoProgresso.dismiss();
+                            } catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
+                        }
+                    }
+                });
 
         //Passando dados para a tela REGISTRAR 2
         Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
