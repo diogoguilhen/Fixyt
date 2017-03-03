@@ -64,9 +64,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
     // Banco de dados Firebase
     private Firebase mRef;
+
     //Emailbd
     private String emailBd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     cadastroMotorista.saveDB( Registrar_1.this );
                 }
         };
+
+
 
         /*  Na verdade morreu essa chamada devido a verificação ser feita pelo firebase.    */
      //  //atribuindo email do banco ao emailBd.
@@ -241,6 +243,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //Se tarefa é completada
                         if (task.isSuccessful()) {
+                            cadastroMotorista.setId(mRef.getKey().toString());
+                            cadastroMotorista.saveDB();
+                            mRef.setValue("email", mRef.getKey() );
                             //usuario registrou corretamente
                             finish();
                             //inicializar cadastro de perfil
@@ -269,31 +274,29 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
 
 
-        mRef.createUser(
-                cadastroMotorista.getEmail(),
-                cadastroMotorista.getSenha(),
-                new Firebase.ValueResultHandler<Map<String, Object>>() {
-                    @Override
-                    public void onSuccess(Map<String, Object> stringObjectMap) {
-                        cadastroMotorista.setId(stringObjectMap.get("uid").toString());
-                        cadastroMotorista.saveDB();
-                        mRef.unauth();
-
-                        Toast.makeText(Registrar_1.this,"Conta criada com sucesso!", Toast.LENGTH_LONG).show();
-
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(FirebaseError firebaseError) {
-                        Toast.makeText(Registrar_1.this,firebaseError.getMessage() + " ERROU FUCKER!!", Toast.LENGTH_LONG).show();
-
-                        //ESTA CAINDO AQUI PRECISO VERIFICAR OQUE PODE SER
-
-
-                    }
-                }
-        );
+    //    mRef.createUser(
+    //            cadastroMotorista.getEmail(),
+    //            cadastroMotorista.getSenha(),
+    //            new Firebase.ValueResultHandler<Map<String, Object>>() {
+    //                @Override
+    //                public void onSuccess(Map<String, Object> stringObjectMap) {
+    //                    cadastroMotorista.setId(stringObjectMap.get("uid").toString());
+    //                    cadastroMotorista.saveDB();
+    //                    mRef.unauth();
+    //                    //mRef.getAuth();<-- ja tentei e não rolou
+    //                    Toast.makeText(Registrar_1.this,"Conta criada com sucesso!", Toast.LENGTH_LONG).show();
+//
+    //                    finish();
+    //                }
+//
+    //                @Override
+    //                public void onError(FirebaseError firebaseError) {
+    //                    Toast.makeText(Registrar_1.this,firebaseError.getMessage() + " ERROU FUCKER!!", Toast.LENGTH_LONG).show();
+//
+    //                    //ESTA CAINDO AQUI PRECISO VERIFICAR OQUE PODE SER
+    //                }
+    //            }
+    //    );
 
 
         //Passando dados para a tela REGISTRAR 2
@@ -309,5 +312,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         finish();
     }
+
 }
 

@@ -73,7 +73,7 @@ public class CadastroMotorista implements Parcelable{
         }
     }
     public void saveDB( DatabaseReference.CompletionListener... completionListener ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        DatabaseReference firebase = LibraryClass.getFirebase().child("CadastroMotorisa").child( getId() );
 
         if( completionListener.length == 0 ){
             firebase.setValue(this);
@@ -84,7 +84,7 @@ public class CadastroMotorista implements Parcelable{
     }
     public void updateDB( DatabaseReference.CompletionListener... completionListener ){
 
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        DatabaseReference firebase = LibraryClass.getFirebase().child("CadastroMotorisa").child( getId() );
 
         Map<String, Object> map = new HashMap<>();
         setNameInMap(map);
@@ -104,12 +104,12 @@ public class CadastroMotorista implements Parcelable{
 
     public void removeDB( DatabaseReference.CompletionListener completionListener ){
 
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        DatabaseReference firebase = LibraryClass.getFirebase().child("CadastroMotorisa").child( getId() );
         firebase.setValue(null, completionListener);
     }
 
     public void contextDataDB( Context context ){
-        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        DatabaseReference firebase = LibraryClass.getFirebase().child("CadastroMotorisa").child( getId() );
 
         firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
     }
