@@ -1,7 +1,17 @@
 package fixyt.fixyt;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.R.attr.password;
 
 public class CadastroMotorista implements Parcelable{
 
@@ -22,6 +32,7 @@ public class CadastroMotorista implements Parcelable{
     private String cidade;
     private String pais;
     private String dataNascimento;
+    private String id;
 
     // Precisa criar um tipo de cadastro de Veiculo.
     private String veiculoTipo;
@@ -37,6 +48,73 @@ public class CadastroMotorista implements Parcelable{
     public CadastroMotorista() {
         super();
     }
+    ///INICIO CADASTROS DB
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private void setNameInMap( Map<String, Object> map ) {
+        if( this.getNome() != null ){
+            map.put( "name", getNome() );
+        }
+    }
+
+    public void setNameIfNull(String name) {
+        if( this.nome == null ){
+            this.nome = name;
+        }
+    }
+    private void setEmailInMap( Map<String, Object> map ) {
+        if( getEmail() != null ){
+            map.put( "email", getEmail() );
+        }
+    }
+    public void saveDB( DatabaseReference.CompletionListener... completionListener ){
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+
+        if( completionListener.length == 0 ){
+            firebase.setValue(this);
+        }
+        else{
+            firebase.setValue(this, completionListener[0]);
+        }
+    }
+    public void updateDB( DatabaseReference.CompletionListener... completionListener ){
+
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+
+        Map<String, Object> map = new HashMap<>();
+        setNameInMap(map);
+        setEmailInMap(map);
+
+        if( map.isEmpty() ){
+            return;
+        }
+
+        if( completionListener.length > 0 ){
+            firebase.updateChildren(map, completionListener[0]);
+        }
+        else{
+            firebase.updateChildren(map);
+        }
+    }
+
+    public void removeDB( DatabaseReference.CompletionListener completionListener ){
+
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+        firebase.setValue(null, completionListener);
+    }
+
+    public void contextDataDB( Context context ){
+        DatabaseReference firebase = LibraryClass.getFirebase().child("users").child( getId() );
+
+        firebase.addListenerForSingleValueEvent( (ValueEventListener) context );
+    }
+
+    /// FIM PARTE DE CADATRO
 
     // Utilizando objetos como parcelável
     public CadastroMotorista(Parcel parcel){
@@ -69,6 +147,8 @@ public class CadastroMotorista implements Parcelable{
         this.veiculoKilometragem=parcel.readString();
         this.veiculoCor=parcel.readString();
     }
+
+
 
     //Metodo de descrição de conteudo do Parcelable
     @Override
@@ -108,6 +188,7 @@ public class CadastroMotorista implements Parcelable{
         parcel.writeString(this.veiculoKilometragem);
         parcel.writeString(this.veiculoCor);
     }
+
 
     public static final Creator<CadastroMotorista> CREATOR=new Creator<CadastroMotorista>() {
         @Override
@@ -321,3 +402,4 @@ public class CadastroMotorista implements Parcelable{
         this.dataNascimento = dataNascimento;
     }
 }
+

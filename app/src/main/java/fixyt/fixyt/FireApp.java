@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.firebase.client.Firebase;
 
+
 /**
  * Created by Sergio on 09/11/2016.
  */
@@ -16,4 +17,7 @@ public class FireApp extends Application {
 
         Firebase.setAndroidContext(this);
     }
+
+
+
 }
