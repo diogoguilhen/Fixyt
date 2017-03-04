@@ -214,6 +214,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         dialogoProgresso.show();
 
 
+
         firebasAuth.createUserWithEmailAndPassword(cadastroMotorista.getEmail(), cadastroMotorista.getSenha())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
