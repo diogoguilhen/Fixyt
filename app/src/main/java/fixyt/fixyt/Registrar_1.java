@@ -220,9 +220,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //Se tarefa é completada
                         if (task.isSuccessful()) {
-                         //  cadastroMotorista.setId(mRef.getKey().toString());
-                         //  cadastroMotorista.saveDB();
-                         //  mRef.setValue("email", mRef.getKey() );
                             //usuario registrou corretamente
                             finish();
                             //inicializar cadastro de perfil
