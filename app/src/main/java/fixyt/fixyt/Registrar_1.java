@@ -69,8 +69,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
        // DatabaseReference ref = database.getReference("server/saving-data/fireblog");
 
 
-
-
         /*  Na verdade morreu essa chamada devido a verificação ser feita pelo firebase.    */
      //  //atribuindo email do banco ao emailBd.
      //  mRef.addValueEventListener(new ValueEventListener() {
@@ -247,13 +245,15 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
-  //     DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
+        DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
 
-  //     Map<String, CadastroMotorista> users = new HashMap<String, CadastroMotorista>() >();
+        Map<String, CadastroMotorista> users = new HashMap<String, CadastroMotorista>() >();
 
-  //     users.put("alanisawesome", new CadastroMotorista("June 23, 1912", cadastroMotorista.getEmail().toString()));
+        users.put("alanisawesome", new CadastroMotorista("June 23, 1912", cadastroMotorista.getEmail().toString()));
 
-  //     usersRef.setValue(users);
+        usersRef.setValue(users);
+
+
 
     //    mRef.createUser(
     //            cadastroMotorista.getEmail(),
