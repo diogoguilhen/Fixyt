@@ -61,34 +61,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pais"
-                    android:textSize="18dp"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="@android:color/white"/>
-
-                <Spinner
-                    android:id="@+id/spinnerPais"
-                    android:layout_width="130dp"
-                    android:layout_height="37dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:entries="@array/Paises"
-                    android:background="@android:drawable/btn_dropdown">
-
-                </Spinner>
-
-
-            </LinearLayout>
-
 
             <EditText
                 android:id="@+id/campoTelefone"

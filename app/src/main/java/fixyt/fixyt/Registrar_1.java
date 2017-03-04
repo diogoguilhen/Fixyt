@@ -33,7 +33,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private Button botaoProximo1;
     private EditText nome;
     private EditText sobrenome;
-    private EditText pais;
     private EditText telefone;
     private EditText email;
     private EditText confirmaSenha;
@@ -151,7 +150,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         cadastroMotorista = new CadastroMotorista();
         cadastroMotorista.setNome(nome.getText().toString().trim());
         cadastroMotorista.setSobrenome(sobrenome.getText().toString().trim());
-        cadastroMotorista.setPais(spinnerPais.getSelectedItem().toString().trim());
         cadastroMotorista.setTelefone(telefone.getText().toString().trim());
         cadastroMotorista.setEmail(email.getText().toString().trim());
         cadastroMotorista.setSenha(digSenha.getText().toString().trim());

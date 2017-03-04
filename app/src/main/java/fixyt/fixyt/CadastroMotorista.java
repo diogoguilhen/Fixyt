@@ -21,7 +21,6 @@ public class CadastroMotorista implements Parcelable{
     private String bairro;
     private String uf;
     private String cidade;
-    private String pais;
     private String dataNascimento;
     private String id;
 
@@ -60,7 +59,6 @@ public class CadastroMotorista implements Parcelable{
         this.bairro=parcel.readString();
         this.uf=parcel.readString();
         this.cidade=parcel.readString();
-        this.pais=parcel.readString();
         this.dataNascimento=parcel.readString();
 
         //Sobre o veiculo do motorista
@@ -101,7 +99,6 @@ public class CadastroMotorista implements Parcelable{
         parcel.writeString(this.bairro);
         parcel.writeString(this.uf);
         parcel.writeString(this.cidade);
-        parcel.writeString(this.pais);
         parcel.writeString(this.dataNascimento);
 
         //Sobre o veiculo do motorista
@@ -239,14 +236,6 @@ public class CadastroMotorista implements Parcelable{
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getVeiculoTipo() {
