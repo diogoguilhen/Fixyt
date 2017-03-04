@@ -2,30 +2,18 @@ package fixyt.fixyt;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,14 +22,13 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class Registrar_1 extends AppCompatActivity implements View.OnClickListener,DatabaseReference.CompletionListener{
+public class Registrar_1 extends AppCompatActivity implements View.OnClickListener{
 
     private Button botaoProximo1;
     private EditText nome;
@@ -78,19 +65,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         //Inicializando Base
         mRef = new Firebase("https://fixyt-20066.firebaseio.com/");
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        // final FirebaseDatabase database = FirebaseDatabase.getInstance();
+       // DatabaseReference ref = database.getReference("server/saving-data/fireblog");
 
-                    if( firebaseUser == null || cadastroMotorista.getId() != null ){
-                        return;
-                    }
-
-                    cadastroMotorista.setId( firebaseUser.getUid() );
-                    cadastroMotorista.saveDB( Registrar_1.this );
-                }
-        };
 
 
 
@@ -243,9 +220,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //Se tarefa é completada
                         if (task.isSuccessful()) {
-                            cadastroMotorista.setId(mRef.getKey().toString());
-                            cadastroMotorista.saveDB();
-                            mRef.setValue("email", mRef.getKey() );
+                         //  cadastroMotorista.setId(mRef.getKey().toString());
+                         //  cadastroMotorista.saveDB();
+                         //  mRef.setValue("email", mRef.getKey() );
                             //usuario registrou corretamente
                             finish();
                             //inicializar cadastro de perfil
@@ -272,7 +249,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
+  //     DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
 
+  //     Map<String, CadastroMotorista> users = new HashMap<String, CadastroMotorista>() >();
+
+  //     users.put("alanisawesome", new CadastroMotorista("June 23, 1912", cadastroMotorista.getEmail().toString()));
+
+  //     usersRef.setValue(users);
 
     //    mRef.createUser(
     //            cadastroMotorista.getEmail(),
@@ -305,13 +288,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         startActivity(intentReg1);
         dialogoProgresso.dismiss();
     }
-    @Override
-    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-        Toast.makeText(Registrar_1.this, "Conta criada com sucesso!" , Toast.LENGTH_LONG).show();
-
-        finish();
-    }
 
 }
 
