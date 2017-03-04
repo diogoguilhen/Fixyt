@@ -46,7 +46,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
 
     private ProgressDialog dialogoProgresso;
 
-    private static final String TAG = "Registrar_3";
+
 
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
@@ -157,38 +157,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                 renavamVeiculo + " " + kmVeiculo + " " + corVeiculo);
         dialogoProgresso.show();
 
-        /*firebasAuth.createUserWithEmailAndPassword(cadastroMotorista.getEmail(),cadastroMotorista.getSenha())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Se tarefa é completada
-                        if(task.isSuccessful()){
-                            //usuario registrou corretamente
-                            finish();
-                            //inicializar cadastro de perfil
-                            startActivity(new Intent(getApplicationContext(), Main.class));
-                            //mostrar mensagem para usuario indicando sucesso
-                            Toast.makeText(Registrar_3.this, "Registrado com Sucesso.", Toast.LENGTH_SHORT).show();
-                            dialogoProgresso.dismiss();
-                        }
-                        else{
-                            try {
-                                throw task.getException();
-                            } catch(FirebaseAuthWeakPasswordException e) {
-                                Toast.makeText(Registrar_3.this, "A senha utilizada deve ter no mínimo 6 caracteres.", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(FirebaseAuthInvalidCredentialsException e) {
-                                Toast.makeText(Registrar_3.this, "As credenciais utilizadas expiraram. Contate o administrador", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(FirebaseAuthUserCollisionException e) {
-                                Toast.makeText(Registrar_3.this, "O usuário escolhido já está cadastrado. Escolha outro!", Toast.LENGTH_LONG).show();
-                                dialogoProgresso.dismiss();
-                            } catch(Exception e) {
-                                Log.e(TAG, e.getMessage());
-                            }
-                        }
-                    }
-                });*/
+
     }
 
 }

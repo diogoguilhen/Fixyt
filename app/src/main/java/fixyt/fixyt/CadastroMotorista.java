@@ -3,6 +3,7 @@ package fixyt.fixyt;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 public class CadastroMotorista implements Parcelable{
 
     // Tipo String
@@ -22,6 +23,7 @@ public class CadastroMotorista implements Parcelable{
     private String cidade;
     private String pais;
     private String dataNascimento;
+    private String id;
 
     // Precisa criar um tipo de cadastro de Veiculo.
     private String veiculoTipo;
@@ -37,6 +39,9 @@ public class CadastroMotorista implements Parcelable{
     public CadastroMotorista() {
         super();
     }
+
+
+
 
     // Utilizando objetos como parcelável
     public CadastroMotorista(Parcel parcel){
@@ -69,6 +74,8 @@ public class CadastroMotorista implements Parcelable{
         this.veiculoKilometragem=parcel.readString();
         this.veiculoCor=parcel.readString();
     }
+
+
 
     //Metodo de descrição de conteudo do Parcelable
     @Override
@@ -108,6 +115,7 @@ public class CadastroMotorista implements Parcelable{
         parcel.writeString(this.veiculoKilometragem);
         parcel.writeString(this.veiculoCor);
     }
+
 
     public static final Creator<CadastroMotorista> CREATOR=new Creator<CadastroMotorista>() {
         @Override
@@ -321,3 +329,4 @@ public class CadastroMotorista implements Parcelable{
         this.dataNascimento = dataNascimento;
     }
 }
+

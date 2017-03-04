@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     // Declarar API Firabase Auth
     private FirebaseAuth firebasAuth;
 
-
+// FIREBASE ********************************* //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -38,16 +38,6 @@
         android:layout_centerHorizontal="true" />
 
 
-
-    <Button
-        android:id="@+id/botProximo2"
-        android:text="Próximo"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_centerHorizontal="true" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -290,5 +280,13 @@
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/botProximo2"
+        android:text="Próximo"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

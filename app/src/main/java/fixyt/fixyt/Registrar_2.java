@@ -169,7 +169,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         //Verificação de CPF válido pelo frontend para posteriormente verificar na Receita a existencia do CPF.
         if (ValidaCPF.isCPF(CPF)) {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Validado!", Toast.LENGTH_SHORT).show();
-            //System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
+            System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
         }
         else {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
