@@ -55,19 +55,20 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:text="Pedir Ajuda"
+        android:id="@+id/botaoAuxilio"
+        android:text="Pedir Auxilio"
         android:elevation="0dp"
-        android:layout_marginTop="183dp"
         android:layout_below="@+id/BotaoCarro"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="168dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scheduleService"
+        android:id="@+id/botaoAgendar"
         android:text="Agendar Serviço"
-        android:layout_below="@+id/button4"
+        android:layout_below="@+id/botaoAuxilio"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
