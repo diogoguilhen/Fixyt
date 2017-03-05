@@ -34,6 +34,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class Registrar_2 extends AppCompatActivity implements View.OnClickListener  {
 
@@ -170,6 +171,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         if (ValidaCPF.isCPF(CPF)) {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Validado!", Toast.LENGTH_SHORT).show();
             System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
+
         }
         else {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
@@ -213,7 +215,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         }
 
         //Passando dados para a tela REGISTRAR 3
-        Intent intentReg2 = new Intent(Registrar_2.this, Registrar_3.class);
+        Intent intentReg2 = new Intent(Registrar_2.this, Perfil.class);
         intentReg2.putExtra("cadastro", cadastroMotorista);
         startActivity(intentReg2);
         dialogoProgresso.dismiss();

@@ -179,12 +179,16 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                         );
         //DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
      //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
-        criacao.child(criacao.push().getKey()).setValue(user);
+        criacao.child(criacao.push().toString()).setValue(user);
 
 
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
             dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
             dialogoProgresso.show();
+
+        Intent intentMain = new Intent(Registrar_3.this, Perfil.class);
+
+        startActivity(intentMain);
 
     //    dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
     //            + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + cadastroMotorista.getCpf() + " " + cadastroMotorista.getRg() + " " + cadastroMotorista.getDataNascimento() + " " +
