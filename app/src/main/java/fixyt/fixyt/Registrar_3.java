@@ -166,7 +166,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getUf(),
                                                             cadastroMotorista.getCidade(),
                                                             cadastroMotorista.getDataNascimento(),
-                                                            criacao.push().toString(),
+                                                            //criacao.push().toString(),
                                                             cadastroMotorista.getVeiculoTipo(),
                                                             cadastroMotorista.getVeiculoMarca(),
                                                             cadastroMotorista.getVeiculoModelo(),
@@ -179,7 +179,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                         );
         //DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
      //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
-        criacao.child("motorista").setValue(user);
+        criacao.child(criacao.push().getKey().toString()).setValue(user);
 
 
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
