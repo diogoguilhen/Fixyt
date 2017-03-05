@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,16 +148,50 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-        // Após validar que cadastro está OK um dialogo de progresso é mostrada
-        /*dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
-        dialogoProgresso.show();*/
 
-        dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
-                + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + cadastroMotorista.getCpf() + " " + cadastroMotorista.getRg() + " " + cadastroMotorista.getDataNascimento() + " " +
-                cadastroMotorista.getSexo() + " " + cadastroMotorista.getTpLogradouro() + " " + cadastroMotorista.getEndereco() + " " + cadastroMotorista.getCep() + " " + cadastroMotorista.getBairro() + " " + cadastroMotorista.getUf() + " " + cadastroMotorista.getCidade() +
-                " Tela 3: " + tipoVeiculo + " " + marcaVeiculo + " " + modeloVeiculo + " " + anoFabVeiculo + " " + anoModVeiculo + " " + placaVeiculo + " " +
-                renavamVeiculo + " " + kmVeiculo + " " + corVeiculo);
-        dialogoProgresso.show();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference criacao = database.getReference("Motorista");
+        CadastroMotorista user = new CadastroMotorista(     cadastroMotorista.getNome(),
+                                                            cadastroMotorista.getSobrenome(),
+                                                            cadastroMotorista.getTelefone(),
+                                                            cadastroMotorista.getEmail(),
+                                                            cadastroMotorista.getSenha(),
+                                                            cadastroMotorista.getCpf(),
+                                                            cadastroMotorista.getRg(),
+                                                            cadastroMotorista.getSexo(),
+                                                            cadastroMotorista.getTpLogradouro(),
+                                                            cadastroMotorista.getEndereco(),
+                                                            cadastroMotorista.getCep(),
+                                                            cadastroMotorista.getBairro(),
+                                                            cadastroMotorista.getUf(),
+                                                            cadastroMotorista.getCidade(),
+                                                            cadastroMotorista.getDataNascimento(),
+                                                            //cadastroMotorista.getid ??
+                                                            cadastroMotorista.getVeiculoTipo(),
+                                                            cadastroMotorista.getVeiculoMarca(),
+                                                            cadastroMotorista.getVeiculoModelo(),
+                                                            cadastroMotorista.getVeiculoAnoFabricacao(),
+                                                            cadastroMotorista.getVeiculoAnoModelo(),
+                                                            cadastroMotorista.getVeiculoPlaca(),
+                                                            cadastroMotorista.getVeiculoRenavam(),
+                                                            cadastroMotorista.getVeiculoKilometragem(),
+                                                            cadastroMotorista.getVeiculoCor()
+                                                        );
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
+        raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
+        criacao.child(criacao.push().getKey()).setValue(user);
+
+
+        // Após validar que cadastro está OK um dialogo de progresso é mostrada
+            dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
+            dialogoProgresso.show();
+
+    //    dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
+    //            + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + cadastroMotorista.getCpf() + " " + cadastroMotorista.getRg() + " " + cadastroMotorista.getDataNascimento() + " " +
+    //            cadastroMotorista.getSexo() + " " + cadastroMotorista.getTpLogradouro() + " " + cadastroMotorista.getEndereco() + " " + cadastroMotorista.getCep() + " " + cadastroMotorista.getBairro() + " " + cadastroMotorista.getUf() + " " + cadastroMotorista.getCidade() +
+    //            " Tela 3: " + tipoVeiculo + " " + marcaVeiculo + " " + modeloVeiculo + " " + anoFabVeiculo + " " + anoModVeiculo + " " + placaVeiculo + " " +
+    //            renavamVeiculo + " " + kmVeiculo + " " + corVeiculo);
+    //    dialogoProgresso.show();
 
 
     }

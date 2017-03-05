@@ -238,16 +238,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
-       FirebaseDatabase database = FirebaseDatabase.getInstance();
-       DatabaseReference criacao = database.getReference("Motorista");
-      CadastroMotorista user = new CadastroMotorista(  cadastroMotorista.getNome(),
-                                                         cadastroMotorista.getSobrenome() ,
-                                                         cadastroMotorista.getTelefone() ,
-                                                         cadastroMotorista.getEmail() ,
-                                                         cadastroMotorista.getSenha() );
-        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
-        raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
-        criacao.child(criacao.push().getKey()).setValue(user);
+
 
         //Passando dados para a tela REGISTRAR 2
         Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);

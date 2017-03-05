@@ -39,13 +39,36 @@ public class CadastroMotorista implements Parcelable{
         super();
     }
 //craido o construtor para que seja enviado para o databse.
-    public CadastroMotorista(String nome, String sobrenome, String telefone, String email, String senha) {
+
+
+    public CadastroMotorista(String nome, String sobrenome, String telefone, String email, String senha, String cpf, String rg, String sexo, String tpLogradouro, String endereco, String cep, String bairro, String uf, String cidade, String dataNascimento, /*String id,*/ String veiculoTipo, String veiculoMarca, String veiculoModelo, String veiculoAnoFabricacao, String veiculoAnoModelo, String veiculoPlaca, String veiculoRenavam, String veiculoKilometragem, String veiculoCor) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
         this.email = email;
         this.senha = senha;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.sexo = sexo;
+        this.tpLogradouro = tpLogradouro;
+        this.endereco = endereco;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.uf = uf;
+        this.cidade = cidade;
+        this.dataNascimento = dataNascimento;
+        //this.id = id;
+        this.veiculoTipo = veiculoTipo;
+        this.veiculoMarca = veiculoMarca;
+        this.veiculoModelo = veiculoModelo;
+        this.veiculoAnoFabricacao = veiculoAnoFabricacao;
+        this.veiculoAnoModelo = veiculoAnoModelo;
+        this.veiculoPlaca = veiculoPlaca;
+        this.veiculoRenavam = veiculoRenavam;
+        this.veiculoKilometragem = veiculoKilometragem;
+        this.veiculoCor = veiculoCor;
     }
+
 
     // Utilizando objetos como parcelável
     public CadastroMotorista(Parcel parcel){
