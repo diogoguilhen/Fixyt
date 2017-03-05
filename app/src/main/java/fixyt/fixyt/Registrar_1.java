@@ -250,7 +250,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         //      Rock.setValue(e);
         //  }
 
-
         //    mRef.createUser(
     //            cadastroMotorista.getEmail(),
     //            cadastroMotorista.getSenha(),
