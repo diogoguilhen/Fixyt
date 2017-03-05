@@ -90,12 +90,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
         dialogoProgresso = new ProgressDialog(this);
 
-        //Implementação do Spinner de Pais
-        spinnerPais = (Spinner) findViewById(R.id.spinnerPais);
-        adaptador = ArrayAdapter.createFromResource(this, R.array.Paises, android.R.layout.simple_spinner_item);
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPais.setAdapter(adaptador);
-
         botaoProximo1 = (Button) findViewById(R.id.botaoProximo1);
         nome = (EditText) findViewById(R.id.campoNome);
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
@@ -243,13 +237,13 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
-        DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
+    /*    DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
 
         Map<String, CadastroMotorista> users = new HashMap<String, CadastroMotorista>() >();
 
         users.put("alanisawesome", new CadastroMotorista("June 23, 1912", cadastroMotorista.getEmail().toString()));
 
-        usersRef.setValue(users);
+        usersRef.setValue(users);*/
 
 
 

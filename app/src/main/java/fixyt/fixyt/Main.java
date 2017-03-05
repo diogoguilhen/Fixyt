@@ -30,7 +30,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         logOut = (Button) findViewById(R.id.botaoLogout);
         perfilUser = (Button) findViewById(R.id.botaoPerfil);
-        agendarServico = (Button) findViewById(R.id.scheduleService);
+        agendarServico = (Button) findViewById(R.id.botaoAgendar);
 
         logOut.setOnClickListener(this);
         perfilUser.setOnClickListener(this);

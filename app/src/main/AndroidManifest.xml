@@ -23,7 +23,7 @@
         <activity android:name=".Registrar_3" />
         <activity android:name=".Schedule" />
         <activity android:name=".Perfil" />
-        <activity android:name=".Auxilio" />
+
         <activity android:name=".Main"/>
 
     </application>

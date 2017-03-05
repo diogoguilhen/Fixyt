@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Auxilio extends AppCompatActivity implements View.OnClickListener{
+public class Auxilio extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
@@ -28,4 +28,5 @@ public class Auxilio extends AppCompatActivity implements View.OnClickListener{
 
         // Escrever aqui
     }
+}
 

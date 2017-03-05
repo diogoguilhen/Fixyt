@@ -6,12 +6,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string-array name="Paises">
-        <item>Brasil</item>
-        <item>Argentina</item>
-        <item>Peru</item>
-        <item>Bolivia</item>
-    </string-array>
     <string-array name="Estados">
         <item>AC</item>
         <item>AL</item>
