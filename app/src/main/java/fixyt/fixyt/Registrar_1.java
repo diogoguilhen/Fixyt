@@ -242,7 +242,6 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         DatabaseReference Rock = database.getReference("Rock");
         Rock.setValue("chupa Sergio" + Rock.push().getDatabase().getApp());
 
-
         //  myRef.setValue("Hello, World!");
         //  try {
         //      Rock.setValue(authData.getUid().toString());
