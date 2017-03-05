@@ -95,6 +95,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         sobrenome = (EditText) findViewById(R.id.campoSobrenome);
         telefone = (EditText) findViewById(R.id.campoTelefone);
         email = (EditText) findViewById(R.id.campoEmail);
+
         /*
         VERIFICAÇÃO DE EMAIL "ONLINE" DESATIVADA, PORQUE O FIREBASE IRA TRATAR ISSO QUANDO DER OK!
         email.addTextChangedListener(new TextWatcher() {
@@ -237,47 +238,16 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-       // FirebaseUser user = firebasAuth.getInstance().getCurrentUser();
-        DatabaseReference Rock = database.getReference("Rock");
-        Rock.setValue("chupa Sergio" + Rock.push().getKey());
-
-
-
-        //  myRef.setValue("Hello, World!");
-        //  try {
-        //      Rock.setValue(authData.getUid().toString());
-//
-        //  }catch (FirebaseException e) {
-        //      Rock.setValue(e);
-        //  }
-
-
-
-        //    mRef.createUser(
-    //            cadastroMotorista.getEmail(),
-    //            cadastroMotorista.getSenha(),
-    //            new Firebase.ValueResultHandler<Map<String, Object>>() {
-    //                @Override
-    //                public void onSuccess(Map<String, Object> stringObjectMap) {
-    //                    cadastroMotorista.setId(stringObjectMap.get("uid").toString());
-    //                    cadastroMotorista.saveDB();
-    //                    mRef.unauth();
-    //                    //mRef.getAuth();<-- ja tentei e não rolou
-    //                    Toast.makeText(Registrar_1.this,"Conta criada com sucesso!", Toast.LENGTH_LONG).show();
-//
-    //                    finish();
-    //                }
-//
-    //                @Override
-    //                public void onError(FirebaseError firebaseError) {
-    //                    Toast.makeText(Registrar_1.this,firebaseError.getMessage() + " ERROU FUCKER!!", Toast.LENGTH_LONG).show();
-//
-    //                    //ESTA CAINDO AQUI PRECISO VERIFICAR OQUE PODE SER
-    //                }
-    //            }
-    //    );
-
+       FirebaseDatabase database = FirebaseDatabase.getInstance();
+       DatabaseReference criacao = database.getReference("Motorista");
+      CadastroMotorista user = new CadastroMotorista(  cadastroMotorista.getNome(),
+                                                         cadastroMotorista.getSobrenome() ,
+                                                         cadastroMotorista.getTelefone() ,
+                                                         cadastroMotorista.getEmail() ,
+                                                         cadastroMotorista.getSenha() );
+        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
+        raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
+        criacao.child(criacao.push().getKey()).setValue(user);
 
         //Passando dados para a tela REGISTRAR 2
         Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);

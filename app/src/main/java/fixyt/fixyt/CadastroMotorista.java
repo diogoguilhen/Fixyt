@@ -38,9 +38,14 @@ public class CadastroMotorista implements Parcelable{
     public CadastroMotorista() {
         super();
     }
-
-
-
+//craido o construtor para que seja enviado para o databse.
+    public CadastroMotorista(String nome, String sobrenome, String telefone, String email, String senha) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+    }
 
     // Utilizando objetos como parcelável
     public CadastroMotorista(Parcel parcel){
