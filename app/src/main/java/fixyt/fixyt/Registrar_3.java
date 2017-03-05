@@ -177,8 +177,8 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getVeiculoKilometragem(),
                                                             cadastroMotorista.getVeiculoCor()
                                                         );
-        DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
-        raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
+        //DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
+     //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
         criacao.child(criacao.push().getKey()).setValue(user);
 
 
