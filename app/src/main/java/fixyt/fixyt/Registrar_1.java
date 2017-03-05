@@ -240,7 +240,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         FirebaseDatabase database = FirebaseDatabase.getInstance();
        // FirebaseUser user = firebasAuth.getInstance().getCurrentUser();
         DatabaseReference Rock = database.getReference("Rock");
-        Rock.setValue("chupa Sergio" + Rock.push().getDatabase().getApp());
+        Rock.setValue("chupa Sergio" + Rock.push().getKey());
+
+
 
         //  myRef.setValue("Hello, World!");
         //  try {
@@ -249,6 +251,8 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         //  }catch (FirebaseException e) {
         //      Rock.setValue(e);
         //  }
+
+
 
         //    mRef.createUser(
     //            cadastroMotorista.getEmail(),
