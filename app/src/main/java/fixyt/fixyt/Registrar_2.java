@@ -215,7 +215,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         }
 
         //Passando dados para a tela REGISTRAR 3
-        Intent intentReg2 = new Intent(Registrar_2.this, Perfil.class);
+        Intent intentReg2 = new Intent(Registrar_2.this, Registrar_3.class);
         intentReg2.putExtra("cadastro", cadastroMotorista);
         startActivity(intentReg2);
         dialogoProgresso.dismiss();

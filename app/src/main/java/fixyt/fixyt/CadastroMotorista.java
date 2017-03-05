@@ -41,7 +41,7 @@ public class CadastroMotorista implements Parcelable{
 //craido o construtor para que seja enviado para o databse.
 
 
-    public CadastroMotorista(String nome, String sobrenome, String telefone, String email, String senha, String cpf, String rg, String sexo, String tpLogradouro, String endereco, String cep, String bairro, String uf, String cidade, String dataNascimento, /*String id,*/ String veiculoTipo, String veiculoMarca, String veiculoModelo, String veiculoAnoFabricacao, String veiculoAnoModelo, String veiculoPlaca, String veiculoRenavam, String veiculoKilometragem, String veiculoCor) {
+    public CadastroMotorista(String nome, String sobrenome, String telefone, String email, String senha, String cpf, String rg, String sexo, String tpLogradouro, String endereco, String cep, String bairro, String uf, String cidade, String dataNascimento, String id, String veiculoTipo, String veiculoMarca, String veiculoModelo, String veiculoAnoFabricacao, String veiculoAnoModelo, String veiculoPlaca, String veiculoRenavam, String veiculoKilometragem, String veiculoCor) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
@@ -57,7 +57,7 @@ public class CadastroMotorista implements Parcelable{
         this.uf = uf;
         this.cidade = cidade;
         this.dataNascimento = dataNascimento;
-        //this.id = id;
+        this.id = id;
         this.veiculoTipo = veiculoTipo;
         this.veiculoMarca = veiculoMarca;
         this.veiculoModelo = veiculoModelo;
