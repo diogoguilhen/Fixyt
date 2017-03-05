@@ -237,17 +237,22 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     }
                 });
 
-    /*    DatabaseReference  usersRef  = mRef.child("CadastroMotorista");
-
-        Map<String, CadastroMotorista> users = new HashMap<String, CadastroMotorista>() >();
-
-        users.put("alanisawesome", new CadastroMotorista("June 23, 1912", cadastroMotorista.getEmail().toString()));
-
-        usersRef.setValue(users);*/
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       // FirebaseUser user = firebasAuth.getInstance().getCurrentUser();
+        DatabaseReference Rock = database.getReference("Rock");
+        Rock.setValue("chupa Sergio" + Rock.push().getDatabase().getApp());
 
 
+        //  myRef.setValue("Hello, World!");
+        //  try {
+        //      Rock.setValue(authData.getUid().toString());
+//
+        //  }catch (FirebaseException e) {
+        //      Rock.setValue(e);
+        //  }
 
-    //    mRef.createUser(
+
+        //    mRef.createUser(
     //            cadastroMotorista.getEmail(),
     //            cadastroMotorista.getSenha(),
     //            new Firebase.ValueResultHandler<Map<String, Object>>() {
