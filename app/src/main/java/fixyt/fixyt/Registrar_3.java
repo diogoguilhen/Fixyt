@@ -58,14 +58,14 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_3);
 
-        //Chamando FIrebase Auth
-        firebasAuth = FirebaseAuth.getInstance();
-        if(firebasAuth.getCurrentUser() != null){
-            //ir para tela main ou perfil
-            finish();
-            //inicializar tela principal
-            startActivity(new Intent(getApplicationContext(), Main.class));
-        }
+    //  //Chamando FIrebase Auth
+      firebasAuth = FirebaseAuth.getInstance();
+    //  if(firebasAuth.getCurrentUser() != null){
+    //      //ir para tela main ou perfil
+    //      finish();
+    //      //inicializar tela principal
+    //      startActivity(new Intent(getApplicationContext(), Main.class));
+    //  }
 
         dialogoProgresso = new ProgressDialog(this);
 
@@ -148,7 +148,6 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference criacao = database.getReference("Motorista");
         CadastroMotorista user = new CadastroMotorista(     cadastroMotorista.getNome(),
@@ -166,7 +165,6 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getUf(),
                                                             cadastroMotorista.getCidade(),
                                                             cadastroMotorista.getDataNascimento(),
-                                                            //criacao.push().toString(),
                                                             cadastroMotorista.getVeiculoTipo(),
                                                             cadastroMotorista.getVeiculoMarca(),
                                                             cadastroMotorista.getVeiculoModelo(),
@@ -181,8 +179,10 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
      //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
 
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //String key = firebaseAuth.getCurrentUser().getUid();
 
-        criacao.child("Motorista").child(key).setValue(user);
+
+        criacao.child(key).setValue(user);
 
         //raiz.child("usuarios").child(key).setValue(user);
 

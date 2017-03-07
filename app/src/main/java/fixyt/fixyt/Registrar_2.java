@@ -64,13 +64,13 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_registrar_2);
 
         //Chamando FIrebase Auth
-        firebasAuth = FirebaseAuth.getInstance();
-        if(firebasAuth.getCurrentUser() != null){
-            //ir para tela main ou perfil
-            finish();
-            //inicializar tela principal
-            startActivity(new Intent(getApplicationContext(), Main.class));
-        }
+    //   firebasAuth = FirebaseAuth.getInstance();
+    //   if(firebasAuth.getCurrentUser() != null){
+    //       //ir para tela main ou perfil
+    //       finish();
+    //       //inicializar tela principal
+    //       startActivity(new Intent(getApplicationContext(), Main.class));
+    //   }
 
         dialogoProgresso = new ProgressDialog(this);
 
