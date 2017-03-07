@@ -147,6 +147,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
+// PARTE ONDE SALVA OS DADOS DO CLIENTE
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference criacao = database.getReference("Motorista");
@@ -175,16 +176,14 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getVeiculoKilometragem(),
                                                             cadastroMotorista.getVeiculoCor()
                                                         );
-        //DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
-     //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
 
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //String key = firebaseAuth.getCurrentUser().getUid();
+
 
 
         criacao.child(key).setValue(user);
 
-        //raiz.child("usuarios").child(key).setValue(user);
+
 
 
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
@@ -195,12 +194,6 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
         dialogoProgresso.dismiss();
         startActivity(intentMain);
 
-    //    dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "
-    //            + cadastroMotorista.getEmail() + " " + cadastroMotorista.getSenha() + " Tela 2: " + cadastroMotorista.getCpf() + " " + cadastroMotorista.getRg() + " " + cadastroMotorista.getDataNascimento() + " " +
-    //            cadastroMotorista.getSexo() + " " + cadastroMotorista.getTpLogradouro() + " " + cadastroMotorista.getEndereco() + " " + cadastroMotorista.getCep() + " " + cadastroMotorista.getBairro() + " " + cadastroMotorista.getUf() + " " + cadastroMotorista.getCidade() +
-    //            " Tela 3: " + tipoVeiculo + " " + marcaVeiculo + " " + modeloVeiculo + " " + anoFabVeiculo + " " + anoModVeiculo + " " + placaVeiculo + " " +
-    //            renavamVeiculo + " " + kmVeiculo + " " + corVeiculo);
-    //    dialogoProgresso.show();
 
 
     }
