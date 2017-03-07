@@ -48,6 +48,9 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private FirebaseAuth firebasAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    //FIREBASE STORAGE
+    //StorageReference storageRef = storage.getReferenceFromUrl("gs://fixyt-20066.appspot.com");
+
     // Banco de dados Firebase
     private Firebase mRef;
 
@@ -213,6 +216,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                         //Se tarefa é completada
                         if (task.isSuccessful()) {
                             //usuario registrou corretamente
+
                             finish();
                             //inicializar cadastro de perfil
                             startActivity(new Intent(getApplicationContext(), Main.class));

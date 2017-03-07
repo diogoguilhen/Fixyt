@@ -118,7 +118,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
     private void registrar3(){
 
         //Recebendo cadastro da tela Registrar_2
-        CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getParcelableExtra("cadastro");
+        CadastroMotorista cadastroMotorista= getIntent().getParcelableExtra("cadastro");
 
         //Apropriando os valores aos campos seguintes.
         cadastroMotorista.setVeiculoTipo(campoTpVeiculo.getSelectedItem().toString().trim());
@@ -179,7 +179,12 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                         );
         //DatabaseReference raiz = FirebaseDatabase.getInstance().getReference(); //Esta variavel indica a raiz da nossa árvore JSON
      //   raiz.child("usuarios/2").setValue(user);//Colocar o usuario com o id 2
-        criacao.child(criacao.push().getKey().toString()).setValue(user);
+
+        String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        criacao.child("Motorista").child(key).setValue(user);
+
+        //raiz.child("usuarios").child(key).setValue(user);
 
 
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
@@ -187,7 +192,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             dialogoProgresso.show();
 
         Intent intentMain = new Intent(Registrar_3.this, Perfil.class);
-
+        dialogoProgresso.dismiss();
         startActivity(intentMain);
 
     //    dialogoProgresso.setMessage("Tela 1: " +  cadastroMotorista.getNome() + " " + cadastroMotorista.getSobrenome() + " " + cadastroMotorista.getTelefone() + " "

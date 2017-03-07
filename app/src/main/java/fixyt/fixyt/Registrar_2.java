@@ -134,7 +134,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
     private void registrar2() {
 
         //Recebendo cadastro da tela Registrar_1
-        CadastroMotorista cadastroMotorista=(CadastroMotorista)getIntent().getParcelableExtra("cadastro");
+        CadastroMotorista cadastroMotorista= getIntent().getParcelableExtra("cadastro");
 
         //Apropriando os valores aos campos seguintes.
         cadastroMotorista.setCpf(campoCpf.getText().toString().trim());
@@ -171,7 +171,6 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         if (ValidaCPF.isCPF(CPF)) {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Validado!", Toast.LENGTH_SHORT).show();
             System.out.printf("%s\n", ValidaCPF.imprimeCPF(CPF));
-
         }
         else {
             Toast.makeText(this, "CPF " + ValidaCPF.imprimeCPF(CPF) + " Invalido! Digite um CPF valido!", Toast.LENGTH_SHORT).show();
