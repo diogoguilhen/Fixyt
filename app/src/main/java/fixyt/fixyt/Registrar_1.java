@@ -67,6 +67,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
         //Inicializando Base
         mRef = new Firebase("https://fixyt-20066.firebaseio.com/");
 
+
         // final FirebaseDatabase database = FirebaseDatabase.getInstance();
        // DatabaseReference ref = database.getReference("server/saving-data/fireblog");
 

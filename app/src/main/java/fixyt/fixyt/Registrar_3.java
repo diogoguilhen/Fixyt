@@ -150,7 +150,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
 // PARTE ONDE SALVA OS DADOS DO CLIENTE
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference criacao = database.getReference("Motorista");
+        DatabaseReference criacaoMotorista = database.getReference("Motorista");
         CadastroMotorista user = new CadastroMotorista(     cadastroMotorista.getNome(),
                                                             cadastroMotorista.getSobrenome(),
                                                             cadastroMotorista.getTelefone(),
@@ -165,7 +165,13 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getBairro(),
                                                             cadastroMotorista.getUf(),
                                                             cadastroMotorista.getCidade(),
-                                                            cadastroMotorista.getDataNascimento(),
+                                                            cadastroMotorista.getDataNascimento()
+                                                        );
+
+        String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        criacaoMotorista.child(key).setValue(user);
+
+        CadastroMotorista VeiculoMotorista = new CadastroMotorista(
                                                             cadastroMotorista.getVeiculoTipo(),
                                                             cadastroMotorista.getVeiculoMarca(),
                                                             cadastroMotorista.getVeiculoModelo(),
@@ -174,15 +180,11 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getVeiculoPlaca(),
                                                             cadastroMotorista.getVeiculoRenavam(),
                                                             cadastroMotorista.getVeiculoKilometragem(),
-                                                            cadastroMotorista.getVeiculoCor()
-                                                        );
-
-        String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                                            cadastroMotorista.getVeiculoCor());
 
 
 
-        criacao.child(key).setValue(user);
-
+        criacaoMotorista.child(key).child("Veiculos").child(criacaoMotorista.push().getKey()).setValue(VeiculoMotorista);
 
 
 
@@ -190,7 +192,7 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
             dialogoProgresso.show();
 
-        Intent intentMain = new Intent(Registrar_3.this, Perfil.class);
+        Intent intentMain = new Intent(Registrar_3.this, Main.class);
         dialogoProgresso.dismiss();
         startActivity(intentMain);
 
