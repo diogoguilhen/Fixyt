@@ -63,6 +63,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fragmentAllowEnterTransitionOverlap="@id/map"
+        android:fragmentAllowReturnTransitionOverlap="@id/map"
+        android:fragmentEnterTransition="@id/map"
+        android:fragmentExitTransition="@id/map"
+        android:fragmentReenterTransition="@id/map"
+        android:fragmentReturnTransition="@id/map"
+        android:fragmentSharedElementEnterTransition="@id/map"
+        android:fragmentSharedElementReturnTransition="@id/map"
+        tools:context="fixyt.fixyt.Schedule"
+        android:layout_below="@+id/tipoAgendamento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,17 +125,18 @@
         android:entries="@array/KitsAgendamento"
         android:background="@android:drawable/btn_dropdown"
         android:layout_below="@+id/pacRevisao"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/botFinalizarAgendamento"
         android:text="Finalizar"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/tipoAgendamento"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/eHora"
+        android:layout_alignLeft="@+id/botaoPerfil"
+        android:layout_alignStart="@+id/botaoPerfil" />
 
 
 </RelativeLayout>

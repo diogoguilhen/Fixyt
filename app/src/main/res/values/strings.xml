@@ -36,8 +36,8 @@
     </string-array>
 
     <string-array name="Sexo">
-    <item>Masculino</item>
-    <item>Femenino</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
     </string-array>
 
     <string-array name="TipoLogradouro">
@@ -133,6 +133,7 @@
         <item>Oleo e filtro de Motor, Ar e Combustível</item>
         <item>Rodízio de Pneus</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

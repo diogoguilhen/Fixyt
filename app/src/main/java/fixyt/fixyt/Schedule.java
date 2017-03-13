@@ -16,9 +16,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Schedule extends AppCompatActivity implements View.OnClickListener{
+public class Schedule extends AppCompatActivity implements View.OnClickListener,OnMapReadyCallback {
 
     private FirebaseAuth firebaseAuth;
     private Button logOut;
@@ -31,6 +37,8 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
     private int ano,mes,dia,hora,minuto;
     private Spinner menuTipoAgendamento;
     private ArrayAdapter adaptadorTipoAgendamento;
+    private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,15 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
         logOut = (Button) findViewById(R.id.botaoLogout);
         perfilUser = (Button) findViewById(R.id.botaoPerfil);
         finalizarAgendamento = (Button) findViewById(R.id.botFinalizarAgendamento);
+
+        /// maps
+        //setContentView(R.layout.activity_maps);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        /// fim maps
+
 
         logOut.setOnClickListener(this);
         perfilUser.setOnClickListener(this);
@@ -117,6 +134,13 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
 
         }
 
+    }
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
