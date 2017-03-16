@@ -147,29 +147,21 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
+
+
+
+
+        // Após validar que cadastro está OK um dialogo de progresso é mostrada
+        dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
+        dialogoProgresso.show();
+
+
 // PARTE ONDE SALVA OS DADOS DO CLIENTE
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference criacaoMotorista = database.getReference("Motorista");
-        CadastroMotorista user = new CadastroMotorista(     cadastroMotorista.getNome(),
-                                                            cadastroMotorista.getSobrenome(),
-                                                            cadastroMotorista.getTelefone(),
-                                                            cadastroMotorista.getEmail(),
-                                                            cadastroMotorista.getSenha(),
-                                                            cadastroMotorista.getCpf(),
-                                                            cadastroMotorista.getRg(),
-                                                            cadastroMotorista.getSexo(),
-                                                            cadastroMotorista.getTpLogradouro(),
-                                                            cadastroMotorista.getEndereco(),
-                                                            cadastroMotorista.getCep(),
-                                                            cadastroMotorista.getBairro(),
-                                                            cadastroMotorista.getUf(),
-                                                            cadastroMotorista.getCidade(),
-                                                            cadastroMotorista.getDataNascimento()
-                                                        );
 
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        criacaoMotorista.child(key).setValue(user);
 
         CadastroMotorista VeiculoMotorista = new CadastroMotorista(
                                                             cadastroMotorista.getVeiculoTipo(),
@@ -180,17 +172,14 @@ public class Registrar_3 extends AppCompatActivity implements View.OnClickListen
                                                             cadastroMotorista.getVeiculoPlaca(),
                                                             cadastroMotorista.getVeiculoRenavam(),
                                                             cadastroMotorista.getVeiculoKilometragem(),
-                                                            cadastroMotorista.getVeiculoCor());
+                                                            cadastroMotorista.getVeiculoCor()
+                                                                );
 
 
 
         criacaoMotorista.child(key).child("Veiculos").child(criacaoMotorista.push().getKey()).setValue(VeiculoMotorista);
 
 
-
-        // Após validar que cadastro está OK um dialogo de progresso é mostrada
-            dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
-            dialogoProgresso.show();
 
         Intent intentMain = new Intent(Registrar_3.this, Main.class);
         dialogoProgresso.dismiss();

@@ -21,7 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
@@ -212,6 +216,64 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
             //parar a execução do código
             return;
         }
+
+
+
+        // CADASTRO NO DATABASE
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference criacaoMotorista = database.getReference("Motorista");
+
+
+
+        String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //metodo antigo que acaba substituindo o banco inteiro  nao viavel.
+        //criacaoMotorista.child(key).setValue(user);
+
+
+        /// ATUALIZANDO CAMPO POR CAMPO
+
+        //CPF
+        HashMap<String, Object> cpfmap = new HashMap<>();
+        cpfmap.put("cpf", cadastroMotorista.getCpf());
+        criacaoMotorista.child(key).updateChildren(cpfmap);
+        //RG
+        HashMap<String, Object> rgmap = new HashMap<>();
+        rgmap.put("rg", cadastroMotorista.getRg());
+        criacaoMotorista.child(key).updateChildren(rgmap);
+        //DATANASCIMENTO
+        HashMap<String, Object> datanascimentomap = new HashMap<>();
+        datanascimentomap.put("dataNascimento", cadastroMotorista.getDataNascimento());
+        criacaoMotorista.child(key).updateChildren(datanascimentomap);
+        //SEXO
+        HashMap<String, Object> sexomap = new HashMap<>();
+        sexomap.put("sexo", cadastroMotorista.getSexo());
+        criacaoMotorista.child(key).updateChildren(sexomap);
+        //TP LOGRADOURO
+        HashMap<String, Object> tplogradouromap = new HashMap<>();
+        tplogradouromap.put("tpLogradouro", cadastroMotorista.getTpLogradouro());
+        criacaoMotorista.child(key).updateChildren(tplogradouromap);
+        //ENDERECO
+        HashMap<String, Object> enderecomap = new HashMap<>();
+        enderecomap.put("endereco", cadastroMotorista.getEndereco());
+        criacaoMotorista.child(key).updateChildren(enderecomap);
+        //CEP
+        HashMap<String, Object> cepmap = new HashMap<>();
+        cepmap.put("cep", cadastroMotorista.getCep());
+        criacaoMotorista.child(key).updateChildren(cepmap);
+        //BAIRRO
+        HashMap<String, Object> bairromap = new HashMap<>();
+        bairromap.put("bairro", cadastroMotorista.getBairro());
+        criacaoMotorista.child(key).updateChildren(bairromap);
+        //ESTADO
+        HashMap<String, Object> ufmap = new HashMap<>();
+        ufmap.put("estado", cadastroMotorista.getUf());
+        criacaoMotorista.child(key).updateChildren(ufmap);
+        //CIDADE
+        HashMap<String, Object> cidademap = new HashMap<>();
+        cidademap.put("cidade", cadastroMotorista.getCidade());
+        criacaoMotorista.child(key).updateChildren(cidademap);
+
 
         //Passando dados para a tela REGISTRAR 3
         Intent intentReg2 = new Intent(Registrar_2.this, Registrar_3.class);

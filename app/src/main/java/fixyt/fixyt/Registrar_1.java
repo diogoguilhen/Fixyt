@@ -39,6 +39,7 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
     private EditText digSenha;
     private ProgressDialog dialogoProgresso;
     private CadastroMotorista cadastroMotorista;
+    public String userKey;
 
     private static final String TAG = "Registrar_1";
     private Spinner spinnerPais;
@@ -216,11 +217,37 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //Se tarefa é completada
                         if (task.isSuccessful()) {
-                            //usuario registrou corretamente
+                            // CADASTRO NO FIREBASE E DEPOIS NO BANCO
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference criacaoMotorista = database.getReference("Motorista");
+                            CadastroMotorista user = new CadastroMotorista(
+                                    cadastroMotorista.getNome(),
+                                    cadastroMotorista.getSobrenome(),
+                                    cadastroMotorista.getTelefone(),
+                                    cadastroMotorista.getEmail(),
+                                    cadastroMotorista.getSenha(),
+                                "null", //cadastroMotorista.getCpf(),
+                                "null", //cadastroMotorista.getRg(),
+                                "null", //cadastroMotorista.getSexo(),
+                                "null", //cadastroMotorista.getTpLogradouro(),
+                                "null", //cadastroMotorista.getEndereco(),
+                                "null", //cadastroMotorista.getCep(),
+                                "null", //cadastroMotorista.getBairro(),
+                                "null", //cadastroMotorista.getUf(),
+                                "null", //cadastroMotorista.getCidade(),
+                                "null" //cadastroMotorista.getDataNascimento()
+                            );
 
+                            userKey =  task.getResult().getUser().getUid().toString();
+                            String key = userKey;
+                            criacaoMotorista.child(key).setValue(user);
+
+                            //usuario registrou corretamente
                             finish();
-                            //inicializar cadastro de perfil
-                            startActivity(new Intent(getApplicationContext(), Main.class));
+                            //passar para tela 2
+                            Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
+                            intentReg1.putExtra("cadastro", cadastroMotorista);
+                            startActivity(intentReg1);
                             //mostrar mensagem para usuario indicando sucesso
                             Toast.makeText(Registrar_1.this, "Registrado com Sucesso.", Toast.LENGTH_SHORT).show();
                             dialogoProgresso.dismiss();
@@ -246,10 +273,10 @@ public class Registrar_1 extends AppCompatActivity implements View.OnClickListen
 
 
         //Passando dados para a tela REGISTRAR 2
-        Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
-        intentReg1.putExtra("cadastro", cadastroMotorista);
-        startActivity(intentReg1);
-        dialogoProgresso.dismiss();
+    //    Intent intentReg1 = new Intent(Registrar_1.this, Registrar_2.class);
+    //    intentReg1.putExtra("cadastro", cadastroMotorista);
+    //    startActivity(intentReg1);
+    //    dialogoProgresso.dismiss();
     }
 
 
