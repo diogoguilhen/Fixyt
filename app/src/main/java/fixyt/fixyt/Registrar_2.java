@@ -21,11 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
@@ -38,7 +34,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class Registrar_2 extends AppCompatActivity implements View.OnClickListener  {
 
@@ -67,14 +62,7 @@ public class Registrar_2 extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_2);
 
-        //Chamando FIrebase Auth
-    //   firebasAuth = FirebaseAuth.getInstance();
-    //   if(firebasAuth.getCurrentUser() != null){
-    //       //ir para tela main ou perfil
-    //       finish();
-    //       //inicializar tela principal
-    //       startActivity(new Intent(getApplicationContext(), Main.class));
-    //   }
+
 
         dialogoProgresso = new ProgressDialog(this);
 
