@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,6 +31,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static android.location.LocationManager.GPS_PROVIDER;
 
 public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
@@ -42,11 +45,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
     public String  vLatitude ;
     public String  vLongitude ;
     public String userKey;
+    public double  vLatitude2 ;
+    public double  vLongitude2 ;
 
-    public Auxilio(String vLatitude, String vLongitude) {
-    }
-    public Auxilio() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,40 +55,54 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_auxilio);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, PreLogin.class));
         }
 
         //Inicio Codigo
-
-
         textCoords = (TextView) findViewById(R.id.coordinates);
         botao = (Button) findViewById(R.id.testButton);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.gMapView);
         mapFragment.getMapAsync(Auxilio.this);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+
+        // minha alteração
+        Location loc = new Location(LocationManager.GPS_PROVIDER);
+
+        double lat = loc.getLatitude();
+        double lng = loc.getLongitude();
+
+        textCoords.append("\n antes do metodo " + String.valueOf(loc.getLatitude()) + ", " + String.valueOf(loc.getLongitude()));
+
+        // FIM minha alteração
+
+
+
+
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-               // textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
-
-                vLatitude = String.valueOf(location.getLatitude()) ;
-                vLongitude = String.valueOf(location.getLongitude());
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference localizacao = database.getReference("Localizacao/Motorista");
 
 
-                Auxilio localizationMode = new Auxilio(vLatitude, vLongitude); //instancia do novo utilizador
-                userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String key = userKey;
-                localizacao.child(key).setValue(localizationMode);
+                textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
+
+               vLatitude = String.valueOf(location.getLatitude()) ;
+               vLongitude = String.valueOf(location.getLongitude());
+
+               CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
+
+               FirebaseDatabase database = FirebaseDatabase.getInstance();
+               DatabaseReference localizacao = database.getReference("Localizacao/Motorista");
+
+
+               userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+               String key = userKey;
+               localizacao.child(key).setValue(diogoLindo);
 
             }
 
@@ -101,7 +116,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
             public void onProviderEnabled(String provider) {
 
             }
-
             @Override
             public void onProviderDisabled(String provider) {
                 Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
@@ -109,6 +123,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
                 startActivity(intent);
             }
         };
+
+        // OUTRA COISA
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{
@@ -142,24 +158,23 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
             public void onClick(View v) {
                 locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
 
-
             }
         });
-
-
-
     }
+
+
 
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+     //   LatLng atual = new LatLng(vLatitude2, vLongitude2);
 
         gMap.setMyLocationEnabled(true);
 
-        gMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+      //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
+       // gMap.moveCamera(CameraUpdateFactory.newLatLng(atual));
     }
 }
 

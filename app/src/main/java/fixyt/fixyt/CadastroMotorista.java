@@ -35,6 +35,11 @@ public class CadastroMotorista implements Parcelable{
     private String veiculoKilometragem;
     private String veiculoCor;
 
+    //INSERCAO DA PARTE DE VARIAVEIS DA LOCALIZAÇÃO
+    private String vLatitude;
+    private String vLongitude;
+
+
     public CadastroMotorista() {
         super();
     }
@@ -81,6 +86,10 @@ public class CadastroMotorista implements Parcelable{
      //  this.veiculoCor = veiculoCor;
     }
 
+    public CadastroMotorista(String vLatitude, String vLongitude) {
+        this.vLatitude = vLatitude;
+        this.vLongitude = vLongitude;
+    }
 
     // Utilizando objetos como parcelável
     public CadastroMotorista(Parcel parcel){
