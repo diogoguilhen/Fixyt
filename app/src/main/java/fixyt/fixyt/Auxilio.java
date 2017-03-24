@@ -63,9 +63,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         //Inicio Codigo
 
 
-
-
-
         textCoords = (TextView) findViewById(R.id.coordinates);
         botao = (Button) findViewById(R.id.testButton);
 
@@ -74,7 +71,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(Auxilio.this);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
 
         locationListener = new LocationListener() {
             @Override
@@ -145,6 +141,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+
+
             }
         });
 
@@ -157,9 +155,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-
-
-
 
         gMap.setMyLocationEnabled(true);
 
