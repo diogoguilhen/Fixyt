@@ -28,6 +28,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
@@ -37,7 +39,14 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private GoogleMap gMap;
+    public String  vLatitude ;
+    public String  vLongitude ;
+    public String userKey;
 
+    public Auxilio(String vLatitude, String vLongitude) {
+    }
+    public Auxilio() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +77,25 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
+               // textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
+
+                vLatitude = String.valueOf(location.getLatitude()) ;
+                vLongitude = String.valueOf(location.getLongitude());
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference localizacao = database.getReference("Localizacao/Motorista");
+
+
+                Auxilio localizationMode = new Auxilio(vLatitude, vLongitude); //instancia do novo utilizador
+                userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String key = userKey;
+                localizacao.child(key).setValue(localizationMode);
+
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
+
 
             }
 
@@ -99,6 +122,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         }else{
             configureButton();
         }
+
+
+
 
     }
 

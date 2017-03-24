@@ -157,6 +157,8 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener,
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        mMap = googleMap;
+
 
         mMap.setMyLocationEnabled(true);
 
