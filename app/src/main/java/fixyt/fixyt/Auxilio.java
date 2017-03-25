@@ -42,11 +42,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private GoogleMap gMap;
-    public String  vLatitude ;
-    public String  vLongitude ;
     public String userKey;
-    public double  vLatitude2 ;
-    public double  vLongitude2 ;
+
 
 
     @Override
@@ -92,19 +89,19 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
                 textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference localizacao = database.getReference("Motorista");
+                DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
 
 
                 userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String key = userKey;
 
-                //vLatitude = String.valueOf(location.getLatitude());
-                //vLongitude = String.valueOf(location.getLongitude());
+               String  vLatitude =    String.valueOf(location.getLatitude());
+               String  vLongitude =   String.valueOf(location.getLongitude());
 
                 CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
 
 
-                localizacao.child(key).child("Localizacao").child(localizacao.push().getKey()).setValue(String.valueOf(location.getLatitude()));
+                localizacao.child(key).setValue(diogoLindo);
 
             }
 
