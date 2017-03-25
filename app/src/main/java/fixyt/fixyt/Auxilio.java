@@ -4,6 +4,8 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +35,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
+import java.util.Locale;
+
 import static android.location.LocationManager.GPS_PROVIDER;
 
 public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
@@ -42,7 +50,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private GoogleMap gMap;
+    private TextView textoEndereco;
     public String userKey;
+    private Location localizacao;
 
 
 
@@ -59,6 +69,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         //Inicio Codigo
         textCoords = (TextView) findViewById(R.id.coordinates);
+        textoEndereco = (TextView) findViewById(R.id.enderecoAtual);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.gMapView);
@@ -66,9 +77,35 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        localizacao = locationManager.getLastKnownLocation("gps");
+
+
+        //Teste Geoloc
+        try{
+            Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
+            if (addresses.isEmpty()) {
+                textoEndereco.setText("Sua Localização");
+            }
+            else {
+                textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
+                /*if (addresses.size() > 0) {
+                    Log.d(TAG,addresses.get(0).getFeatureName() + "," + addresses.get(0).getLocality() + ", " + addresses.get(0).getAdminArea() + ",
+                            " + addresses.get(0).getCountryName());
+
+                }*/
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+
 
                 textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -89,7 +126,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
 
             }
 
@@ -118,7 +154,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
             locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         }
 
-        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+        //locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+
 
 
 

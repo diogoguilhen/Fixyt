@@ -21,7 +21,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="270dp"
         android:orientation="horizontal"
         android:id="@+id/linearLayout3"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
         android:id="@+id/gMapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="271dp"
         tools:context="fixyt.fixyt.Auxilio" />
     </LinearLayout>
 
@@ -43,13 +43,13 @@
         android:id="@+id/testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_marginTop="87dp"
+        android:text="Enviar Loc"
+        android:layout_below="@+id/coordinates"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp"
-        android:layout_marginTop="26dp"
-        android:text="Enviar Loc" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp" />
 
     <TextView
         android:id="@+id/coordinates"
@@ -61,6 +61,14 @@
         android:layout_marginLeft="82dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/enderecoAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/testButton"
+        android:layout_centerHorizontal="true"
+        android:textSize="14sp" />
 
 
 </RelativeLayout>
