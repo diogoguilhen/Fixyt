@@ -1,6 +1,5 @@
 package fixyt.fixyt;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -86,8 +85,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         }
 
 
-
-
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -168,7 +165,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
      //   LatLng atual = new LatLng(vLatitude2, vLongitude2);
 
         gMap.setMyLocationEnabled(true);
-
+        googleMap.setMaxZoomPreference(80);
 
       //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
        // gMap.moveCamera(CameraUpdateFactory.newLatLng(atual));
