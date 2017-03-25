@@ -35,22 +35,6 @@ public class CadastroMotorista implements Parcelable{
     private String veiculoKilometragem;
     private String veiculoCor;
 
-    public String getvLatitude() {
-        return vLatitude;
-    }
-
-    public void setvLatitude(String vLatitude) {
-        this.vLatitude = vLatitude;
-    }
-
-    public String getvLongitude() {
-        return vLongitude;
-    }
-
-    public void setvLongitude(String vLongitude) {
-        this.vLongitude = vLongitude;
-    }
-
     //INSERCAO DA PARTE DE VARIAVEIS DA LOCALIZAÇÃO
     private String vLatitude;
     private String vLongitude;
@@ -382,5 +366,23 @@ public class CadastroMotorista implements Parcelable{
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+
+    public String getvLatitude() {
+        return vLatitude;
+    }
+
+    public void setvLatitude(String vLatitude) {
+        this.vLatitude = vLatitude;
+    }
+
+    public String getvLongitude() {
+        return vLongitude;
+    }
+
+    public void setvLongitude(String vLongitude) {
+        this.vLongitude = vLongitude;
+    }
+
 }
 
