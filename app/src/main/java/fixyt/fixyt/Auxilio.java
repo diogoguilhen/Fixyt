@@ -66,23 +66,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
-
-        // minha alteração
-        Location loc = new Location(LocationManager.GPS_PROVIDER);
-
-
-        double lat = loc.getLatitude();
-        double lng = loc.getLongitude();
-
-        //textCoords.append("\n antes do metodo " + String.valueOf(loc.getLatitude()) + ", " + String.valueOf(loc.getLongitude()));
-
-        // FIM minha alteração
-
-
-
-
-
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
