@@ -95,8 +95,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
                 userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String key = userKey;
 
-               String  vLatitude =    String.valueOf(location.getLatitude());
-               String  vLongitude =   String.valueOf(location.getLongitude());
+                String  vLatitude =    String.valueOf(location.getLatitude());
+                String  vLongitude =   String.valueOf(location.getLongitude());
 
                 CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
 
