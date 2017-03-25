@@ -62,7 +62,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         //Inicio Codigo
         textCoords = (TextView) findViewById(R.id.coordinates);
-        botao = (Button) findViewById(R.id.testButton);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.gMapView);
         mapFragment.getMapAsync(Auxilio.this);
@@ -70,13 +70,15 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
+
         // minha alteração
         Location loc = new Location(LocationManager.GPS_PROVIDER);
+
 
         double lat = loc.getLatitude();
         double lng = loc.getLongitude();
 
-        textCoords.append("\n antes do metodo " + String.valueOf(loc.getLatitude()) + ", " + String.valueOf(loc.getLongitude()));
+        //textCoords.append("\n antes do metodo " + String.valueOf(loc.getLatitude()) + ", " + String.valueOf(loc.getLongitude()));
 
         // FIM minha alteração
 
@@ -88,21 +90,21 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public void onLocationChanged(Location location) {
 
-
                 textCoords.append("\n " + location.getLatitude() + ", " + location.getLongitude());
-
-               vLatitude = String.valueOf(location.getLatitude()) ;
-               vLongitude = String.valueOf(location.getLongitude());
-
-               CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
-
-               FirebaseDatabase database = FirebaseDatabase.getInstance();
-               DatabaseReference localizacao = database.getReference("Localizacao/Motorista");
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference localizacao = database.getReference("Motorista");
 
 
-               userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
-               String key = userKey;
-               localizacao.child(key).setValue(diogoLindo);
+                userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String key = userKey;
+
+                //vLatitude = String.valueOf(location.getLatitude());
+                //vLongitude = String.valueOf(location.getLongitude());
+
+                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
+
+
+                localizacao.child(key).child("Localizacao").child(localizacao.push().getKey()).setValue(String.valueOf(location.getLatitude()));
 
             }
 
@@ -134,9 +136,10 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
                 return;
             }
         }else{
-            configureButton();
+            locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         }
 
+        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
 
 
 
@@ -147,20 +150,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         switch (requestCode){
             case 10:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    configureButton();
+                    locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
                 return;
         }
     }
 
-    private void configureButton() {
-        botao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
 
-            }
-        });
-    }
 
 
 
