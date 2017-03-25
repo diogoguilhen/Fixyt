@@ -91,7 +91,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
 
-
                 userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String key = userKey;
 
