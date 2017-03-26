@@ -29,8 +29,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -87,6 +92,48 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         localizacao = locationManager.getLastKnownLocation("gps");
 
         //Transformação da LatLang para Endereço e mostrar no TextView da tela.
+
+
+        // INICIO DE PEGAR OS SERVICOS DO BANCO
+    //   FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //   DatabaseReference servicos = database.getReference();
+
+    //   Query query1 = servicos.child("Servicos/Partner/Guincho");
+
+    //   query1.addListenerForSingleValueEvent(new ValueEventListener() {
+
+    //       public void onDataChange(DataSnapshot dataSnapshot) {
+
+    //           dataSnapshot.getValue();
+
+    //           //Passar os dados para a interface grafica
+    //       }
+    //       public void onCancelled(DatabaseError databaseError) {
+    //           //Se ocorrer um erro
+    //           databaseError.getMessage();
+    //       }
+
+    //   });
+
+    //   Query query2 = servicos.child("Servicos/Partner/Moto");
+    //   query2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+    //       public void onDataChange(DataSnapshot dataSnapshot) {
+
+    //           System.out.println(dataSnapshot.getValue());
+    //           //Passar os dados para a interface grafica
+    //       }
+    //       public void onCancelled(DatabaseError databaseError) {
+    //           //Se ocorrer um erro
+    //           databaseError.getMessage();
+    //       }
+
+    //   });
+
+    //   /// FIM DO GET DO BANCO
+
+
+        //Teste Geoloc
         try{
             Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
@@ -121,6 +168,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
 
                 localizacao.child(key).setValue(diogoLindo);
+
+                //  FIM DE SALVAR A LOCALIZAÇÃO ATUAL NO BANCO
 
             }
 
@@ -170,6 +219,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 return;
         }
     }
+
+
 
 
 
