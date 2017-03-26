@@ -9,17 +9,25 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,17 +35,21 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
+public class Auxilio extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
     private TextView textCoords;
-    private Button botao;
+
     private LocationManager locationManager;
     private LocationListener locationListener;
     private GoogleMap gMap;
-    private TextView textoEndereco;
+    private EditText textoEndereco;
+    private EditText pontoReferencia;
     public String userKey;
     private Location localizacao;
+    private Spinner spinnerReparo;
+    private ArrayAdapter adaptadorServico;
+    private Button teste;
 
 
 
@@ -54,7 +66,17 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         //Inicio Codigo
         textCoords = (TextView) findViewById(R.id.coordinates);
-        textoEndereco = (TextView) findViewById(R.id.enderecoAtual);
+        textoEndereco = (EditText) findViewById(R.id.enderecoAtual);
+        pontoReferencia = (EditText) findViewById(R.id.pontoRef);
+        teste = (Button) findViewById(R.id.botTeste);
+
+        teste.setOnClickListener(this);
+
+        //Spinner do Sexo
+        spinnerReparo = (Spinner) findViewById(R.id.spinnerServico);
+        adaptadorServico = ArrayAdapter.createFromResource(this,R.array.Sexo, android.R.layout.simple_spinner_item);
+        adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerReparo.setAdapter(adaptadorServico);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.gMapView);
@@ -64,21 +86,15 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
 
         localizacao = locationManager.getLastKnownLocation("gps");
 
-
-        //Teste Geoloc
+        //Transformação da LatLang para Endereço e mostrar no TextView da tela.
         try{
             Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
             if (addresses.isEmpty()) {
-                textoEndereco.setText("Sua Localização");
+                textoEndereco.setText("Não encontramos sua localização!");
             }
             else {
                 textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
-                /*if (addresses.size() > 0) {
-                    Log.d(TAG,addresses.get(0).getFeatureName() + "," + addresses.get(0).getLocality() + ", " + addresses.get(0).getAdminArea() + ",
-                            " + addresses.get(0).getCountryName());
-
-                }*/
             }
         }
         catch (Exception e) {
@@ -165,13 +181,26 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback {
         gMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-     //   LatLng atual = new LatLng(vLatitude2, vLongitude2);
+        LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
 
         gMap.setMyLocationEnabled(true);
-
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(atual));
 
       //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
-       // gMap.moveCamera(CameraUpdateFactory.newLatLng(atual));
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == teste){
+            /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:q=R.Aimbere,668,SP"));*/
+            //final String url = String.format("waze://?ll=-23.536052, -46.680724&navigate=yes");
+            final String url = String.format("waze://?ll=-23.625233, -46.630693&navigate=yes");
+            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+            startActivity(intent);
+        }
     }
 }
 

@@ -39,18 +39,6 @@
         tools:context="fixyt.fixyt.Auxilio" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="87dp"
-        android:text="Enviar Loc"
-        android:layout_below="@+id/coordinates"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp" />
-
     <TextView
         android:id="@+id/coordinates"
         android:layout_width="wrap_content"
@@ -62,13 +50,60 @@
         android:layout_marginStart="82dp"
         android:layout_marginTop="10dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/enderecoAtual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/testButton"
+        android:text=""
+        android:textSize="14sp"
+        android:layout_alignBaseline="@+id/coordinates"
+        android:layout_alignBottom="@+id/coordinates"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/pontoRef"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ponto de Referência"
+        android:inputType="textPersonName"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/coordinates"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:id="@+id/spinnerServico"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+
+        android:layout_gravity="center_vertical"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/pontoRef"
+        android:layout_alignLeft="@+id/pontoRef"
+        android:layout_alignStart="@+id/pontoRef"
+        android:layout_alignRight="@+id/pontoRef"
+        android:layout_alignEnd="@+id/pontoRef" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pontoRef"
         android:layout_centerHorizontal="true"
-        android:textSize="14sp" />
+        android:layout_marginTop="12dp"
+        android:text="Selecione Um Serviço:"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/botTeste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerServico"
+        android:layout_marginTop="33dp"
+        android:layout_toEndOf="@+id/coordinates"
+        android:layout_toRightOf="@+id/coordinates"
+        android:text="Button" />
 
 
 </RelativeLayout>
