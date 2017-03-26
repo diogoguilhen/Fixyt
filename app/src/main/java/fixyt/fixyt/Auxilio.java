@@ -164,7 +164,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 String  vLatitude =    String.valueOf(location.getLatitude());
                 String  vLongitude =   String.valueOf(location.getLongitude());
 
-                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude);
+                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude, "null");
 
 
                 localizacao.child(key).setValue(diogoLindo);
@@ -219,12 +219,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 return;
         }
     }
-
-
-
-
-
-
 
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
