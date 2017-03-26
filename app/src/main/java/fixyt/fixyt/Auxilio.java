@@ -102,8 +102,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         }
 
 
-
-
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
