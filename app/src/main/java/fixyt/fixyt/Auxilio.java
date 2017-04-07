@@ -91,7 +91,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
         localizacao = locationManager.getLastKnownLocation("gps");
 
-        //Transformação da LatLang para Endereço e mostrar no TextView da tela.
+
 
 
         // INICIO DE PEGAR OS SERVICOS DO BANCO
@@ -132,8 +132,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     //   /// FIM DO GET DO BANCO
 
-
-        //Teste Geoloc
+        //Transformação da LatLang para Endereço e mostrar no TextView da tela.
         try{
             Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
@@ -239,9 +238,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse("google.navigation:q=R.Aimbere,668,SP"));*/
             //final String url = String.format("waze://?ll=-23.536052, -46.680724&navigate=yes");
-            final String url = String.format("waze://?ll=-23.625233, -46.630693&navigate=yes");
+            final String url = String.format("waze://?ll=" + localizacao.getLatitude()+", " + localizacao.getLongitude()+ "&navigate=yes");
             final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
             startActivity(intent);
         }
     }
