@@ -106,8 +106,9 @@ public class TrocarCarro extends AppCompatActivity implements View.OnClickListen
     private void atualizarVeiculo(){
 
         //Recebendo cadastro de Veiculo atual
-        CadastroMotorista cadastroMotorista= getIntent().getParcelableExtra("cadastro");
+        //CadastroMotorista cadastroMotorista= getIntent().getParcelableExtra("cadastro");
 
+        CadastroMotorista cadastroMotorista = new CadastroMotorista();
         //Apropriando os valores aos campos seguintes.
         cadastroMotorista.setVeiculoTipo(campoTpVeiculo.getSelectedItem().toString().trim());
         cadastroMotorista.setVeiculoMarca(campoMarcaVeiculo.getSelectedItem().toString().trim());
