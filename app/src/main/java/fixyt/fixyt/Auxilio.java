@@ -2,6 +2,7 @@ package fixyt.fixyt;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -36,6 +37,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,8 +56,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public String userKey;
     private Location localizacao;
     private Spinner spinnerReparo;
-    private ArrayAdapter adaptadorServico;
+    private String[] CaralhaDeAsa;
     private Button teste;
+    private String testeServico;
 
 
 
@@ -74,14 +78,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         textoEndereco = (EditText) findViewById(R.id.enderecoAtual);
         pontoReferencia = (EditText) findViewById(R.id.pontoRef);
         teste = (Button) findViewById(R.id.botTeste);
+        spinnerReparo = (Spinner) findViewById(R.id.spinnerServico);
 
         teste.setOnClickListener(this);
 
-        //Spinner do Sexo
-        spinnerReparo = (Spinner) findViewById(R.id.spinnerServico);
-        adaptadorServico = ArrayAdapter.createFromResource(this,R.array.Sexo, android.R.layout.simple_spinner_item);
-        adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerReparo.setAdapter(adaptadorServico);
+        //
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.gMapView);
@@ -95,25 +96,34 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
 
         // INICIO DE PEGAR OS SERVICOS DO BANCO
-    //   FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //   DatabaseReference servicos = database.getReference();
+       FirebaseDatabase database = FirebaseDatabase.getInstance();
+       DatabaseReference servicos = database.getReference();
 
-    //   Query query1 = servicos.child("Servicos/Partner/Guincho");
+       Query query1 = servicos.child("Servicos/Partner/Guincho");
 
-    //   query1.addListenerForSingleValueEvent(new ValueEventListener() {
+       query1.addListenerForSingleValueEvent(new ValueEventListener() {
 
-    //       public void onDataChange(DataSnapshot dataSnapshot) {
+           public void onDataChange(DataSnapshot dataSnapshot) {
 
-    //           dataSnapshot.getValue();
+               testeServico = (String) dataSnapshot.getValue();
+               testeServico = testeServico.replace("[","").replace("]","");
+               CaralhaDeAsa = testeServico.split(",");
+               ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, CaralhaDeAsa);
+               adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+               spinnerReparo.setAdapter(adaptadorServico);
 
-    //           //Passar os dados para a interface grafica
-    //       }
-    //       public void onCancelled(DatabaseError databaseError) {
-    //           //Se ocorrer um erro
-    //           databaseError.getMessage();
-    //       }
+               Toast.makeText(Auxilio.this, CaralhaDeAsa[0] + CaralhaDeAsa[1], Toast.LENGTH_SHORT).show();
+              //Passar os dados para a interface grafica
+           }
+           public void onCancelled(DatabaseError databaseError) {
+               //Se ocorrer um erro
+               databaseError.getMessage();
+           }
 
-    //   });
+       });
+
+
+
 
     //   Query query2 = servicos.child("Servicos/Partner/Moto");
     //   query2.addListenerForSingleValueEvent(new ValueEventListener() {
