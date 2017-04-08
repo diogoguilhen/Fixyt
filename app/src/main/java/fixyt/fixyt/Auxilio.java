@@ -223,10 +223,10 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         gMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
+        //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
 
         gMap.setMyLocationEnabled(true);
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(atual));
+        //gMap.animateCamera(CameraUpdateFactory.newLatLng(atual));
 
       //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
 

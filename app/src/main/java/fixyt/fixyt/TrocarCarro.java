@@ -105,30 +105,8 @@ public class TrocarCarro extends AppCompatActivity implements View.OnClickListen
 
     private void atualizarVeiculo(){
 
-        //Recebendo cadastro de Veiculo atual
-        //CadastroMotorista cadastroMotorista= getIntent().getParcelableExtra("cadastro");
-
-        CadastroMotorista cadastroMotorista = new CadastroMotorista();
         //Apropriando os valores aos campos seguintes.
-        cadastroMotorista.setVeiculoTipo(campoTpVeiculo.getSelectedItem().toString().trim());
-        cadastroMotorista.setVeiculoMarca(campoMarcaVeiculo.getSelectedItem().toString().trim());
-        cadastroMotorista.setVeiculoModelo(campoModeloVeiculo.getText().toString().trim());
-        cadastroMotorista.setVeiculoAnoFabricacao(campoAnoFabVeiculo.getSelectedItem().toString().trim());
-        cadastroMotorista.setVeiculoAnoModelo(campoAnoModVeiculo.getSelectedItem().toString().trim());
-        cadastroMotorista.setVeiculoPlaca(campoPlacaVeiculo.getText().toString().trim());
-        cadastroMotorista.setVeiculoRenavam(campoRenavam.getText().toString().trim());
-        cadastroMotorista.setVeiculoKilometragem(campoKmVeiculo.getText().toString().trim());
-        cadastroMotorista.setVeiculoCor(campoCorVeiculo.getText().toString().trim());
-
-        String tipoVeiculo = campoTpVeiculo.getSelectedItem().toString().trim();
-        String marcaVeiculo = campoMarcaVeiculo.getSelectedItem().toString().trim();
         String modeloVeiculo = campoModeloVeiculo.getText().toString().trim();
-        String anoFabVeiculo = campoAnoFabVeiculo.getSelectedItem().toString().trim();
-        String anoModVeiculo = campoAnoModVeiculo.getSelectedItem().toString().trim();
-        String placaVeiculo = campoPlacaVeiculo.getText().toString().trim();
-        String renavamVeiculo = campoRenavam.getText().toString().trim();
-        String kmVeiculo = campoKmVeiculo.getText().toString().trim();
-        String corVeiculo = campoCorVeiculo.getText().toString().trim();
 
         if(TextUtils.isEmpty(modeloVeiculo)){
             //Modelo de Veiculo vazio
@@ -137,13 +115,9 @@ public class TrocarCarro extends AppCompatActivity implements View.OnClickListen
             return;
         }
 
-
-
-
         // Após validar que cadastro está OK um dialogo de progresso é mostrada
         dialogoProgresso.setMessage("Registrando Usuário...Aguarde...");
         dialogoProgresso.show();
-
 
         // PARTE ONDE SALVA OS DADOS DO CLIENTE
 
@@ -153,15 +127,15 @@ public class TrocarCarro extends AppCompatActivity implements View.OnClickListen
         String key = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         CadastroMotorista VeiculoMotorista = new CadastroMotorista(
-                                                            cadastroMotorista.getVeiculoTipo(),
-                                                            cadastroMotorista.getVeiculoMarca(),
-                                                            cadastroMotorista.getVeiculoModelo(),
-                                                            cadastroMotorista.getVeiculoAnoFabricacao(),
-                                                            cadastroMotorista.getVeiculoAnoModelo(),
-                                                            cadastroMotorista.getVeiculoPlaca(),
-                                                            cadastroMotorista.getVeiculoRenavam(),
-                                                            cadastroMotorista.getVeiculoKilometragem(),
-                                                            cadastroMotorista.getVeiculoCor()
+                campoTpVeiculo.getSelectedItem().toString().trim(),
+                campoMarcaVeiculo.getSelectedItem().toString().trim(),
+                campoModeloVeiculo.getText().toString().trim(),
+                campoAnoFabVeiculo.getSelectedItem().toString().trim(),
+                campoAnoModVeiculo.getSelectedItem().toString().trim(),
+                campoPlacaVeiculo.getText().toString().trim(),
+                campoRenavam.getText().toString().trim(),
+                campoKmVeiculo.getText().toString().trim(),
+                campoCorVeiculo.getText().toString().trim()
                                                                 );
 
 
