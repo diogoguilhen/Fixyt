@@ -31,6 +31,7 @@
         <activity android:name=".Registrar_1" />
         <activity android:name=".Registrar_2" />
         <activity android:name=".Registrar_3" />
+        <activity android:name=".TrocarCarro"/>
         <activity android:name=".Schedule"   android:label="@string/title_activity_maps"/>
         <activity android:name=".Auxilio"/>
         <activity android:name=".Perfil" />
