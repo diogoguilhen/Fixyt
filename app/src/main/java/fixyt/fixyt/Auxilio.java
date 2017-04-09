@@ -136,7 +136,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 int i = 0;
                 for(DataSnapshot alert: dataSnapshot.getChildren()){
                     //System.out.println(alert.child("veiculoPlaca").getValue());
-                    placaString = placaString.concat("," + alert.child("veiculoPlaca").getValue().toString());
+                    placaString = placaString.concat("," + alert.child("veiculoPlaca").getValue().toString() + " - " + alert.child("veiculoMarca").getValue().toString() + " " + alert.child("veiculoModelo").getValue().toString());
                 }
                 placaString = placaString.substring(1);
                 placaCarros = placaString.split(",");
