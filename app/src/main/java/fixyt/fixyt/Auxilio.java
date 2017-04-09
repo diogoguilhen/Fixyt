@@ -124,20 +124,20 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
        });
         // QUERY para captar SPINNER de Carros PRECISA VER COMO CAPTURAR AS PLACAS DOS CARROS (Não sei como fazer o query por codigo de veiculo)
-        Query query2 = servicos.child("Motorista");
+        Query query2 = servicos.child("Motorista/"+ firebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
 
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                placaString = (String) dataSnapshot.getValue();
-                placaString = placaString.replace("[","").replace("]","");
+                placaString =  dataSnapshot.getValue().toString();
+                /*placaString = placaString.replace("[","").replace("]","");
                 placaCarros = placaString.split(",");
-                ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, CaralhaDeAsa);
-                adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerReparo.setAdapter(adaptadorServico);
+                ArrayAdapter<String> adaptadorPlacas = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, placaCarros);
+                adaptadorPlacas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerReparo.setAdapter(adaptadorPlacas);*/
 
-                Toast.makeText(Auxilio.this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Auxilio.this, placaString, Toast.LENGTH_SHORT).show();
                 //Passar os dados para a interface grafica
             }
             public void onCancelled(DatabaseError databaseError) {
@@ -250,14 +250,18 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     @Override
     public void onClick(View v) {
-        if(v == teste){
+        if(v == solicitarAuxilio){
+            //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
+
+        }
+        /*if(v == teste){
             /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("google.navigation:q=R.Aimbere,668,SP"));*/
+                    Uri.parse("google.navigation:q=R.Aimbere,668,SP"));
             //final String url = String.format("waze://?ll=-23.536052, -46.680724&navigate=yes");
             final String url = String.format("waze://?ll=" + localizacao.getLatitude()+", " + localizacao.getLongitude()+ "&navigate=yes");
             final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
-        }
+        }*/
     }
 }
 
