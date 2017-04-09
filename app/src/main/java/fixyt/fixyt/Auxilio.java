@@ -126,6 +126,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         // QUERY para captar SPINNER de Carros PRECISA VER COMO CAPTURAR AS PLACAS DOS CARROS (Não sei como fazer o query por codigo de veiculo)
         Query query2 = servicos.child("Motorista/"+ firebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
 
+
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
