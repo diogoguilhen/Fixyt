@@ -37,6 +37,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -259,6 +262,15 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onClick(View v) {
         if(v == solicitarAuxilio){
             //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
+            CalculadorETA diogoCuzudo= new CalculadorETA();
+            //diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude());
+            try {
+                Toast.makeText(Auxilio.this, diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude()), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
         /*if(v == teste){
