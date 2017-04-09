@@ -131,14 +131,19 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                placaString =  dataSnapshot.getValue().toString();
-                /*placaString = placaString.replace("[","").replace("]","");
+                placaCarros = new String[]{""};
+                placaString = "";
+                int i = 0;
+                for(DataSnapshot alert: dataSnapshot.getChildren()){
+                    //System.out.println(alert.child("veiculoPlaca").getValue());
+                    placaString = placaString.concat("," + alert.child("veiculoPlaca").getValue().toString());
+                }
+                placaString = placaString.substring(1);
                 placaCarros = placaString.split(",");
+
                 ArrayAdapter<String> adaptadorPlacas = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, placaCarros);
                 adaptadorPlacas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerReparo.setAdapter(adaptadorPlacas);*/
-
+                spinnerCarros.setAdapter(adaptadorPlacas);
                 Toast.makeText(Auxilio.this, placaString, Toast.LENGTH_SHORT).show();
                 //Passar os dados para a interface grafica
             }
