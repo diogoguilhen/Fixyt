@@ -127,6 +127,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         Query query2 = servicos.child("Motorista/"+ firebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
 
 
+        //Aqui NAO TEM CARALHADEASA!!
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
