@@ -56,9 +56,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public String userKey;
     private Location localizacao;
     private Spinner spinnerReparo;
-    private String[] CaralhaDeAsa;
-    private Button teste;
-    private String testeServico;
+    private Spinner spinnerCarros;
+    private String[] servicosArray;
+    private String[] placaCarros;
+    private Button solicitarAuxilio;
+    private String servicoString;
+    private String placaString;
 
 
 
@@ -77,10 +80,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         textCoords = (TextView) findViewById(R.id.coordinates);
         textoEndereco = (EditText) findViewById(R.id.enderecoAtual);
         pontoReferencia = (EditText) findViewById(R.id.pontoRef);
-        teste = (Button) findViewById(R.id.botTeste);
+        solicitarAuxilio = (Button) findViewById(R.id.botSolicitar);
         spinnerReparo = (Spinner) findViewById(R.id.spinnerServico);
+        spinnerCarros = (Spinner) findViewById(R.id.spinnerVeiculo);
 
-        teste.setOnClickListener(this);
+        solicitarAuxilio.setOnClickListener(this);
 
         //
 
@@ -98,22 +102,20 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         // INICIO DE PEGAR OS SERVICOS DO BANCO
        FirebaseDatabase database = FirebaseDatabase.getInstance();
        DatabaseReference servicos = database.getReference();
-
+        // QUERY para captar SPINNER de Serviços
        Query query1 = servicos.child("Servicos/Partner/Guincho");
 
        query1.addListenerForSingleValueEvent(new ValueEventListener() {
 
            public void onDataChange(DataSnapshot dataSnapshot) {
-
-               testeServico = (String) dataSnapshot.getValue();
-               testeServico = testeServico.replace("[","").replace("]","");
-               CaralhaDeAsa = testeServico.split(",");
-               ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, CaralhaDeAsa);
+                //Passar os dados para a interface grafica
+               servicoString = (String) dataSnapshot.getValue();
+               servicoString = servicoString.replace("[","").replace("]","");
+               servicosArray = servicoString.split(",");
+               ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, servicosArray);
                adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                spinnerReparo.setAdapter(adaptadorServico);
 
-               Toast.makeText(Auxilio.this, CaralhaDeAsa[0] + CaralhaDeAsa[1], Toast.LENGTH_SHORT).show();
-              //Passar os dados para a interface grafica
            }
            public void onCancelled(DatabaseError databaseError) {
                //Se ocorrer um erro
@@ -121,25 +123,29 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
            }
 
        });
+        // QUERY para captar SPINNER de Carros PRECISA VER COMO CAPTURAR AS PLACAS DOS CARROS (Não sei como fazer o query por codigo de veiculo)
+        Query query2 = servicos.child("Motorista");
 
+        query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                placaString = (String) dataSnapshot.getValue();
+                placaString = placaString.replace("[","").replace("]","");
+                placaCarros = placaString.split(",");
+                ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, CaralhaDeAsa);
+                adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerReparo.setAdapter(adaptadorServico);
 
-    //   Query query2 = servicos.child("Servicos/Partner/Moto");
-    //   query2.addListenerForSingleValueEvent(new ValueEventListener() {
+                Toast.makeText(Auxilio.this, "", Toast.LENGTH_SHORT).show();
+                //Passar os dados para a interface grafica
+            }
+            public void onCancelled(DatabaseError databaseError) {
+                //Se ocorrer um erro
+                databaseError.getMessage();
+            }
 
-    //       public void onDataChange(DataSnapshot dataSnapshot) {
-
-    //           System.out.println(dataSnapshot.getValue());
-    //           //Passar os dados para a interface grafica
-    //       }
-    //       public void onCancelled(DatabaseError databaseError) {
-    //           //Se ocorrer um erro
-    //           databaseError.getMessage();
-    //       }
-
-    //   });
-
+        });
     //   /// FIM DO GET DO BANCO
 
         //Transformação da LatLang para Endereço e mostrar no TextView da tela.
