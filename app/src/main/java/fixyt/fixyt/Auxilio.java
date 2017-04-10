@@ -35,6 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -278,17 +282,13 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onClick(View v) {
         if(v == solicitarAuxilio){
             //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
-          //  CalculadorETA diogoCuzudo= new CalculadorETA();
-            //diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude());
-
-
-
             try {
-                Toast.makeText(Auxilio.this, RetornaJson() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(Auxilio.this, "Tempo de Viagem: " + RetornaJson() + " segundos para o destino" , Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
 
 
         }
@@ -300,11 +300,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public String makeURL (double sourcelat, double sourcelog, double destlat, double destlog ){
         StringBuilder urlString = new StringBuilder();
         urlString.append("https://maps.googleapis.com/maps/api/directions/json");
-        urlString.append("?origin=");// from
+        urlString.append("?origin=");// Localização Origem
         urlString.append(String.valueOf((sourcelat)));
                 urlString.append(",");
         urlString.append(String.valueOf( sourcelog));
-        urlString.append("&destination=");// to
+        urlString.append("&destination=");// Localização Destino
         urlString.append(String.valueOf( destlat));
         urlString.append(",");
         urlString.append(String.valueOf(destlog));
@@ -313,48 +313,45 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         return urlString.toString();
     }
 
-    public String RetornaJson() throws IOException {
-    String UrlBolada = makeURL( -23.625234244329558,-46.6763037, -23.5360516,-46.6807242);
+    public String RetornaJson() throws IOException, JSONException {
+        String UrlFinal = makeURL( -23.625234244329558,-46.6763037, -23.5360516,-46.6807242);
 
 
-    URL url = null;
-            try {
-        url = new URL(UrlBolada);
-    } catch (MalformedURLException e) {
-        e.printStackTrace();
+        URL url = null;
+                try {
+            url = new URL(UrlFinal);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        //connection.setRequestMethod("GET");
+
+        InputStream is = connection.getInputStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        // String temporario onde guardar os dados que vem do URL.
+        String directionMaps;
+            String objetoMaps ="";
+        while ((directionMaps = rd.readLine()) != null) {
+
+            objetoMaps =  objetoMaps + directionMaps;
+
+        }
+        rd.close();
+
+        //Parse (leitura) do JSON (que vem do Directions API)
+        JSONObject raiz = new JSONObject(objetoMaps);
+        JSONArray routeArray = raiz.getJSONArray("routes");
+        JSONObject routes = routeArray.getJSONObject(0);
+        JSONArray overPernas = routes.getJSONArray("legs");
+        JSONObject perna = overPernas.getJSONObject(0);
+        JSONObject duracao = perna.getJSONObject("duration");
+        String tempoDeViagem = duracao.getString("value");
+
+       return tempoDeViagem;
+
     }
-
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-    connection.setRequestMethod("GET");
-
-    InputStream is = connection.getInputStream();
-    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-    String pirocaDeTempo;
-        String porraToda ="";
-    while ((pirocaDeTempo = rd.readLine()) != null) {
-     // Toast.makeText(Auxilio.this, pirocaDeTempo , Toast.LENGTH_SHORT).show();
-        porraToda =  porraToda + pirocaDeTempo;
-       // System.out.println(pirocaDeTempo); so para imprimir no log
-    }
-    rd.close();
-
-        // SERGIO AGORA TEM Q PEGAR A STRING CONVERTER EM JSON E LER DO JEITO Q ESTA SENDO FEITO AQUI EM BAIXO! E JA ERA MANO...
-
-      // precisa importar esse fdp  JSONParser parser = new JSONParser();
-       // JSONObject json = (JSONObject) parser.parse(stringToParse);
-
-   //  final JSONObject json = new JSONObject(porraToda);
-  //  JSONArray routeArray = json.getJSONArray("routes");
-  //  JSONObject routes = routeArray.getJSONObject(0);
-  //  JSONObject overviewPolylines = routes.getJSONObject("legs");
-  //  JSONObject duration = overviewPolylines.getJSONObject("duration");
-
-  //  String pirocaDeTempo = overviewPolylines.getString("value");
-
-   return porraToda;
-
-}
 
 }
 
