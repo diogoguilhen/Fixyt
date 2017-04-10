@@ -46,6 +46,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -298,11 +299,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
           //  CalculadorETA diogoCuzudo= new CalculadorETA();
             //diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude());
 
-    //   tentativa diogo lindo1    try {
-    //           /Toast.makeText(Auxilio.this, queryGoogleDistanceApi("-23.62517109155844,-46.63068254729331", String.valueOf(localizacao.getLatitude()) + "," + String.valueOf(localizacao.getLongitude()), "AIzaSyDe-yV7hy223L4I7O8f2qprbpNQd9IBEqQ").toString(), Toast.LENGTH_SHORT).show();
-    //       } catch (Exception e) {
-    //           e.printStackTrace();
-    //       }
+
 
             try {
                 Toast.makeText(Auxilio.this, RetornaJson() , Toast.LENGTH_SHORT).show();
@@ -310,47 +307,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 e.printStackTrace();
             }
 
-            //    try {
-       //       //Toast.makeText(Auxilio.this, diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude()), Toast.LENGTH_SHORT).show();
-       //    } catch (IOException e) {
-       //        e.printStackTrace();
-       //    } catch (JSONException e) {
-       //        e.printStackTrace();
-       //    }
+
 
         }
-        /*if(v == teste){
-            /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("google.navigation:q=R.Aimbere,668,SP"));
-            //final String url = String.format("waze://?ll=-23.536052, -46.680724&navigate=yes");
-            final String url = String.format("waze://?ll=" + localizacao.getLatitude()+", " + localizacao.getLongitude()+ "&navigate=yes");
-            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-        }*/
+
     }
-    /*public JSONObject queryGoogleDistanceApi(String origin, String destination, String API_KEY_PLACES) throws Exception{
-        String Url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin + "&destinations=" + destination + "&mode=driving&language=en&key=" + API_KEY_PLACES;
 
-        HttpURLConnection conn = null;
-        StringBuilder jsonResults = new StringBuilder();
-        URL url = new URL(Url);
-        Log.d(TAG, Url);
-        conn = (HttpURLConnection) url.openConnection();
-        InputStreamReader in = new InputStreamReader(conn.getInputStream());
-        // Load the results into a StringBuilder
-        int read;
-        char[] buff = new char[1024];
-        while ((read = in.read(buff)) != -1) {
-            jsonResults.append(buff, 0, read);
-        }
-        if (conn != null) {
-            conn.disconnect();
-        }
-
-        JSONObject object = new JSONObject(jsonResults.toString());
-        return object;
-    }
-*/
 
 
     public String makeURL (double sourcelat, double sourcelog, double destlat, double destlog ){
@@ -396,6 +358,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     rd.close();
 
         // SERGIO AGORA TEM Q PEGAR A STRING CONVERTER EM JSON E LER DO JEITO Q ESTA SENDO FEITO AQUI EM BAIXO! E JA ERA MANO...
+
+      // precisa importar esse fdp  JSONParser parser = new JSONParser();
+       // JSONObject json = (JSONObject) parser.parse(stringToParse);
 
    //  final JSONObject json = new JSONObject(porraToda);
   //  JSONArray routeArray = json.getJSONArray("routes");
