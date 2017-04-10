@@ -389,7 +389,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     String pirocaDeTempo;
         String porraToda ="";
     while ((pirocaDeTempo = rd.readLine()) != null) {
-     // Toast.makeText(Auxilio.this, pirocaDeTempo , Toast.LENGTH_SHORT).show(); esse cara retorna item por item acho q precisa concatenar  em um so texto para converter dps
+     // Toast.makeText(Auxilio.this, pirocaDeTempo , Toast.LENGTH_SHORT).show();
         porraToda =  porraToda + pirocaDeTempo;
        // System.out.println(pirocaDeTempo); so para imprimir no log
     }
