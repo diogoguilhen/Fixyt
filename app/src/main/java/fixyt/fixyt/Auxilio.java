@@ -48,6 +48,7 @@ import java.net.MalformedURLException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -147,13 +148,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         Query query2 = servicos.child("Motorista/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
 
 
-        //Aqui NAO TEM CARALHADEASA!!
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 placaCarros = new String[]{""};
                 placaString = "";
-                int i = 0;
+
                 for(DataSnapshot alert: dataSnapshot.getChildren()){
                     //System.out.println(alert.child("veiculoPlaca").getValue());
                     placaString = placaString.concat("," + alert.child("veiculoPlaca").getValue().toString() + " - " + alert.child("veiculoMarca").getValue().toString() + " " + alert.child("veiculoModelo").getValue().toString());
@@ -282,20 +282,58 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onClick(View v) {
         if(v == solicitarAuxilio){
             //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
-            try {
-                Toast.makeText(Auxilio.this, "Tempo de Viagem: " + RetornaJson() + " segundos para o destino" , Toast.LENGTH_SHORT).show();
+            ArrayList<PartnersProximos> listagemPartnersProximos = new ArrayList<>();
+            PartnersProximos exemplo1 = new PartnersProximos();
+            capturarPartners(exemplo1);
+
+            /*try {
+                Toast.makeText(Auxilio.this, "Tempo de Viagem: " + RetornaTempoJson() + " segundos para o destino" , Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
 
 
         }
 
     }
 
+    public void capturarPartners(final PartnersProximos partner){
+        //Inicio de Query para capturar os dados do banco de partners
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference partners = database.getReference();
 
+        Query queryPartners = partners.child("Localizacoes/Partner/");
+
+        queryPartners.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Passar os dados para o objeto
+                String dadosPartner = "";
+
+                for(DataSnapshot alert: dataSnapshot.getChildren()){
+
+                    dadosPartner = dadosPartner.concat("," + alert.child("vLatitude").getValue().toString() + "," + alert.child("vLongitude").getValue().toString() + "," + alert.child("vOnline").getValue().toString());
+                }
+                Toast.makeText(Auxilio.this, dadosPartner , Toast.LENGTH_SHORT).show();
+                /*servicoString = (String) dataSnapshot.getValue();
+                servicoString = servicoString.replace("[","").replace("]","");
+                servicosArray = servicoString.split(",");
+                partner.setCodigoPartner(); // ler do banco e aplicar os dados.
+                partner.setLatitudePartner();
+                partner.setLongitudePartner();
+                partner.setStatusPartner();*/
+
+            }
+            public void onCancelled(DatabaseError databaseError) {
+                //Se ocorrer um erro
+                databaseError.getMessage();
+            }
+
+        });
+
+    }
 
     public String makeURL (double sourcelat, double sourcelog, double destlat, double destlog ){
         StringBuilder urlString = new StringBuilder();
@@ -313,7 +351,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         return urlString.toString();
     }
 
-    public String RetornaJson() throws IOException, JSONException {
+    public String RetornaTempoJson() throws IOException, JSONException {
         String UrlFinal = makeURL( -23.625234244329558,-46.6763037, -23.5360516,-46.6807242);
 
 
