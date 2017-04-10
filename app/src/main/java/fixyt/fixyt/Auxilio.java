@@ -3,6 +3,7 @@ package fixyt.fixyt;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,9 +14,11 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,11 +27,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,9 +47,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +67,7 @@ import java.util.Locale;
 
 public class Auxilio extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
+    private static String TAG;
     private FirebaseAuth firebaseAuth;
     private TextView textCoords;
 
@@ -65,6 +85,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private Button solicitarAuxilio;
     private String servicoString;
     private String placaString;
+    public  Double fromLatitude ;
+    public  Double fromLongitude ;
+    public  Double toLatitude       =    -23.0;
+    public  Double toLongitude      =   -46.66;
+
 
 
 
@@ -78,7 +103,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             finish();
             startActivity(new Intent(this, PreLogin.class));
         }
-
+        //POLITICA DE FUNCIONAMENTO NÃO PODE TIRAR ESSA MERDA DE CODIGO DE MERDA FILHA DA PUTA
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         //Inicio Codigo
         textCoords = (TextView) findViewById(R.id.coordinates);
         textoEndereco = (EditText) findViewById(R.id.enderecoAtual);
@@ -127,7 +157,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
        });
         // QUERY para captar SPINNER de Carros PRECISA VER COMO CAPTURAR AS PLACAS DOS CARROS (Não sei como fazer o query por codigo de veiculo)
-        Query query2 = servicos.child("Motorista/"+ firebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
+        Query query2 = servicos.child("Motorista/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
 
 
         //Aqui NAO TEM CARALHADEASA!!
@@ -189,6 +219,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 String  vLatitude =    String.valueOf(location.getLatitude());
                 String  vLongitude =   String.valueOf(location.getLongitude());
 
+                        fromLatitude = location.getLatitude();
+                        fromLongitude = location.getLongitude();
+
                 CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude, "null");
 
 
@@ -216,16 +249,16 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         };
 
         // OUTRA COISA
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET
-                }, 10);
-                return;
-            }
-        }else{
-            locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.INTERNET
+                    }, 10);
+                    return;
+                }
+            }else{
+                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         }
 
         //locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
@@ -262,15 +295,28 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onClick(View v) {
         if(v == solicitarAuxilio){
             //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
-            CalculadorETA diogoCuzudo= new CalculadorETA();
+          //  CalculadorETA diogoCuzudo= new CalculadorETA();
             //diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude());
+
+    //   tentativa diogo lindo1    try {
+    //           /Toast.makeText(Auxilio.this, queryGoogleDistanceApi("-23.62517109155844,-46.63068254729331", String.valueOf(localizacao.getLatitude()) + "," + String.valueOf(localizacao.getLongitude()), "AIzaSyDe-yV7hy223L4I7O8f2qprbpNQd9IBEqQ").toString(), Toast.LENGTH_SHORT).show();
+    //       } catch (Exception e) {
+    //           e.printStackTrace();
+    //       }
+
             try {
-                Toast.makeText(Auxilio.this, diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Auxilio.this, RetornaJson() , Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+
+            //    try {
+       //       //Toast.makeText(Auxilio.this, diogoCuzudo.obterETA(-23.62517109155844, -46.63068254729331, localizacao.getLatitude(), localizacao.getLongitude()), Toast.LENGTH_SHORT).show();
+       //    } catch (IOException e) {
+       //        e.printStackTrace();
+       //    } catch (JSONException e) {
+       //        e.printStackTrace();
+       //    }
 
         }
         /*if(v == teste){
@@ -282,6 +328,87 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             startActivity(intent);
         }*/
     }
+    /*public JSONObject queryGoogleDistanceApi(String origin, String destination, String API_KEY_PLACES) throws Exception{
+        String Url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin + "&destinations=" + destination + "&mode=driving&language=en&key=" + API_KEY_PLACES;
+
+        HttpURLConnection conn = null;
+        StringBuilder jsonResults = new StringBuilder();
+        URL url = new URL(Url);
+        Log.d(TAG, Url);
+        conn = (HttpURLConnection) url.openConnection();
+        InputStreamReader in = new InputStreamReader(conn.getInputStream());
+        // Load the results into a StringBuilder
+        int read;
+        char[] buff = new char[1024];
+        while ((read = in.read(buff)) != -1) {
+            jsonResults.append(buff, 0, read);
+        }
+        if (conn != null) {
+            conn.disconnect();
+        }
+
+        JSONObject object = new JSONObject(jsonResults.toString());
+        return object;
+    }
+*/
+
+
+    public String makeURL (double sourcelat, double sourcelog, double destlat, double destlog ){
+        StringBuilder urlString = new StringBuilder();
+        urlString.append("https://maps.googleapis.com/maps/api/directions/json");
+        urlString.append("?origin=");// from
+        urlString.append(String.valueOf((sourcelat)));
+                urlString.append(",");
+        urlString.append(String.valueOf( sourcelog));
+        urlString.append("&destination=");// to
+        urlString.append(String.valueOf( destlat));
+        urlString.append(",");
+        urlString.append(String.valueOf(destlog));
+        urlString.append("&sensor=false&mode=driving&alternatives=true");
+        urlString.append("&key=AIzaSyDe-yV7hy223L4I7O8f2qprbpNQd9IBEqQ");
+        return urlString.toString();
+    }
+
+    public String RetornaJson() throws IOException {
+    String UrlBolada = makeURL( -23.625234244329558,-46.6763037, -23.5360516,-46.6807242);
+
+
+    URL url = null;
+            try {
+        url = new URL(UrlBolada);
+    } catch (MalformedURLException e) {
+        e.printStackTrace();
+    }
+
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+    connection.setRequestMethod("GET");
+
+    InputStream is = connection.getInputStream();
+    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+    String pirocaDeTempo;
+        String porraToda ="";
+    while ((pirocaDeTempo = rd.readLine()) != null) {
+     // Toast.makeText(Auxilio.this, pirocaDeTempo , Toast.LENGTH_SHORT).show(); esse cara retorna item por item acho q precisa concatenar  em um so texto para converter dps
+        porraToda =  porraToda + pirocaDeTempo;
+       // System.out.println(pirocaDeTempo); so para imprimir no log
+    }
+    rd.close();
+
+        // SERGIO AGORA TEM Q PEGAR A STRING CONVERTER EM JSON E LER DO JEITO Q ESTA SENDO FEITO AQUI EM BAIXO! E JA ERA MANO...
+
+   //  final JSONObject json = new JSONObject(porraToda);
+  //  JSONArray routeArray = json.getJSONArray("routes");
+  //  JSONObject routes = routeArray.getJSONObject(0);
+  //  JSONObject overviewPolylines = routes.getJSONObject("legs");
+  //  JSONObject duration = overviewPolylines.getJSONObject("duration");
+
+  //  String pirocaDeTempo = overviewPolylines.getString("value");
+
+   return porraToda;
+
+}
+
 }
 
 

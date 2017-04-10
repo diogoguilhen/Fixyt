@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -18,13 +19,13 @@ import java.nio.charset.Charset;
 public class CalculadorETA {
     public String obterETA(double latitude, double longitude, double prelatitute, double prelongitude) throws IOException, JSONException {
         String resultado_em_segundos = "";
-        String url = "https://maps.googleapis.com/maps/api/directions/xml?origin="
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
                 + latitude + "," + longitude + "&destination=" + prelatitute
-                + "," + prelongitude + "&sensor=false&units=metric&key=AIzaSyD5uvH4kSQWM60dsrfk80zcUrqxYqDQ3nc";;
+                + "," + prelongitude + "&sensor=false&units=metric&key=AIzaSyD5uvH4kSQWM60dsrfk80zcUrqxYqDQ3nc";
         String tag[] = { "text" };
 
-        JSONObject json = readJsonFromUrl(url);
-        // final JSONObject json = new JSONObject(result);
+       JSONObject json = readJsonFromUrl(url);
+     //   final JSONObject json = new JSONObject(result);
         JSONArray routeArray = json.getJSONArray("routes");
         JSONObject routes = routeArray.getJSONObject(0);
 
@@ -61,5 +62,10 @@ public class CalculadorETA {
         }
     }
 
+
+
+
 }
+
+
 
