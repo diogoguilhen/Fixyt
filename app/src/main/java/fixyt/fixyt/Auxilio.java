@@ -2,6 +2,7 @@ package fixyt.fixyt;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -49,6 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,12 +75,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private Button solicitarAuxilio;
     private String servicoString;
     private String placaString;
-    public  Double fromLatitude ;
-    public  Double fromLongitude ;
-    public  Double toLatitude       =    -23.0;
-    public  Double toLongitude      =   -46.66;
-
-
+    public Double fromLatitude;
+    public Double fromLongitude;
 
 
     @Override
@@ -92,8 +90,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             startActivity(new Intent(this, PreLogin.class));
         }
         //POLITICA DE FUNCIONAMENTO NÃO PODE TIRAR ESSA MERDA DE CODIGO DE MERDA FILHA DA PUTA
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
@@ -113,39 +110,39 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 .findFragmentById(R.id.gMapView);
         mapFragment.getMapAsync(Auxilio.this);
 
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         localizacao = locationManager.getLastKnownLocation("gps");
 
 
-
-
         // INICIO DE PEGAR OS SERVICOS DO BANCO
-       FirebaseDatabase database = FirebaseDatabase.getInstance();
-       DatabaseReference servicos = database.getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference servicos = database.getReference();
         // QUERY para captar SPINNER de Serviços
-       Query query1 = servicos.child("Servicos/Partner/Guincho");
+        Query query1 = servicos.child("Servicos/Partner/Guincho");
 
-       query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        query1.addListenerForSingleValueEvent(new ValueEventListener() {
 
-           public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 //Passar os dados para a interface grafica
-               servicoString = (String) dataSnapshot.getValue();
-               servicoString = servicoString.replace("[","").replace("]","");
-               servicosArray = servicoString.split(",");
-               ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, servicosArray);
-               adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-               spinnerReparo.setAdapter(adaptadorServico);
+                servicoString = (String) dataSnapshot.getValue();
+                servicoString = servicoString.replace("[", "").replace("]", "");
+                servicosArray = servicoString.split(",");
+                ArrayAdapter<String> adaptadorServico = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, servicosArray);
+                adaptadorServico.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerReparo.setAdapter(adaptadorServico);
 
-           }
-           public void onCancelled(DatabaseError databaseError) {
-               //Se ocorrer um erro
-               databaseError.getMessage();
-           }
+            }
 
-       });
+            public void onCancelled(DatabaseError databaseError) {
+                //Se ocorrer um erro
+                databaseError.getMessage();
+            }
+
+        });
         // QUERY para captar SPINNER de Carros PRECISA VER COMO CAPTURAR AS PLACAS DOS CARROS (Não sei como fazer o query por codigo de veiculo)
-        Query query2 = servicos.child("Motorista/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Veiculos");
+        Query query2 = servicos.child("Motorista/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Veiculos");
 
 
         query2.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -154,7 +151,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 placaCarros = new String[]{""};
                 placaString = "";
 
-                for(DataSnapshot alert: dataSnapshot.getChildren()){
+                for (DataSnapshot alert : dataSnapshot.getChildren()) {
                     //System.out.println(alert.child("veiculoPlaca").getValue());
                     placaString = placaString.concat("," + alert.child("veiculoPlaca").getValue().toString() + " - " + alert.child("veiculoMarca").getValue().toString() + " " + alert.child("veiculoModelo").getValue().toString());
                 }
@@ -167,26 +164,25 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 Toast.makeText(Auxilio.this, placaString, Toast.LENGTH_SHORT).show();
                 //Passar os dados para a interface grafica
             }
+
             public void onCancelled(DatabaseError databaseError) {
                 //Se ocorrer um erro
                 databaseError.getMessage();
             }
 
         });
-    //   /// FIM DO GET DO BANCO
+        //   /// FIM DO GET DO BANCO
 
         //Transformação da LatLang para Endereço e mostrar no TextView da tela.
-        try{
+        try {
             Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
             List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
             if (addresses.isEmpty()) {
                 textoEndereco.setText("Não encontramos sua localização!");
-            }
-            else {
+            } else {
                 textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -200,16 +196,16 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
 
-                userKey =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+                userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String key = userKey;
 
-                String  vLatitude =    String.valueOf(location.getLatitude());
-                String  vLongitude =   String.valueOf(location.getLongitude());
+                String vLatitude = String.valueOf(location.getLatitude());
+                String vLongitude = String.valueOf(location.getLongitude());
 
-                        fromLatitude = location.getLatitude();
-                        fromLongitude = location.getLongitude();
+                fromLatitude = location.getLatitude();
+                fromLongitude = location.getLongitude();
 
-                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude,vLongitude, "null");
+                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, "null");
 
 
                 localizacao.child(key).setValue(diogoLindo);
@@ -227,6 +223,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             public void onProviderEnabled(String provider) {
 
             }
+
             @Override
             public void onProviderDisabled(String provider) {
                 Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
@@ -236,30 +233,28 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         };
 
         // OUTRA COISA
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.INTERNET
-                    }, 10);
-                    return;
-                }
-            }else{
-                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.INTERNET
+                }, 10);
+                return;
+            }
+        } else {
+            locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         }
 
         //locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-
-
 
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 10:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
                 return;
         }
@@ -274,17 +269,24 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         gMap.setMyLocationEnabled(true);
         //gMap.animateCamera(CameraUpdateFactory.newLatLng(atual));
 
-      //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
+        //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
 
     }
 
     @Override
     public void onClick(View v) {
-        if(v == solicitarAuxilio){
+        if (v == solicitarAuxilio) {
             //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
-            ArrayList<PartnersProximos> listagemPartnersProximos = new ArrayList<>();
-            PartnersProximos exemplo1 = new PartnersProximos();
-            capturarPartners(exemplo1);
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            localizacao = locationManager.getLastKnownLocation("gps");
+            /*try {
+                System.out.println("TEMPO DE VIAGEM em 0:  " + RetornaTempoJson(localizacao.getLatitude(), localizacao.getLongitude(), "-19.92171275", "-43.94256592"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+            capturarPartners(localizacao);
 
             /*try {
                 Toast.makeText(Auxilio.this, "Tempo de Viagem: " + RetornaTempoJson() + " segundos para o destino" , Toast.LENGTH_SHORT).show();
@@ -299,24 +301,38 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     }
 
-    public void capturarPartners(final PartnersProximos partner){
+    public void capturarPartners(final Location location) {
         //Inicio de Query para capturar os dados do banco de partners
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference partners = database.getReference();
 
-        Query queryPartners = partners.child("Localizacoes/Partner/");
+        Query queryPartners = partners.child("Localizacoes/Partner");
 
         queryPartners.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Passar os dados para o objeto
-                String dadosPartner = "";
 
-                for(DataSnapshot alert: dataSnapshot.getChildren()){
+                ArrayList<PartnersProximos> listagemPartnersProximos = new ArrayList<>();
+                PartnersProximos partner = new PartnersProximos();
+                for (DataSnapshot alert : dataSnapshot.getChildren()) {
+                    partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
+                    partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
+                    partner.setStatusPartner(alert.child("vOnline").getValue().toString());
+                    partner.setCodigoPartner(alert.getKey().toString());
+                    try {
+                        partner.setTempoAteMotorista(RetornaTempoJson(location.getLatitude(), location.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista());
+                    listagemPartnersProximos.add(partnerfinal);
 
-                    dadosPartner = dadosPartner.concat("," + alert.child("vLatitude").getValue().toString() + "," + alert.child("vLongitude").getValue().toString() + "," + alert.child("vOnline").getValue().toString());
                 }
-                Toast.makeText(Auxilio.this, dadosPartner , Toast.LENGTH_SHORT).show();
+                System.out.println("TEMPO DE VIAGEM em 0:  " + listagemPartnersProximos.get(0).getTempoAteMotorista() + "TEMPO DE VIAGEM em 1:  " + listagemPartnersProximos.get(1).getTempoAteMotorista());
+                Toast.makeText(Auxilio.this, String.valueOf(location.getLatitude()) + String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
                 /*servicoString = (String) dataSnapshot.getValue();
                 servicoString = servicoString.replace("[","").replace("]","");
                 servicosArray = servicoString.split(",");
@@ -326,37 +342,37 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 partner.setStatusPartner();*/
 
             }
+
             public void onCancelled(DatabaseError databaseError) {
                 //Se ocorrer um erro
                 databaseError.getMessage();
             }
 
         });
-
     }
 
-    public String makeURL (double sourcelat, double sourcelog, double destlat, double destlog ){
+    public String makeURL(double sourcelat, double sourcelog, String destlat, String destlog) {
         StringBuilder urlString = new StringBuilder();
         urlString.append("https://maps.googleapis.com/maps/api/directions/json");
         urlString.append("?origin=");// Localização Origem
-        urlString.append(String.valueOf((sourcelat)));
-                urlString.append(",");
-        urlString.append(String.valueOf( sourcelog));
-        urlString.append("&destination=");// Localização Destino
-        urlString.append(String.valueOf( destlat));
+        urlString.append(String.valueOf(sourcelat));
         urlString.append(",");
-        urlString.append(String.valueOf(destlog));
+        urlString.append(String.valueOf(sourcelog));
+        urlString.append("&destination=");// Localização Destino
+        urlString.append(destlat);
+        urlString.append(",");
+        urlString.append(destlog);
         urlString.append("&sensor=false&mode=driving&alternatives=true");
         urlString.append("&key=AIzaSyDe-yV7hy223L4I7O8f2qprbpNQd9IBEqQ");
         return urlString.toString();
     }
 
-    public String RetornaTempoJson() throws IOException, JSONException {
-        String UrlFinal = makeURL( -23.625234244329558,-46.6763037, -23.5360516,-46.6807242);
+    public int RetornaTempoJson(double origemLat, double origemLong, String destLat, String destLong) throws IOException, JSONException {
+        String UrlFinal = makeURL(origemLat, origemLong, destLat, destLong);
 
 
         URL url = null;
-                try {
+        try {
             url = new URL(UrlFinal);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -370,27 +386,26 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
         // String temporario onde guardar os dados que vem do URL.
         String directionMaps;
-            String objetoMaps ="";
+        String objetoMaps = "";
         while ((directionMaps = rd.readLine()) != null) {
 
-            objetoMaps =  objetoMaps + directionMaps;
+            objetoMaps = objetoMaps + directionMaps;
 
         }
         rd.close();
 
         //Parse (leitura) do JSON (que vem do Directions API)
+
         JSONObject raiz = new JSONObject(objetoMaps);
         JSONArray routeArray = raiz.getJSONArray("routes");
         JSONObject routes = routeArray.getJSONObject(0);
         JSONArray overPernas = routes.getJSONArray("legs");
         JSONObject perna = overPernas.getJSONObject(0);
         JSONObject duracao = perna.getJSONObject("duration");
-        String tempoDeViagem = duracao.getString("value");
+        int tempoDeViagem = duracao.getInt("value");
 
-       return tempoDeViagem;
-
+        return tempoDeViagem;
     }
-
 }
 
 

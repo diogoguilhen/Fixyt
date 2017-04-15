@@ -1,6 +1,7 @@
 package fixyt.fixyt;
 
 
+import android.icu.text.MessagePattern;
 
 public class PartnersProximos extends Auxilio{
     //Variáveis do objeto
@@ -12,6 +13,18 @@ public class PartnersProximos extends Auxilio{
     private int tempoAteMotorista;
 
     //Construtor em Lista
+
+    public PartnersProximos(){
+
+    }
+
+    public PartnersProximos(String codigoPartner, String statusPartner, String latitudePartner, String longitudePartner, int tempoAteMotorista) {
+        this.codigoPartner = codigoPartner;
+        this.statusPartner = statusPartner;
+        this.latitudePartner = latitudePartner;
+        this.longitudePartner = longitudePartner;
+        this.tempoAteMotorista = tempoAteMotorista;
+    }
 
 
 
