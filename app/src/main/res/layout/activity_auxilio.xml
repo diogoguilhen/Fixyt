@@ -19,50 +19,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Spinner
-        android:id="@+id/spinnerServico"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-
-        android:layout_alignEnd="@+id/pontoRef"
-        android:layout_alignLeft="@+id/pontoRef"
-        android:layout_alignRight="@+id/pontoRef"
-        android:layout_alignStart="@+id/pontoRef"
-        android:layout_below="@+id/pontoRef"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="36dp"
-        android:background="@android:drawable/btn_dropdown" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:orientation="horizontal"
         android:id="@+id/linearLayout3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/gMapView"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="271dp"
-        tools:context="fixyt.fixyt.Auxilio" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/coordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="230dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_marginLeft="82dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="10dp" />
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+
+        <fragment
+            android:id="@+id/gMapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="238dp"
+            tools:context="fixyt.fixyt.Auxilio" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinnerServico"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+
+        android:layout_alignLeft="@+id/pontoRef"
+        android:layout_alignStart="@+id/pontoRef"
+        android:layout_below="@+id/textView3"
+        android:layout_gravity="center_vertical"
+        android:background="@android:drawable/btn_dropdown" />
 
     <EditText
         android:id="@+id/enderecoAtual"
@@ -70,53 +54,52 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="14sp"
-        android:layout_alignBaseline="@+id/coordinates"
-        android:layout_alignBottom="@+id/coordinates"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/pontoRef"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enderecoAtual"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Ponto de Referência"
         android:inputType="textPersonName"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/enderecoAtual"
-        android:layout_centerHorizontal="true" />
+        android:textSize="14sp" />
 
     <Spinner
         android:id="@+id/spinnerVeiculo"
         android:layout_width="wrap_content"
-        android:layout_height="37dp"
+        android:layout_height="30dp"
 
-        android:layout_gravity="center_vertical"
-        android:background="@android:drawable/btn_dropdown"
-        android:layout_below="@+id/textView4"
+        android:layout_alignEnd="@+id/spinnerServico"
         android:layout_alignLeft="@+id/spinnerServico"
-        android:layout_alignStart="@+id/spinnerServico"
         android:layout_alignRight="@+id/spinnerServico"
-        android:layout_alignEnd="@+id/spinnerServico" />
+        android:layout_alignStart="@+id/spinnerServico"
+        android:layout_below="@+id/textView4"
+        android:layout_gravity="center_vertical"
+        android:background="@android:drawable/btn_dropdown" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Qual o seu veículo?"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layout_below="@+id/spinnerServico"
-        android:layout_alignLeft="@+id/botSolicitar"
-        android:layout_alignStart="@+id/botSolicitar" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pontoRef"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
         android:text="Selecione Um Serviço:"
-        android:textSize="18sp" />
+        android:textSize="14sp"
+        android:layout_below="@+id/pontoRef"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/botSolicitar"
@@ -126,6 +109,25 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="11dp" />
+
+    <TextView
+        android:id="@+id/namePartner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerVeiculo"
+        android:layout_marginTop="34dp"
+        android:layout_toLeftOf="@+id/textView4"
+        android:layout_toStartOf="@+id/textView4"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/placaPartner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/namePartner"
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="" />
 
 
 </RelativeLayout>
