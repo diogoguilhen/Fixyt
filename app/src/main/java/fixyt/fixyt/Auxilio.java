@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,6 +91,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private TextView partnerName, partnerETA;
     public String nomePartner;
     private ProgressDialog progresso;
+    private Double latMec = 0.0;
+    private Double lngMec = 0.0;
+    private Marker mecanicoPosition;
 
 
 
@@ -328,6 +332,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
                 capturarPartners(localizacao);
+                atualizarPosMecanico();
                 atualizarPos.setVisibility(View.VISIBLE);
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
@@ -337,6 +342,48 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         if (v == atualizarPos){
 
         }
+
+    }
+
+    private void atualizarPosMecanico() {
+        //Inicio de Query para capturar os dados de localização do Partner em atendimento
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference posicaoPartner = database.getReference();
+
+        Query queryPosPartner = posicaoPartner.child("Localizacoes/Partner");
+
+        queryPosPartner.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                //Atualizar posição do mecanico no mapa.
+
+                latMec = Double.valueOf(dataSnapshot.child("vLatitude").getValue().toString());
+                lngMec = Double.valueOf(dataSnapshot.child("vLongitude").getValue().toString());
+                LatLng posMec = new LatLng(latMec, lngMec);
+                mecanicoPosition.setPosition(posMec);
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -400,7 +447,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                                 .tilt(45)                   // Sets the tilt of the camera to 30 degrees
                                 .build();                   // Creates a CameraPosition from the builder
                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        Marker mecanicoPosition = gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
+                        mecanicoPosition = gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
                         //Verificar bounds entre motorista e mecanico para fazer zoom na camera.
                         /*
                         LatLngBounds.Builder builder = new LatLngBounds.Builder();
