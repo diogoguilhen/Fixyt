@@ -356,6 +356,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 lngMec = dataSnapshot.child("vLongitude").getValue().toString();
                 LatLng posMec = new LatLng(Double.parseDouble(latMec), Double.parseDouble(lngMec));
                 mecanicoPosition.setPosition(posMec);
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(posMec)      // Sets the center of the map to Mountain View
+                        .zoom(14)                   // Sets the zoom
+                        .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                        .build();                   // Creates a CameraPosition from the builder
+                gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 try {
                     tempoAtualizado = RetornaTempoJson(localizacao.getLatitude(), localizacao.getLongitude(), latMec, lngMec);
                 } catch (IOException e) {
