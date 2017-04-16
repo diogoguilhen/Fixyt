@@ -3,7 +3,6 @@ package fixyt.fixyt;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -29,10 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,19 +49,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-
 import java.net.URL;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 
 
@@ -421,11 +412,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                         e.printStackTrace();
                     }
 
-                    if(partner.getStatusPartner() == "1" && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString())){
+
+                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString())){
                         PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista());
                         listagemPartnersProximos.add(partnerfinal);
                     }
-
 
 
                 }
@@ -440,11 +431,13 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
                 DatabaseReference partnerNomePlaca = databaseName.getReference();
 
-                String codAt = atendente.getCodigoPartner() + "-" + FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DatabaseReference noAtendimento = databaseName.getReference("Em Atendimento/" + codAt );
-                Atendimento atendimento = new Atendimento();
-                atendimento.setHorarioAtendimento(String.valueOf(System.currentTimeMillis()));
-                noAtendimento.setValue(atendimento);
+                String codAt = (atendente.getCodigoPartner().toString() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
+
+                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())));
+                noAtendimento.child(codAt).setValue(atendimento);
 
                 Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
 

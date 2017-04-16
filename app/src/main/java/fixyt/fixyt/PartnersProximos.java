@@ -16,7 +16,7 @@ public class PartnersProximos extends Auxilio{
     //Construtor em Lista
 
     public PartnersProximos(){
-
+        super();
     }
 
     public PartnersProximos(String codigoPartner, String statusPartner, String latitudePartner, String longitudePartner, int tempoAteMotorista) {

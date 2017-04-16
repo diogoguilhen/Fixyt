@@ -1,17 +1,18 @@
 package fixyt.fixyt;
 
 
-public class Atendimento extends Auxilio{
+public class Atendimento {
     //Variaveis do Objeto
-    private String horarioAtendimento;
+    public String horarioAtendimento;
 
     // construtor
 
     public Atendimento() {
-
+        super();
     }
 
     public Atendimento(String horarioAtendimento) {
+
         this.horarioAtendimento = horarioAtendimento;
     }
 
