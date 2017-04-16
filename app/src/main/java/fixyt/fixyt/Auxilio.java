@@ -58,8 +58,10 @@ import java.net.MalformedURLException;
 
 import java.net.URL;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -437,11 +439,19 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
                 DatabaseReference partnerNomePlaca = databaseName.getReference();
+
+                String codAt = atendente.getCodigoPartner() + "-" + FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference noAtendimento = databaseName.getReference("Em Atendimento/" + codAt );
+                Atendimento atendimento = new Atendimento();
+                atendimento.setHorarioAtendimento(String.valueOf(System.currentTimeMillis()));
+                noAtendimento.setValue(atendimento);
+
                 Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
 
                 queryNamePartnerFinal.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         double lat = Double.parseDouble(atendente.getLatitudePartner());
                         double lng = Double.parseDouble(atendente.getLongitudePartner());
                         LatLng posicaoPartner = new LatLng(lat, lng);
