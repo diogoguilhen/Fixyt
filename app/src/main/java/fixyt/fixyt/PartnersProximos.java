@@ -9,6 +9,7 @@ public class PartnersProximos extends Auxilio{
     private String statusPartner;
     private String latitudePartner;
     private String longitudePartner;
+    private String servicoPartner;
     private int distanciaAteMotorista;
     private int tempoAteMotorista;
 
@@ -29,6 +30,15 @@ public class PartnersProximos extends Auxilio{
 
 
     //Getters e Setters
+
+
+    public String getServicoPartner() {
+        return servicoPartner;
+    }
+
+    public void setServicoPartner(String servicoPartner) {
+        this.servicoPartner = servicoPartner;
+    }
 
     public String getCodigoPartner() {
         return codigoPartner;

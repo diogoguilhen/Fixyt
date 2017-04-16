@@ -40,7 +40,7 @@
     <Spinner
         android:id="@+id/spinnerServico"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="37dp"
 
         android:layout_alignLeft="@+id/pontoRef"
         android:layout_alignStart="@+id/pontoRef"
@@ -73,7 +73,7 @@
     <Spinner
         android:id="@+id/spinnerVeiculo"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="37dp"
 
         android:layout_alignEnd="@+id/spinnerServico"
         android:layout_alignLeft="@+id/spinnerServico"
@@ -114,20 +114,20 @@
         android:id="@+id/namePartner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
         android:layout_below="@+id/spinnerVeiculo"
-        android:layout_marginTop="34dp"
-        android:layout_toLeftOf="@+id/textView4"
-        android:layout_toStartOf="@+id/textView4"
-        android:text="" />
-
+        android:layout_centerHorizontal="true" />
     <TextView
-        android:id="@+id/placaPartner"
+        android:id="@+id/tempoETA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/namePartner"
-        android:layout_toEndOf="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
-        android:text="" />
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@+id/namePartner"
+        android:layout_centerHorizontal="true" />
+
+
 
 
 </RelativeLayout>

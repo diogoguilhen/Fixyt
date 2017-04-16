@@ -80,7 +80,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private String placaString;
     public Double fromLatitude;
     public Double fromLongitude;
-    private TextView partnerName, partnerPlaque;
+    private TextView partnerName, partnerETA;
+    public String nomePartner;
+    private ProgressDialog progresso;
+
+
 
 
     @Override
@@ -106,7 +110,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         spinnerReparo = (Spinner) findViewById(R.id.spinnerServico);
         spinnerCarros = (Spinner) findViewById(R.id.spinnerVeiculo);
         partnerName = (TextView) findViewById(R.id.namePartner);
-        partnerPlaque = (TextView) findViewById(R.id.placaPartner);
+        partnerETA = (TextView) findViewById(R.id.tempoETA);
+
 
         solicitarAuxilio.setTag(0);
         solicitarAuxilio.setText("Solicitar Auxilio");
@@ -287,23 +292,20 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             final int status = (int) v.getTag();
             if(status == 1){
                 solicitarAuxilio.setText("Solicitar Auxilio");
+                partnerName.setText("");
+                partnerETA.setText("");
                 Toast.makeText(Auxilio.this, "Solicitação cancelada com Sucesso!", Toast.LENGTH_SHORT).show();
                 v.setTag(0);
             } else{
                 //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 localizacao = locationManager.getLastKnownLocation("gps");
-                /*try {
-                    System.out.println("TEMPO DE VIAGEM em 0:  " + RetornaTempoJson(localizacao.getLatitude(), localizacao.getLongitude(), "-19.92171275", "-43.94256592"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-                ProgressDialog progresso = new ProgressDialog(Auxilio.this);
+
+
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
                 capturarPartners(localizacao);
+
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
 
@@ -344,6 +346,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
                     partner.setStatusPartner(alert.child("vOnline").getValue().toString());
                     partner.setCodigoPartner(alert.getKey().toString());
+                    partner.setServicoPartner(alert.child("vServico").getValue().toString());
                     try {
                         partner.setTempoAteMotorista(RetornaTempoJson(location.getLatitude(), location.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
                     } catch (IOException e) {
@@ -352,7 +355,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                         e.printStackTrace();
                     }
 
-                    if(partner.getStatusPartner() == "1" && partner.getTempoAteMotorista() != 0){
+                    if(partner.getStatusPartner() == "1" && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString())){
                         PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista());
                         listagemPartnersProximos.add(partnerfinal);
                     }
@@ -361,11 +364,34 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
                 }
                 int indicePartnerMenorTempo = RetornaIndicePartnerMenorTempo(listagemPartnersProximos);
-                PartnersProximos atendente = new PartnersProximos();
+                final PartnersProximos atendente = new PartnersProximos();
                 atendente.setCodigoPartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getCodigoPartner());
                 atendente.setTempoAteMotorista(listagemPartnersProximos.get(indicePartnerMenorTempo).getTempoAteMotorista());
+                final int minutagem = (atendente.getTempoAteMotorista()/60);
 
-                //System.out.println("Menor tempo de Viagem:  " + atendente.getTempoAteMotorista() + " Codigo do Motorista  " + atendente.getCodigoPartner());
+                FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
+                DatabaseReference partnerNomePlaca = databaseName.getReference();
+                Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
+
+                queryNamePartnerFinal.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nomePartner = (dataSnapshot.child("nome").getValue() + " " + dataSnapshot.child("sobrenome").getValue());
+                        partnerName.setText("O nome do mecanico é : " + nomePartner);
+                        partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
+                        progresso.dismiss();
+                        Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
                 //Toast.makeText(Auxilio.this, String.valueOf(location.getLatitude()) + String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
 
             }
