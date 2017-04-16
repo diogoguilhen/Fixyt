@@ -83,7 +83,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private String[] servicosArray;
     private String[] placaCarros;
     private Button solicitarAuxilio;
-    private Button atualizarPos;
     private String servicoString;
     private String placaString;
     public Double fromLatitude;
@@ -91,9 +90,10 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private TextView partnerName, partnerETA;
     public String nomePartner;
     private ProgressDialog progresso;
-    private Double latMec = 0.0;
-    private Double lngMec = 0.0;
+    private String latMec = "";
+    private String lngMec = "";
     private Marker mecanicoPosition;
+    private int tempoAtualizado = 0;
 
 
 
@@ -122,15 +122,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         spinnerCarros = (Spinner) findViewById(R.id.spinnerVeiculo);
         partnerName = (TextView) findViewById(R.id.namePartner);
         partnerETA = (TextView) findViewById(R.id.tempoETA);
-        atualizarPos = (Button) findViewById(R.id.atualizarPosMec);
 
 
         solicitarAuxilio.setTag(0);
         solicitarAuxilio.setText("Solicitar Auxilio");
         solicitarAuxilio.setOnClickListener(this);
-        atualizarPos.setTag(0);
-        atualizarPos.setVisibility(View.INVISIBLE);
-        atualizarPos.setOnClickListener(this);
 
 
         //
@@ -234,7 +230,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 fromLatitude = location.getLatitude();
                 fromLongitude = location.getLongitude();
 
-                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, "null");
+                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, pontoReferencia.getText().toString());
 
 
                 localizacao.child(key).setValue(diogoLindo);
@@ -316,7 +312,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             final int status = (int) v.getTag();
             if(status == 1){
                 solicitarAuxilio.setText("Solicitar Auxilio");
-                atualizarPos.setVisibility(View.INVISIBLE);
                 partnerName.setText("");
                 partnerETA.setText("");
                 gMap.clear();
@@ -333,16 +328,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.show();
                 capturarPartners(localizacao);
                 atualizarPosMecanico();
-                atualizarPos.setVisibility(View.VISIBLE);
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
 
             }
         }
-        if (v == atualizarPos){
-
-        }
-
     }
 
     private void atualizarPosMecanico() {
@@ -362,10 +352,18 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 //Atualizar posição do mecanico no mapa.
 
-                latMec = Double.valueOf(dataSnapshot.child("vLatitude").getValue().toString());
-                lngMec = Double.valueOf(dataSnapshot.child("vLongitude").getValue().toString());
-                LatLng posMec = new LatLng(latMec, lngMec);
+                latMec = dataSnapshot.child("vLatitude").getValue().toString();
+                lngMec = dataSnapshot.child("vLongitude").getValue().toString();
+                LatLng posMec = new LatLng(Double.parseDouble(latMec), Double.parseDouble(lngMec));
                 mecanicoPosition.setPosition(posMec);
+                try {
+                    tempoAtualizado = RetornaTempoJson(localizacao.getLatitude(), localizacao.getLongitude(), latMec, lngMec);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                partnerETA.setText("Tempo estimado de chegada é: " + (tempoAtualizado/60) + " Minutos.");
 
             }
 

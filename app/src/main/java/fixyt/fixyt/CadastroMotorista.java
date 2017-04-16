@@ -38,7 +38,7 @@ public class CadastroMotorista implements Parcelable{
     //INSERCAO DA PARTE DE VARIAVEIS DA LOCALIZAÇÃO
     private String vLatitude;
     private String vLongitude;
-    private String EnderecoCompleto;
+    private String pontoReferencia;
 
 
     public CadastroMotorista() {
@@ -87,10 +87,10 @@ public class CadastroMotorista implements Parcelable{
      //  this.veiculoCor = veiculoCor;
     }
 
-    public CadastroMotorista(String vLatitude, String vLongitude, String EnderecoCompleto) {
+    public CadastroMotorista(String vLatitude, String vLongitude, String pontoReferencia) {
         this.vLatitude = vLatitude;
         this.vLongitude = vLongitude;
-        this.EnderecoCompleto = EnderecoCompleto;
+        this.pontoReferencia = pontoReferencia;
     }
 
     // Utilizando objetos como parcelável
@@ -386,12 +386,12 @@ public class CadastroMotorista implements Parcelable{
         this.vLongitude = vLongitude;
     }
 
-    public String getEnderecoCompleto() {
-        return EnderecoCompleto;
+    public String getPontoReferencia() {
+        return pontoReferencia;
     }
 
-    public void setEnderecoCompleto(String enderecoCompleto) {
-        EnderecoCompleto = enderecoCompleto;
+    public void setPontoReferencia(String pontoReferencia) {
+        pontoReferencia = pontoReferencia;
     }
 }
 
