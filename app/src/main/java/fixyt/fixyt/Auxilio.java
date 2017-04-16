@@ -174,7 +174,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 ArrayAdapter<String> adaptadorPlacas = new ArrayAdapter<String>(Auxilio.this, android.R.layout.simple_spinner_item, placaCarros);
                 adaptadorPlacas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCarros.setAdapter(adaptadorPlacas);
-                Toast.makeText(Auxilio.this, placaString, Toast.LENGTH_SHORT).show();
+
                 //Passar os dados para a interface grafica
             }
 
@@ -310,19 +310,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 solicitarAuxilio.setText("Cancelar Solicitação");
 
             }
-
-
-
-
-            /*try {
-                Toast.makeText(Auxilio.this, "Tempo de Viagem: " + RetornaTempoJson() + " segundos para o destino" , Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-
         }
 
     }
