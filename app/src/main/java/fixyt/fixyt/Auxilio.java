@@ -301,7 +301,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 localizacao = locationManager.getLastKnownLocation("gps");
 
-
+                progresso = new ProgressDialog(this);
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
                 capturarPartners(localizacao);
