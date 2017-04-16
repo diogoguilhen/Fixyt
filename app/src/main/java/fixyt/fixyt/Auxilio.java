@@ -82,6 +82,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private String[] servicosArray;
     private String[] placaCarros;
     private Button solicitarAuxilio;
+    private Button atualizarPos;
     private String servicoString;
     private String placaString;
     public Double fromLatitude;
@@ -117,11 +118,16 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         spinnerCarros = (Spinner) findViewById(R.id.spinnerVeiculo);
         partnerName = (TextView) findViewById(R.id.namePartner);
         partnerETA = (TextView) findViewById(R.id.tempoETA);
+        atualizarPos = (Button) findViewById(R.id.atualizarPosMec);
 
 
         solicitarAuxilio.setTag(0);
         solicitarAuxilio.setText("Solicitar Auxilio");
         solicitarAuxilio.setOnClickListener(this);
+        atualizarPos.setTag(0);
+        atualizarPos.setVisibility(View.INVISIBLE);
+        atualizarPos.setOnClickListener(this);
+
 
         //
 
@@ -306,10 +312,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             final int status = (int) v.getTag();
             if(status == 1){
                 solicitarAuxilio.setText("Solicitar Auxilio");
+                atualizarPos.setVisibility(View.INVISIBLE);
                 partnerName.setText("");
                 partnerETA.setText("");
                 gMap.clear();
-
+                onMapReady(gMap);
                 Toast.makeText(Auxilio.this, "Solicitação cancelada com Sucesso!", Toast.LENGTH_SHORT).show();
                 v.setTag(0);
             } else{
@@ -321,11 +328,14 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
                 capturarPartners(localizacao);
-
+                atualizarPos.setVisibility(View.VISIBLE);
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
 
             }
+        }
+        if (v == atualizarPos){
+
         }
 
     }
@@ -390,7 +400,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                                 .tilt(45)                   // Sets the tilt of the camera to 30 degrees
                                 .build();                   // Creates a CameraPosition from the builder
                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
+                        Marker mecanicoPosition = gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
                         //Verificar bounds entre motorista e mecanico para fazer zoom na camera.
                         /*
                         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -457,7 +467,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        //connection.setRequestMethod("GET");
+        connection.setRequestMethod("GET");
 
         InputStream is = connection.getInputStream();
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
