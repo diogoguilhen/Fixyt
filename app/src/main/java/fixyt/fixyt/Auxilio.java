@@ -25,10 +25,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -280,9 +286,17 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
 
         gMap.setMyLocationEnabled(true);
-        //gMap.animateCamera(CameraUpdateFactory.newLatLng(atual));
+        LatLng latLng = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
+        //float zoomLevel = 16; //This goes up to 21
 
-        //  gMap.addMarker(new MarkerOptions().position(atual).title("Marker in Sydney"));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)      // Sets the center of the map to Mountain View
+                .zoom(14)                   // Sets the zoom
+                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
 
     }
 
@@ -294,6 +308,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 solicitarAuxilio.setText("Solicitar Auxilio");
                 partnerName.setText("");
                 partnerETA.setText("");
+                gMap.clear();
+
                 Toast.makeText(Auxilio.this, "Solicitação cancelada com Sucesso!", Toast.LENGTH_SHORT).show();
                 v.setTag(0);
             } else{
@@ -354,6 +370,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 final PartnersProximos atendente = new PartnersProximos();
                 atendente.setCodigoPartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getCodigoPartner());
                 atendente.setTempoAteMotorista(listagemPartnersProximos.get(indicePartnerMenorTempo).getTempoAteMotorista());
+                atendente.setLatitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLatitudePartner());
+                atendente.setLongitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLongitudePartner());
                 final int minutagem = (atendente.getTempoAteMotorista()/60);
 
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
@@ -363,6 +381,24 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 queryNamePartnerFinal.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        double lat = Double.parseDouble(atendente.getLatitudePartner());
+                        double lng = Double.parseDouble(atendente.getLongitudePartner());
+                        LatLng posicaoPartner = new LatLng(lat, lng);
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(posicaoPartner)      // Sets the center of the map to Mountain View
+                                .zoom(14)                   // Sets the zoom
+                                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                                .build();                   // Creates a CameraPosition from the builder
+                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
+                        //Verificar bounds entre motorista e mecanico para fazer zoom na camera.
+                        /*
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        for (Marker marker : markers) {
+                            builder.include(marker.getPosition());
+                        }
+                        LatLngBounds bounds = builder.build();*/
+
                         nomePartner = (dataSnapshot.child("nome").getValue() + " " + dataSnapshot.child("sobrenome").getValue());
                         partnerName.setText("O nome do mecanico é : " + nomePartner);
                         partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
