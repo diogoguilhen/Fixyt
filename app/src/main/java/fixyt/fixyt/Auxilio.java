@@ -87,6 +87,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private String lngMec = "";
     private Marker mecanicoPosition;
     private int tempoAtualizado = 0;
+    private PartnersProximos atendente;
 
 
 
@@ -321,11 +322,58 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.show();
                 capturarPartners(localizacao);
                 atualizarPosMecanico();
+
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
 
             }
         }
+    }
+
+    private void aguardarAceitarMecanico(PartnersProximos atendente) {
+        //Inicio de Query para capturar os dados de localização do Partner em atendimento
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference emAtendimento = database.getReference();
+        String codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Query queryAtendimento = emAtendimento.child("EmAtendimento/" + codAt );
+
+        queryAtendimento.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                //Chamado foi aceito pelo motorista
+                progresso.dismiss();
+                Toast.makeText(Auxilio.this, "O Mecanico aceitou seu pedido!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                solicitarAuxilio.setText("Solicitar Auxilio");
+                partnerName.setText("");
+                partnerETA.setText("");
+                gMap.clear();
+                onMapReady(gMap);
+                Toast.makeText(Auxilio.this, "Solicitação cancelada ou não aceita pelo mecanico!", Toast.LENGTH_SHORT).show();
+                solicitarAuxilio.setTag(0);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     private void atualizarPosMecanico() {
@@ -431,12 +479,14 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
                 DatabaseReference partnerNomePlaca = databaseName.getReference();
 
-                String codAt = (atendente.getCodigoPartner().toString() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                String codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
                 DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
+                aguardarAceitarMecanico(atendente);
 
-                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())));
+                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())), "-1");
+
                 noAtendimento.child(codAt).setValue(atendimento);
 
                 Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
@@ -468,6 +518,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                         partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
                         progresso.dismiss();
                         Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
+
+                        progresso.setMessage("Aguardando Aceitação do Mecanico...");
+                        progresso.show();
 
                     }
 

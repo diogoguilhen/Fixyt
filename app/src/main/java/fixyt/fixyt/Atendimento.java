@@ -4,6 +4,7 @@ package fixyt.fixyt;
 public class Atendimento {
     //Variaveis do Objeto
     public String horarioAtendimento;
+    public String statusAceitacao;
 
     // construtor
 
@@ -11,9 +12,10 @@ public class Atendimento {
         super();
     }
 
-    public Atendimento(String horarioAtendimento) {
+    public Atendimento(String horarioAtendimento, String statusAceitacao) {
 
         this.horarioAtendimento = horarioAtendimento;
+        this.statusAceitacao = statusAceitacao;
     }
 
 
@@ -25,6 +27,14 @@ public class Atendimento {
 
     public void setHorarioAtendimento(String horarioAtendimento) {
         this.horarioAtendimento = horarioAtendimento;
+    }
+
+    public String getStatusAceitacao() {
+        return statusAceitacao;
+    }
+
+    public void setStatusAceitacao(String statusAceitacao) {
+        this.statusAceitacao = statusAceitacao;
     }
 }
 
