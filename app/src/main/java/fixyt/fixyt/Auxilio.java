@@ -215,14 +215,16 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 // Mostrar localizaçao no mapa
                 LatLng latLng = new LatLng(fromLatitude, fromLongitude);
                 //float zoomLevel = 16; //This goes up to 21
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(latLng)      // Sets the center of the map to Mountain View
+                        .zoom(14)                   // Sets the zoom
+                        .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                        .build();                   // Creates a CameraPosition from the builder
+                gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
                 if(contadorLeituraMapa == 0) {
 
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLng)      // Sets the center of the map to Mountain View
-                            .zoom(14)                   // Sets the zoom
-                            .tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                            .build();                   // Creates a CameraPosition from the builder
-                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    gMap.setMyLocationEnabled(true);
 
                     try {
                         Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
@@ -235,7 +237,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    gMap.setMyLocationEnabled(true);
+
                     contadorLeituraMapa++;
                 }
 
@@ -256,6 +258,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
             @Override
             public void onProviderEnabled(String provider) {
+
 
             }
 
