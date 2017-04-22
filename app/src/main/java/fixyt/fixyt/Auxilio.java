@@ -88,6 +88,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private Marker mecanicoPosition;
     private int tempoAtualizado = 0;
     private PartnersProximos atendente;
+    private int contadorLeituraMapa = 0;
 
 
 
@@ -193,24 +194,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         //   /// FIM DO GET DO BANCO
 
         //Transformação da LatLang para Endereço e mostrar no TextView da tela.
-        try {
-            Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
-            List<Address> addresses = geo.getFromLocation(localizacao.getLatitude(), localizacao.getLongitude(), 1);
-            if (addresses.isEmpty()) {
-                textoEndereco.setText("Não encontramos sua localização!");
-            } else {
-                textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
-
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
@@ -223,6 +212,33 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
                 fromLatitude = location.getLatitude();
                 fromLongitude = location.getLongitude();
+                // Mostrar localizaçao no mapa
+                LatLng latLng = new LatLng(fromLatitude, fromLongitude);
+                //float zoomLevel = 16; //This goes up to 21
+                if(contadorLeituraMapa == 0) {
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLng)      // Sets the center of the map to Mountain View
+                            .zoom(14)                   // Sets the zoom
+                            .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                            .build();                   // Creates a CameraPosition from the builder
+                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                    try {
+                        Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
+                        List<Address> addresses = geo.getFromLocation(fromLatitude, fromLongitude, 1);
+                        if (addresses.isEmpty()) {
+                            textoEndereco.setText("Não encontramos sua localização!");
+                        } else {
+                            textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    gMap.setMyLocationEnabled(true);
+                    contadorLeituraMapa++;
+                }
+
 
                 CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, pontoReferencia.getText().toString());
 
@@ -284,17 +300,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
         // Add a marker in Sydney and move the camera
         //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
-
-        gMap.setMyLocationEnabled(true);
-        LatLng latLng = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
-        //float zoomLevel = 16; //This goes up to 21
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to Mountain View
-                .zoom(14)                   // Sets the zoom
-                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                .build();                   // Creates a CameraPosition from the builder
-        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
 
