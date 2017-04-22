@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -126,7 +127,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
         //
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.gMapView);
         mapFragment.getMapAsync(Auxilio.this);
 
@@ -223,7 +224,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
                 if(contadorLeituraMapa == 0) {
-
                     gMap.setMyLocationEnabled(true);
 
                     try {
@@ -300,6 +300,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+
 
         // Add a marker in Sydney and move the camera
         //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
