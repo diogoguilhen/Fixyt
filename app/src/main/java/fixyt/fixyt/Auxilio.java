@@ -250,14 +250,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             buildGoogleApiClient();
             gMap.setMyLocationEnabled(true);
         }
-        /*gMap.setMyLocationEnabled(true);
-            
-        //float zoomLevel = 16; //This goes up to 21
 
-
-
-        // Add a marker in Sydney and move the camera
-        //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());*/
     }
 
 
@@ -456,7 +449,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
                 aguardarAceitarMecanico(atendente);
 
-                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())), "-1");
+                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())), "-1", String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()), String.valueOf(minutagem), pontoReferencia.getText().toString()) ;
 
                 noAtendimento.child(codAt).setValue(atendimento);
 

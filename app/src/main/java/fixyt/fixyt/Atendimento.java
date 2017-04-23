@@ -5,6 +5,11 @@ public class Atendimento {
     //Variaveis do Objeto
     public String horarioAtendimento;
     public String statusAceitacao;
+    public String latitudeMotorista;
+    public String longitudeMotorista;
+    public String tempoEstimado;
+    public String pontoDeReferencia;
+
 
     // construtor
 
@@ -12,10 +17,13 @@ public class Atendimento {
         super();
     }
 
-    public Atendimento(String horarioAtendimento, String statusAceitacao) {
-
+    public Atendimento(String horarioAtendimento, String statusAceitacao, String latitudeMotorista, String longitudeMotorista, String tempoEstimado, String pontoDeReferencia) {
         this.horarioAtendimento = horarioAtendimento;
         this.statusAceitacao = statusAceitacao;
+        this.latitudeMotorista = latitudeMotorista;
+        this.longitudeMotorista = longitudeMotorista;
+        this.tempoEstimado = tempoEstimado;
+        this.pontoDeReferencia = pontoDeReferencia;
     }
 
 
