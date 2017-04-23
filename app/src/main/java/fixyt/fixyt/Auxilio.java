@@ -31,7 +31,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -413,6 +412,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 for (DataSnapshot alert : dataSnapshot.getChildren()) {
                     partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
                     partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
+                    System.out.println("key: " + alert.getKey().toString());
                     partner.setStatusPartner(alert.child("vOnline").getValue().toString());
                     partner.setCodigoPartner(alert.getKey().toString());
                     partner.setServicoPartner(alert.child("vServico").getValue().toString());
