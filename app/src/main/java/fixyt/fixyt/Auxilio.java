@@ -104,6 +104,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     Context context;
     boolean GpsStatus ;
     private int cancel = 0;
+    private String codAt = "";
 
 
 
@@ -328,6 +329,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     solicitarAuxilio.setTag(0);
                     cancel = 1;
                 }
+                if(cancel == -1){
+                    // piroca da assa da nasa
+                }
             }
 
             @Override
@@ -399,6 +403,36 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             }
         });
 
+        Query queryFinalizadoAtendimento = posicaoPartner.child("AtendimentoFinalizado/" + codAt );
+
+        queryFinalizadoAtendimento.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // Atendimento finalizado com sucesso executar avaliação do partner.
+                Toast.makeText(Auxilio.this, "Atendimento foi finalizado. Avalie o mecanico !", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void capturarPartners(final Location location) {
@@ -432,7 +466,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     }
 
 
-                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !mecanicosQRecusaram.contains(partner.getCodigoPartner())){
+                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !(mecanicosQRecusaram.contains(partner.getCodigoPartner()))){
                         PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
                         listagemPartnersProximos.add(partnerfinal);
                     }
@@ -451,7 +485,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
                 DatabaseReference partnerNomePlaca = databaseName.getReference();
 
-                String codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
                 DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
