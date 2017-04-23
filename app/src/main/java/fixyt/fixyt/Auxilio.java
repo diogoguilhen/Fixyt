@@ -416,6 +416,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     partner.setStatusPartner(alert.child("vOnline").getValue().toString());
                     partner.setCodigoPartner(alert.getKey().toString());
                     partner.setServicoPartner(alert.child("vServico").getValue().toString());
+                    partner.setEmAtendimento(alert.child("vEmAtendimento").getValue().toString());
                     try {
                         partner.setTempoAteMotorista(RetornaTempoJson(mLastLocation.getLatitude(), mLastLocation.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
                     } catch (IOException e) {
@@ -425,8 +426,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     }
 
 
-                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString())){
-                        PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista());
+                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 ){
+                        PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
                         listagemPartnersProximos.add(partnerfinal);
                     }
 
@@ -438,6 +439,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 atendente.setTempoAteMotorista(listagemPartnersProximos.get(indicePartnerMenorTempo).getTempoAteMotorista());
                 atendente.setLatitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLatitudePartner());
                 atendente.setLongitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLongitudePartner());
+                atendente.setEmAtendimento(listagemPartnersProximos.get(indicePartnerMenorTempo).getEmAtendimento());
                 final int minutagem = (atendente.getTempoAteMotorista()/60);
 
                 FirebaseDatabase databaseName = FirebaseDatabase.getInstance();

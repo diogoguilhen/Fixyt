@@ -10,6 +10,7 @@ public class PartnersProximos extends Auxilio{
     private String latitudePartner;
     private String longitudePartner;
     private String servicoPartner;
+    private String emAtendimento;
     private int distanciaAteMotorista;
     private int tempoAteMotorista;
 
@@ -19,12 +20,13 @@ public class PartnersProximos extends Auxilio{
         super();
     }
 
-    public PartnersProximos(String codigoPartner, String statusPartner, String latitudePartner, String longitudePartner, int tempoAteMotorista) {
+    public PartnersProximos(String codigoPartner, String statusPartner, String latitudePartner, String longitudePartner, int tempoAteMotorista, String emAtendimento) {
         this.codigoPartner = codigoPartner;
         this.statusPartner = statusPartner;
         this.latitudePartner = latitudePartner;
         this.longitudePartner = longitudePartner;
         this.tempoAteMotorista = tempoAteMotorista;
+        this.emAtendimento = emAtendimento;
     }
 
 
@@ -34,6 +36,14 @@ public class PartnersProximos extends Auxilio{
 
     public String getServicoPartner() {
         return servicoPartner;
+    }
+
+    public String getEmAtendimento() {
+        return emAtendimento;
+    }
+
+    public void setEmAtendimento(String emAtendimento) {
+        this.emAtendimento = emAtendimento;
     }
 
     public void setServicoPartner(String servicoPartner) {
@@ -87,4 +97,6 @@ public class PartnersProximos extends Auxilio{
     public void setTempoAteMotorista(int tempoAteMotorista) {
         this.tempoAteMotorista = tempoAteMotorista;
     }
+
+
 }
