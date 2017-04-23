@@ -83,6 +83,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private Spinner spinnerCarros;
     private String[] servicosArray;
     private String[] placaCarros;
+    private String mecanicosQRecusaram = "";
     private Button solicitarAuxilio;
     private String servicoString;
     private String placaString;
@@ -292,12 +293,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         mGoogleApiClient.connect();
     }
 
-    private void aguardarAceitarMecanico(PartnersProximos atendente) {
+    private void aguardarAceitarMecanico(final PartnersProximos atendente) {
         //Inicio de Query para capturar os dados de localização do Partner em atendimento
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference emAtendimento = database.getReference();
         String codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        Query queryAtendimento = emAtendimento.child("EmAtendimento/" + codAt );
+        Query queryAtendimento = emAtendimento.child("EmAtendimento/" + codAt + "/statusAceitacao" );
 
         queryAtendimento.addChildEventListener(new ChildEventListener() {
             @Override
@@ -313,12 +314,13 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            public void onChildRemoved(DataSnapshot snapshot) {
                 solicitarAuxilio.setText("Solicitar Auxilio");
                 partnerName.setText("");
                 partnerETA.setText("");
                 gMap.clear();
                 //onMapReady(gMap);
+                mecanicosQRecusaram = mecanicosQRecusaram + " " + atendente.getCodigoPartner().toString();
                 Toast.makeText(Auxilio.this, "Solicitação cancelada ou não aceita pelo mecanico!", Toast.LENGTH_SHORT).show();
                 progresso.dismiss();
                 solicitarAuxilio.setTag(0);
@@ -426,7 +428,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     }
 
 
-                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 ){
+                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !mecanicosQRecusaram.contains(partner.getCodigoPartner())){
                         PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
                         listagemPartnersProximos.add(partnerfinal);
                     }
