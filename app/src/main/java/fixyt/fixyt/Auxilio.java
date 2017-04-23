@@ -3,6 +3,7 @@ package fixyt.fixyt;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -101,6 +102,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
+    Context context;
+    boolean GpsStatus ;
 
 
 
@@ -142,10 +145,25 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 .findFragmentById(R.id.gMapView);
         supportMapFragment.getMapAsync(this);
 
+        context = getApplicationContext();
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        CheckGpsStatus();
+        
+        if(GpsStatus == true)
+        {
+            //
+        }else {
+            //
+            Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
 
-        localizacao = locationManager.getLastKnownLocation("gps");
+        }
+
+
+        /*locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        localizacao = locationManager.getLastKnownLocation("gps");*/
 
 
         // INICIO DE PEGAR OS SERVICOS DO BANCO
@@ -211,15 +229,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     }
 
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 10:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-                return;
-        }
-    }*/
+    private void CheckGpsStatus() {
+        locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+
+        GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
 
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
@@ -573,9 +588,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
+        mLocationRequest.setInterval(5000);
         mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -662,9 +677,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onLocationChanged(Location location) {
         mLastLocation = location;
         //stop location updates
-        /*if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }*/
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
@@ -712,6 +725,10 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
         localizacao.child(key).setValue(diogoLindo);
 
+        /*if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }*/
+
         //  FIM DE SALVAR A LOCALIZAÇÃO ATUAL NO BANCO
 
     }
@@ -719,9 +736,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     /*@Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(intent);
+
     }*/
 }
 
