@@ -75,7 +75,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private FirebaseAuth firebaseAuth;
 
     private LocationManager locationManager;
-    private LocationListener locationListener;
     private GoogleMap gMap;
     private EditText textoEndereco;
     private EditText pontoReferencia;
@@ -425,7 +424,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     partner.setCodigoPartner(alert.getKey().toString());
                     partner.setServicoPartner(alert.child("vServico").getValue().toString());
                     try {
-                        partner.setTempoAteMotorista(RetornaTempoJson(location.getLatitude(), location.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
+                        partner.setTempoAteMotorista(RetornaTempoJson(mLastLocation.getLatitude(), mLastLocation.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
