@@ -8,14 +8,16 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +26,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -59,7 +66,9 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Auxilio extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+public class Auxilio extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
 
     private static String TAG;
     private FirebaseAuth firebaseAuth;
@@ -89,6 +98,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private int tempoAtualizado = 0;
     private PartnersProximos atendente;
     private int contadorLeituraMapa = 0;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    LocationRequest mLocationRequest;
 
 
 
@@ -107,6 +119,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+            checkLocationPermission();
         }
         //Inicio Codigo
 
@@ -122,8 +135,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         solicitarAuxilio.setTag(0);
         solicitarAuxilio.setText("Solicitar Auxilio");
         solicitarAuxilio.setOnClickListener(this);
-
-
         //
 
 
@@ -198,100 +209,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
 
 
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
-
-                userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String key = userKey;
-
-                String vLatitude = String.valueOf(location.getLatitude());
-                String vLongitude = String.valueOf(location.getLongitude());
-
-                fromLatitude = location.getLatitude();
-                fromLongitude = location.getLongitude();
-                // Mostrar localizaçao no mapa
-                LatLng latLng = new LatLng(fromLatitude, fromLongitude);
-
-                if(contadorLeituraMapa == 0) {
-
-
-
-                    try {
-                        Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
-                        List<Address> addresses = geo.getFromLocation(fromLatitude, fromLongitude, 1);
-                        if (addresses.isEmpty()) {
-                            textoEndereco.setText("Não encontramos sua localização!");
-                        } else {
-                            textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                    contadorLeituraMapa++;
-                }
-                gMap.setMyLocationEnabled(true);
-                //float zoomLevel = 16; //This goes up to 21
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)      // Sets the center of the map to Mountain View
-                        .zoom(14)                   // Sets the zoom
-                        .tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
-                CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, pontoReferencia.getText().toString());
-
-
-                localizacao.child(key).setValue(diogoLindo);
-
-                //  FIM DE SALVAR A LOCALIZAÇÃO ATUAL NO BANCO
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        };
-
-        // OUTRA COISA
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET
-                }, 10);
-                return;
-            }
-        } else {
-            locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-        }
-
-        //locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-
-
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 10:
@@ -299,18 +219,33 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
                 return;
         }
-    }
+    }*/
 
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        //Initialize Google Play Services
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                gMap.setMyLocationEnabled(true);
+            }
+        }
+        else {
+            buildGoogleApiClient();
+            gMap.setMyLocationEnabled(true);
+        }
+        /*gMap.setMyLocationEnabled(true);
+            
+        //float zoomLevel = 16; //This goes up to 21
+
 
 
         // Add a marker in Sydney and move the camera
-        //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());
-
-
-
+        //LatLng atual = new LatLng(localizacao.getLatitude(), localizacao.getLongitude());*/
     }
+
 
     @Override
     public void onClick(View v) {
@@ -342,6 +277,15 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         }
     }
 
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+
     private void aguardarAceitarMecanico(PartnersProximos atendente) {
         //Inicio de Query para capturar os dados de localização do Partner em atendimento
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -368,7 +312,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 partnerName.setText("");
                 partnerETA.setText("");
                 gMap.clear();
-                onMapReady(gMap);
+                //onMapReady(gMap);
                 Toast.makeText(Auxilio.this, "Solicitação cancelada ou não aceita pelo mecanico!", Toast.LENGTH_SHORT).show();
                 progresso.dismiss();
                 solicitarAuxilio.setTag(0);
@@ -626,7 +570,164 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         return indice;
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // Permission was granted.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        gMap.setMyLocationEnabled(true);
+                    }
+
+                } else {
+
+                    // Permission denied, Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other permissions this app might request.
+            //You can add here other case statements according to your requirement.
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        //stop location updates
+        /*if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }*/
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference localizacao = database.getReference("Localizacoes/Motoristas");
+
+        userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String key = userKey;
+
+        String vLatitude = String.valueOf(location.getLatitude());
+        String vLongitude = String.valueOf(location.getLongitude());
+
+        fromLatitude = location.getLatitude();
+        fromLongitude = location.getLongitude();
+
+        LatLng latLng = new LatLng(fromLatitude, fromLongitude);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)      // Sets the center of the map to Mountain View
+                .zoom(14)                   // Sets the zoom
+                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+        if(contadorLeituraMapa == 0) {
+
+            try {
+                Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
+                List<Address> addresses = geo.getFromLocation(fromLatitude, fromLongitude, 1);
+                if (addresses.isEmpty()) {
+                    textoEndereco.setText("Não encontramos sua localização!");
+                } else {
+                    textoEndereco.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            contadorLeituraMapa++;
+        }
+
+
+
+        CadastroMotorista diogoLindo = new CadastroMotorista(vLatitude, vLongitude, pontoReferencia.getText().toString());
+
+
+        localizacao.child(key).setValue(diogoLindo);
+
+        //  FIM DE SALVAR A LOCALIZAÇÃO ATUAL NO BANCO
+
+    }
+
+
+    /*@Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(Auxilio.this, "Ative seu GPS para utilizar o serviço!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
+    }*/
 }
+
+
+
+
 
 
 
