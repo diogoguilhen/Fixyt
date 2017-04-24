@@ -2,8 +2,10 @@ package fixyt.fixyt;
 
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -19,10 +21,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,8 +66,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import static android.R.attr.name;
 
 
 public class Auxilio extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener,
@@ -105,6 +112,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     boolean GpsStatus ;
     private int cancel = 0;
     private String codAt = "";
+    private RatingBar ratingBar;
+    private Dialog rankDialog;
 
 
 
@@ -410,6 +419,26 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Atendimento finalizado com sucesso executar avaliação do partner.
                 Toast.makeText(Auxilio.this, "Atendimento foi finalizado. Avalie o mecanico !", Toast.LENGTH_SHORT).show();
+                rankDialog = new Dialog(Auxilio.this);
+                rankDialog.setContentView(R.layout.rank_dialog);
+                rankDialog.setCancelable(true);
+                ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
+                ratingBar.getRating();
+
+                TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
+                text.setText("Motorista");
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rankDialog.dismiss();
+                        Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //now that the dialog is set up, it's time to show it
+                rankDialog.show();
+
             }
 
             @Override
