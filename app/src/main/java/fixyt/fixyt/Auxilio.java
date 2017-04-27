@@ -664,7 +664,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
