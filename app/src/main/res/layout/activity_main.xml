@@ -53,24 +53,15 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/botaoAuxilio"
-        android:text="Pedir Auxilio"
-        android:elevation="0dp"
-        android:layout_below="@+id/botaoCarro"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="168dp" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/botaoAgendar"
-        android:text="Agendar Serviço"
-        android:layout_below="@+id/botaoAuxilio"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/botaoCarro"
+        android:layout_marginTop="168dp"
+        android:elevation="0dp"
+        android:text="Pedir Auxilio" />
 
 
 </RelativeLayout>

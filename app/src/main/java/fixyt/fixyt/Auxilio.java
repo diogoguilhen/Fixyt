@@ -422,6 +422,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Atendimento finalizado com sucesso executar avaliação do partner.
+                solicitarAuxilio.setTag(0);
+                solicitarAuxilio.setText("Solicitar Auxilio");
+                partnerName.setText("");
+                partnerETA.setText("");
+                gMap.clear();
                 Toast.makeText(Auxilio.this, "Atendimento foi finalizado. Avalie o mecanico !", Toast.LENGTH_SHORT).show();
                 rankDialog = new Dialog(Auxilio.this);
                 rankDialog.setContentView(R.layout.rank_dialog);
@@ -663,8 +668,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setInterval(20000);
+        mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -767,17 +772,18 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         fromLatitude = location.getLatitude();
         fromLongitude = location.getLongitude();
 
-        LatLng latLng = new LatLng(fromLatitude, fromLongitude);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to Mountain View
-                .zoom(14)                   // Sets the zoom
-                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                .build();                   // Creates a CameraPosition from the builder
-        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
 
         if(contadorLeituraMapa == 0) {
 
+            LatLng latLng = new LatLng(fromLatitude, fromLongitude);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)      // Sets the center of the map to Mountain View
+                    .zoom(14)                   // Sets the zoom
+                    .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             try {
                 Geocoder geo = new Geocoder(Auxilio.this.getApplicationContext(), Locale.getDefault());
                 List<Address> addresses = geo.getFromLocation(fromLatitude, fromLongitude, 1);

@@ -15,7 +15,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     private Button logOut;
     private Button perfilUser;
     private Button pedirAuxilio;
-    private Button agendarServico;
     private Button trocarCarro;
 
     @Override
@@ -33,13 +32,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         logOut = (Button) findViewById(R.id.botaoLogout);
         perfilUser = (Button) findViewById(R.id.botaoPerfil);
         pedirAuxilio = (Button) findViewById(R.id.botaoAuxilio);
-        agendarServico = (Button) findViewById(R.id.botaoAgendar);
         trocarCarro = (Button) findViewById(R.id.botaoCarro);
 
         logOut.setOnClickListener(this);
         perfilUser.setOnClickListener(this);
         pedirAuxilio.setOnClickListener(this);
-        agendarServico.setOnClickListener(this);
         trocarCarro.setOnClickListener(this);
     }
 
@@ -56,9 +53,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         }
         if(v == pedirAuxilio){
             startActivity(new Intent(this, Auxilio.class));
-        }
-        if(v == agendarServico){
-            startActivity(new Intent(this, Schedule.class));
         }
         if(v == trocarCarro ){
             startActivity(new Intent(this, TrocarCarro.class));
