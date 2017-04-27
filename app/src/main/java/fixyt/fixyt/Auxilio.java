@@ -112,8 +112,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     boolean GpsStatus ;
     private int cancel = 0;
     private String codAt = "";
+    private String codMot = "";
     private RatingBar ratingBar;
     private Dialog rankDialog;
+    private String notaRank = "";
+    private int flagEndListenerAvaliacao = 0;
 
 
 
@@ -287,6 +290,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
                 capturarPartners(localizacao);
+                flagEndListenerAvaliacao = 0;
                 atualizarPosMecanico();
                 cancel = 0;
                 v.setTag(1);
@@ -412,9 +416,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             }
         });
 
-        Query queryFinalizadoAtendimento = posicaoPartner.child("AtendimentoFinalizado/" + codAt );
+        final Query queryFinalizadoAtendimento = posicaoPartner.child("AtendimentoFinalizado/" + codAt );
 
-        queryFinalizadoAtendimento.addChildEventListener(new ChildEventListener() {
+        final ChildEventListener listenerMotor = queryFinalizadoAtendimento.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Atendimento finalizado com sucesso executar avaliação do partner.
@@ -423,8 +427,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 rankDialog.setContentView(R.layout.rank_dialog);
                 rankDialog.setCancelable(true);
                 ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
-                ratingBar.getRating();
-
+                rankDialog.show();
                 TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
                 text.setText("Motorista");
 
@@ -432,12 +435,20 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 updateButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        rankDialog.dismiss();
-                        Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
+                        if(flagEndListenerAvaliacao == 0){
+                            //Salvar rating no banco
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference avaliacaoPartner = database.getReference("Avaliacoes/");
+                            notaRank = String.valueOf(ratingBar.getRating());
+                            avaliacaoPartner.child(codMot).child(codAt).child("nota").setValue(notaRank);
+                            Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
+                            flagEndListenerAvaliacao = 1;
+                            rankDialog.dismiss();
+                        }
+
                     }
                 });
-                //now that the dialog is set up, it's time to show it
-                rankDialog.show();
+
 
             }
 
@@ -515,6 +526,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 DatabaseReference partnerNomePlaca = databaseName.getReference();
 
                 codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                codMot = atendente.getCodigoPartner();
                 DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
