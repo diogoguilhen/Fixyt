@@ -331,7 +331,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                if(cancel == 0){
+                if(cancel == 1){
                     solicitarAuxilio.setText("Solicitar Auxilio");
                     partnerName.setText("");
                     partnerETA.setText("");
@@ -340,10 +340,17 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     Toast.makeText(Auxilio.this, "Solicitação cancelada ou não aceita pelo mecanico!", Toast.LENGTH_SHORT).show();
                     progresso.dismiss();
                     solicitarAuxilio.setTag(0);
-                    cancel = 1;
+                    cancel = 0;
                 }
-                if(cancel == -1){
+                if(cancel == 0){
                     // piroca da assa da nasa
+                    solicitarAuxilio.setText("Solicitar Auxilio");
+                    partnerName.setText("");
+                    partnerETA.setText("");
+                    gMap.clear();
+                    mecanicosQRecusaram = mecanicosQRecusaram + " " + atendente.getCodigoPartner().toString();
+                    progresso.dismiss();
+                    solicitarAuxilio.setTag(0);
                 }
             }
 
@@ -497,7 +504,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 for (DataSnapshot alert : dataSnapshot.getChildren()) {
                     partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
                     partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
-                    System.out.println("key: " + alert.getKey().toString());
+                    //System.out.println("key: " + alert.getKey().toString());
                     partner.setStatusPartner(alert.child("vOnline").getValue().toString());
                     partner.setCodigoPartner(alert.getKey().toString());
                     partner.setServicoPartner(alert.child("vServico").getValue().toString());
@@ -515,7 +522,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                         PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
                         listagemPartnersProximos.add(partnerfinal);
                     }
-
 
                 }
                 int indicePartnerMenorTempo = RetornaIndicePartnerMenorTempo(listagemPartnersProximos);
