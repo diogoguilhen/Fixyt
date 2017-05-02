@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -60,6 +61,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -70,6 +72,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static android.R.attr.data;
 import static android.R.attr.name;
 
 
@@ -117,6 +120,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private Dialog rankDialog;
     private String notaRank = "";
     private int flagEndListenerAvaliacao = 0;
+    private int contadorParceiros = 0;
+    private ArrayList<PartnersProximos> listagemPartnersProximos;
 
 
 
@@ -291,7 +296,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.show();
                 capturarPartners(localizacao);
                 flagEndListenerAvaliacao = 0;
-                atualizarPosMecanico();
+
                 cancel = 0;
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
@@ -341,6 +346,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                     progresso.dismiss();
                     solicitarAuxilio.setTag(0);
                     cancel = 0;
+                    contadorParceiros = 0;
                 }
                 if(cancel == 0){
                     // piroca da assa da nasa
@@ -497,103 +503,107 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         queryPartners.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Passar os dados para o objeto
+                System.out.println(dataSnapshot.hasChild("vOnline"));
+                if (dataSnapshot.exists() && dataSnapshot.getValue().toString().contains("vOnline=1")) {
+                    //Passar os dados para o objeto
 
-                ArrayList<PartnersProximos> listagemPartnersProximos = new ArrayList<>();
-                PartnersProximos partner = new PartnersProximos();
-                for (DataSnapshot alert : dataSnapshot.getChildren()) {
-                    partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
-                    partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
-                    //System.out.println("key: " + alert.getKey().toString());
-                    partner.setStatusPartner(alert.child("vOnline").getValue().toString());
-                    partner.setCodigoPartner(alert.getKey().toString());
-                    partner.setServicoPartner(alert.child("vServico").getValue().toString());
-                    partner.setEmAtendimento(alert.child("vEmAtendimento").getValue().toString());
-                    try {
-                        partner.setTempoAteMotorista(RetornaTempoJson(mLastLocation.getLatitude(), mLastLocation.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    if(Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !(mecanicosQRecusaram.contains(partner.getCodigoPartner()))){
-                        PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
-                        listagemPartnersProximos.add(partnerfinal);
-                    }
-
-                }
-                int indicePartnerMenorTempo = RetornaIndicePartnerMenorTempo(listagemPartnersProximos);
-                final PartnersProximos atendente = new PartnersProximos();
-                atendente.setCodigoPartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getCodigoPartner());
-                atendente.setTempoAteMotorista(listagemPartnersProximos.get(indicePartnerMenorTempo).getTempoAteMotorista());
-                atendente.setLatitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLatitudePartner());
-                atendente.setLongitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLongitudePartner());
-                atendente.setEmAtendimento(listagemPartnersProximos.get(indicePartnerMenorTempo).getEmAtendimento());
-                final int minutagem = (atendente.getTempoAteMotorista()/60);
-
-                FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
-                DatabaseReference partnerNomePlaca = databaseName.getReference();
-
-                codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-                codMot = atendente.getCodigoPartner();
-                DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
-                aguardarAceitarMecanico(atendente);
-
-                Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())), "-1", String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()), String.valueOf(minutagem), pontoReferencia.getText().toString()) ;
-
-                noAtendimento.child(codAt).setValue(atendimento);
-
-                Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
-
-                queryNamePartnerFinal.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        double lat = Double.parseDouble(atendente.getLatitudePartner());
-                        double lng = Double.parseDouble(atendente.getLongitudePartner());
-                        LatLng posicaoPartner = new LatLng(lat, lng);
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(posicaoPartner)      // Sets the center of the map to Mountain View
-                                .zoom(14)                   // Sets the zoom
-                                .tilt(45)                   // Sets the tilt of the camera to 30 degrees
-                                .build();                   // Creates a CameraPosition from the builder
-                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        mecanicoPosition = gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
-                        //Verificar bounds entre motorista e mecanico para fazer zoom na camera.
-                        /*
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        for (Marker marker : markers) {
-                            builder.include(marker.getPosition());
+                    listagemPartnersProximos = new ArrayList<>();
+                    PartnersProximos partner = new PartnersProximos();
+                    for (DataSnapshot alert : dataSnapshot.getChildren()) {
+                        partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
+                        partner.setLongitudePartner(alert.child("vLongitude").getValue().toString());
+                        partner.setStatusPartner(alert.child("vOnline").getValue().toString());
+                        partner.setCodigoPartner(alert.getKey().toString());
+                        partner.setServicoPartner(alert.child("vServico").getValue().toString());
+                        partner.setEmAtendimento(alert.child("vEmAtendimento").getValue().toString());
+                        try {
+                            partner.setTempoAteMotorista(RetornaTempoJson(mLastLocation.getLatitude(), mLastLocation.getLongitude(), partner.getLatitudePartner(), partner.getLongitudePartner()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        LatLngBounds bounds = builder.build();*/
 
-                        nomePartner = (dataSnapshot.child("nome").getValue() + " " + dataSnapshot.child("sobrenome").getValue());
-                        partnerName.setText("O nome do mecanico é : " + nomePartner);
-                        partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
+
+                        if (Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !(mecanicosQRecusaram.contains(partner.getCodigoPartner()))) {
+                            PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
+                            listagemPartnersProximos.add(partnerfinal);
+                        }
+
+                    }
+                    int indicePartnerMenorTempo = RetornaIndicePartnerMenorTempo(listagemPartnersProximos);
+                    final PartnersProximos atendente = new PartnersProximos();
+                    atendente.setCodigoPartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getCodigoPartner());
+                    atendente.setTempoAteMotorista(listagemPartnersProximos.get(indicePartnerMenorTempo).getTempoAteMotorista());
+                    atendente.setLatitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLatitudePartner());
+                    atendente.setLongitudePartner(listagemPartnersProximos.get(indicePartnerMenorTempo).getLongitudePartner());
+                    atendente.setEmAtendimento(listagemPartnersProximos.get(indicePartnerMenorTempo).getEmAtendimento());
+                    final int minutagem = (atendente.getTempoAteMotorista() / 60);
+
+                    FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
+                    DatabaseReference partnerNomePlaca = databaseName.getReference();
+
+                    codAt = (atendente.getCodigoPartner() + "AND" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    codMot = atendente.getCodigoPartner();
+                    DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat mdformat = new SimpleDateFormat("dd/MM/yyyy H:mm:ss");
+                    aguardarAceitarMecanico(atendente);
+
+                    Atendimento atendimento = new Atendimento(String.valueOf(mdformat.format(calendar.getTime())), "-1", String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()), String.valueOf(minutagem), pontoReferencia.getText().toString());
+
+                    noAtendimento.child(codAt).setValue(atendimento);
+
+                    Query queryNamePartnerFinal = partnerNomePlaca.child("Partner/" + atendente.getCodigoPartner());
+
+                    queryNamePartnerFinal.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            double lat = Double.parseDouble(atendente.getLatitudePartner());
+                            double lng = Double.parseDouble(atendente.getLongitudePartner());
+                            LatLng posicaoPartner = new LatLng(lat, lng);
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .target(posicaoPartner)      // Sets the center of the map to Mountain View
+                                    .zoom(14)                   // Sets the zoom
+                                    .tilt(45)                   // Sets the tilt of the camera to 30 degrees
+                                    .build();                   // Creates a CameraPosition from the builder
+                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            mecanicoPosition = gMap.addMarker(new MarkerOptions().position(posicaoPartner).title("Seu Mecanico"));
+
+                            nomePartner = (dataSnapshot.child("nome").getValue() + " " + dataSnapshot.child("sobrenome").getValue());
+                            partnerName.setText("O nome do mecanico é : " + nomePartner);
+                            partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
+                            progresso.dismiss();
+                            Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
+
+                            progresso.setMessage("Aguardando Aceitação do Mecanico...");
+                            progresso.show();
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                } else {
+                    if(listagemPartnersProximos != null){
+                        atualizarPosMecanico();
+                    }else{
+                        solicitarAuxilio.setText("Solicitar Auxilio");
+                        partnerName.setText("");
+                        partnerETA.setText("");
+                        gMap.clear();
+                        onMapReady(gMap);
+                        Toast.makeText(Auxilio.this, "Não encontramos um mecanico próximo! Tente novamente", Toast.LENGTH_SHORT).show();
+                        cancel = 0;
+                        solicitarAuxilio.setTag(0);
                         progresso.dismiss();
-                        Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
-
-                        progresso.setMessage("Aguardando Aceitação do Mecanico...");
-                        progresso.show();
-
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
-                //Toast.makeText(Auxilio.this, String.valueOf(location.getLatitude()) + String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
-
+                }
             }
-
             public void onCancelled(DatabaseError databaseError) {
                 //Se ocorrer um erro
                 databaseError.getMessage();
