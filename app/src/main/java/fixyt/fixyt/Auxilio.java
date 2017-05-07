@@ -122,6 +122,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private int flagEndListenerAvaliacao = 0;
     private int contadorParceiros = 0;
     private ArrayList<PartnersProximos> listagemPartnersProximos;
+    private Query queryPosPartner;
+    private ChildEventListener listener;
 
 
 
@@ -166,6 +168,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         context = getApplicationContext();
 
         CheckGpsStatus();
+        finalizaAtendimento();
+
         
         if(GpsStatus == true)
         {
@@ -290,7 +294,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 //Execução do programa para achar o mecanico mais próximo e mostrar na tela.
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 localizacao = locationManager.getLastKnownLocation("gps");
-
+                atualizarPosMecanico();
                 progresso = new ProgressDialog(this);
                 progresso.setMessage("Procurando o Mecanico mais próximo... Aguarde...");
                 progresso.show();
@@ -375,14 +379,85 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
     }
 
+    private void finalizaAtendimento(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference posicaoPartner = database.getReference();
+
+
+        Query queryFinalizadoAtendimento = posicaoPartner.child("AtendimentoFinalizado/" + codAt );
+
+        queryFinalizadoAtendimento.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                // Atendimento finalizado com sucesso executar avaliação do partner.
+                Toast.makeText(Auxilio.this, "Atendimento foi finalizado. Avalie o mecanico !", Toast.LENGTH_SHORT).show();
+                rankDialog = new Dialog(Auxilio.this);
+                rankDialog.setContentView(R.layout.rank_dialog);
+                rankDialog.setCancelable(true);
+                ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
+                rankDialog.show();
+                TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
+                text.setText("Motorista");
+                solicitarAuxilio.setTag(0);
+                solicitarAuxilio.setText("Solicitar Auxilio");
+                partnerName.setText("");
+                partnerETA.setText("");
+                gMap.clear();
+                queryPosPartner.removeEventListener(listener);
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(flagEndListenerAvaliacao == 0){
+                            //Salvar rating no banco
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference avaliacaoPartner = database.getReference("Avaliacoes/");
+                            DatabaseReference noFinalAtendimento = database.getReference("AtendimentoFinalizado/");
+                            notaRank = String.valueOf(ratingBar.getRating());
+                            avaliacaoPartner.child(codMot).child(codAt).child("nota").setValue(notaRank);
+                            Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
+                            flagEndListenerAvaliacao = 1;
+                            rankDialog.dismiss();
+                            noFinalAtendimento.child(codAt).setValue(null);
+                        }
+
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void atualizarPosMecanico() {
         //Inicio de Query para capturar os dados de localização do Partner em atendimento
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference posicaoPartner = database.getReference();
 
-        Query queryPosPartner = posicaoPartner.child("Localizacoes/Partner");
+        queryPosPartner = posicaoPartner.child("Localizacoes/Partner/");
 
-        queryPosPartner.addChildEventListener(new ChildEventListener() {
+        listener = queryPosPartner.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -429,67 +504,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
             }
         });
 
-        final Query queryFinalizadoAtendimento = posicaoPartner.child("AtendimentoFinalizado/" + codAt );
 
-        final ChildEventListener listenerMotor = queryFinalizadoAtendimento.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                // Atendimento finalizado com sucesso executar avaliação do partner.
-                solicitarAuxilio.setTag(0);
-                solicitarAuxilio.setText("Solicitar Auxilio");
-                partnerName.setText("");
-                partnerETA.setText("");
-                gMap.clear();
-                Toast.makeText(Auxilio.this, "Atendimento foi finalizado. Avalie o mecanico !", Toast.LENGTH_SHORT).show();
-                rankDialog = new Dialog(Auxilio.this);
-                rankDialog.setContentView(R.layout.rank_dialog);
-                rankDialog.setCancelable(true);
-                ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
-                rankDialog.show();
-                TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
-                text.setText("Motorista");
-
-                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
-                updateButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(flagEndListenerAvaliacao == 0){
-                            //Salvar rating no banco
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference avaliacaoPartner = database.getReference("Avaliacoes/");
-                            notaRank = String.valueOf(ratingBar.getRating());
-                            avaliacaoPartner.child(codMot).child(codAt).child("nota").setValue(notaRank);
-                            Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
-                            flagEndListenerAvaliacao = 1;
-                            rankDialog.dismiss();
-                        }
-
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        // Era aqui onde começava o outro codigo do finalizado
 
     }
 
@@ -504,10 +520,13 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
 
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot.hasChild("vOnline"));
-                if (dataSnapshot.exists() && dataSnapshot.getValue().toString().contains("vOnline=1")) {
+                if (dataSnapshot.exists() && dataSnapshot.getValue().toString().contains("vEmAtendimento=0")) {
                     //Passar os dados para o objeto
 
                     listagemPartnersProximos = new ArrayList<>();
+                    if(listagemPartnersProximos.size() > 0){
+                        listagemPartnersProximos.clear();
+                    }
                     PartnersProximos partner = new PartnersProximos();
                     for (DataSnapshot alert : dataSnapshot.getChildren()) {
                         partner.setLatitudePartner(alert.child("vLatitude").getValue().toString());
@@ -525,7 +544,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                         }
 
 
-                        if (Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 && !(mecanicosQRecusaram.contains(partner.getCodigoPartner()))) {
+                        if (Integer.parseInt(partner.getStatusPartner()) == 1 && partner.getTempoAteMotorista() != 0 && partner.getServicoPartner().contains(spinnerReparo.getSelectedItem().toString()) && Integer.parseInt(partner.getEmAtendimento()) != 1 /*&& !(mecanicosQRecusaram.contains(partner.getCodigoPartner()))*/) {
                             PartnersProximos partnerfinal = new PartnersProximos(partner.getCodigoPartner(), partner.getStatusPartner(), partner.getLatitudePartner(), partner.getLongitudePartner(), partner.getTempoAteMotorista(), partner.getEmAtendimento());
                             listagemPartnersProximos.add(partnerfinal);
                         }
@@ -684,8 +703,8 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(20000);
-        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
