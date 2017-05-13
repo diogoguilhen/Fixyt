@@ -53,30 +53,30 @@
             android:orientation="horizontal">
 
             <EditText
-                android:layout_margin="15dp"
                 android:id="@+id/campoCpf"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:hint="CPF"
                 android:inputType="number"
                 android:maxLength="14"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColor="@android:color/white" />
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
             <EditText
-                android:layout_margin="15dp"
                 android:id="@+id/campoRg"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:hint="RG"
                 android:inputType="text"
                 android:maxLength="13"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColor="@android:color/white" />
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
         </LinearLayout>
 
@@ -86,17 +86,17 @@
             android:orientation="horizontal">
 
             <EditText
-                android:layout_margin="15dp"
                 android:id="@+id/campoDataNascimento"
-                android:hint="Data nascimento"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textColorHighlight="@android:color/background_light"
+                android:layout_margin="15dp"
+                android:hint="Data nascimento"
+                android:inputType="number"
                 android:textColor="@android:color/white"
-                android:inputType="number" />
+                android:textColorHighlight="@android:color/background_light"
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -168,17 +168,17 @@
             </LinearLayout>
 
             <EditText
-                android:layout_margin="15dp"
                 android:id="@+id/campoEndereco"
-                android:hint="Endereço"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textColorHighlight="@android:color/background_light"
+                android:layout_margin="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="Endereço"
+                android:inputType="text"
                 android:textColor="@android:color/white"
-                android:inputType="text" />
-
+                android:textColorHighlight="@android:color/background_light"
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
 
         </LinearLayout>
@@ -194,31 +194,31 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/campoCep"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:hint="CEP"
                     android:inputType="number"
                     android:maxLength="9"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:textColorLink="@android:color/holo_blue_dark"
-                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textColor="@android:color/white"
                     android:textColorHighlight="@android:color/background_light"
-                    android:textColor="@android:color/white" />
+                    android:textColorHint="@android:color/holo_blue_bright"
+                    android:textColorLink="@android:color/holo_blue_dark" />
 
             </LinearLayout>
 
             <EditText
-                android:layout_marginLeft="15dp"
                 android:id="@+id/campoBairro"
-                android:hint="Bairro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textColorHighlight="@android:color/background_light"
+                android:layout_marginLeft="15dp"
+                android:hint="Bairro"
+                android:inputType="text"
                 android:textColor="@android:color/white"
-                android:inputType="text" />
+                android:textColorHighlight="@android:color/background_light"
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
 
 
@@ -261,16 +261,17 @@
             </LinearLayout>
 
             <EditText
-                android:layout_marginLeft="15dp"
                 android:id="@+id/campoCidade"
-                android:hint="Cidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textColorHighlight="@android:color/background_light"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="Cidade"
+                android:inputType="text"
                 android:textColor="@android:color/white"
-                android:inputType="text" />
+                android:textColorHighlight="@android:color/background_light"
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
         </LinearLayout>
 
@@ -283,10 +284,13 @@
 
     <Button
         android:id="@+id/botProximo2"
-        android:text="Próximo"
-        android:layout_width="150dp"
+        style="@android:style/Widget.Holo.Button.Inset"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Próximo" />
 
 </RelativeLayout>

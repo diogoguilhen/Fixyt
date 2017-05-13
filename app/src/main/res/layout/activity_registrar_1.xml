@@ -39,7 +39,7 @@
                 android:inputType="text"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHint="@android:color/holo_blue_bright"
                 android:textColorLink="@android:color/holo_blue_dark" />
 
             <EditText
@@ -51,7 +51,7 @@
                 android:inputType="text"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHint="@android:color/holo_blue_bright"
                 android:textColorLink="@android:color/holo_blue_dark" />
 
         </LinearLayout>
@@ -66,16 +66,16 @@
                 android:id="@+id/campoTelefone"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_margin="15dp"
                 android:hint="(11) 92345-6789"
                 android:inputType="number"
                 android:maxLength="14"
-                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textColorLink="@android:color/holo_blue_dark"
-                android:textAlignment="center" />
+                android:textColorHint="@android:color/holo_blue_bright"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="@android:color/holo_blue_bright"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <EditText
@@ -100,7 +100,7 @@
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="@android:color/holo_blue_bright"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <EditText
@@ -112,14 +112,16 @@
             android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textColorHighlight="@android:color/background_light"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint="@android:color/holo_blue_bright"
             android:textColorLink="@android:color/holo_blue_dark" />
 
         <Button
             android:id="@+id/botaoProximo1"
+            style="@android:style/Widget.Holo.Button.Inset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:text="Próximo" />
 
 

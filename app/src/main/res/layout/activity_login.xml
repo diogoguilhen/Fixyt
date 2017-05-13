@@ -84,13 +84,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_centerHorizontal="true"
         android:text="ENTRAR"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@android:color/background_light"
         android:textColorHighlight="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
