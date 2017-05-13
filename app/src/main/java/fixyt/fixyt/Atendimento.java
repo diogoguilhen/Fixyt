@@ -1,6 +1,7 @@
 package fixyt.fixyt;
 
 
+
 public class Atendimento {
     //Variaveis do Objeto
     public String horarioAtendimento;
