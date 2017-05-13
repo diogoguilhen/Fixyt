@@ -10,22 +10,26 @@
 
 
     <ImageView
+        android:id="@+id/imageView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/principal_back"
-        android:id="@+id/imageView8"
-        android:scaleType="centerCrop"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:adjustViewBounds="false"
+        android:background="@drawable/back_tela"
+        android:scaleType="centerCrop"
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="240dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@android:drawable/editbox_dropdown_dark_frame"
         android:orientation="horizontal">
 
 
@@ -35,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="238dp"
             tools:context="fixyt.fixyt.Auxilio" />
+
     </LinearLayout>
 
     <Spinner
@@ -42,21 +47,21 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
 
-        android:layout_alignLeft="@+id/pontoRef"
-        android:layout_alignStart="@+id/pontoRef"
-        android:layout_below="@+id/textView3"
         android:layout_gravity="center_vertical"
-        android:background="@android:drawable/btn_dropdown" />
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_below="@+id/textView3" />
 
     <EditText
         android:id="@+id/enderecoAtual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="14sp"
         android:layout_below="@+id/linearLayout3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="@android:color/holo_blue_bright"
+        android:textColorHint="@android:color/holo_blue_bright"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/pontoRef"
@@ -64,11 +69,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/enderecoAtual"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="11dp"
         android:ems="10"
         android:hint="Ponto de Referência"
         android:inputType="textPersonName"
-        android:textSize="14sp" />
+        android:singleLine="false"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textColorHint="@android:color/holo_blue_dark" />
 
     <Spinner
         android:id="@+id/spinnerVeiculo"
@@ -87,45 +94,52 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Qual o seu veículo?"
-        android:textSize="14sp"
         android:layout_below="@+id/spinnerServico"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Qual o seu veículo?"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecione Um Serviço:"
-        android:textSize="14sp"
         android:layout_below="@+id/pontoRef"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Selecione Um Serviço:"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/botSolicitar"
-        android:layout_width="wrap_content"
+        style="@android:style/Widget.Holo.Button.Inset"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Solicitar Auxilio"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp" />
+        android:layout_marginBottom="11dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Solicitar Auxilio" />
 
     <TextView
         android:id="@+id/namePartner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerVeiculo"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text=""
-        android:layout_below="@+id/spinnerVeiculo"
-        android:layout_centerHorizontal="true" />
+        android:textColor="@android:color/holo_blue_bright" />
+
     <TextView
         android:id="@+id/tempoETA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/namePartner"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text=""
-        android:layout_below="@+id/namePartner"
-        android:layout_centerHorizontal="true" />
+        android:textColor="@android:color/holo_blue_bright" />
 
 
 </RelativeLayout>

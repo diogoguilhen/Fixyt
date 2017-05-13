@@ -26,7 +26,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         if(firebaseAuth.getCurrentUser() == null){
             finish();
-            startActivity(new Intent(this, PreLogin.class));
+            startActivity(new Intent(this, Login.class));
         }
 
         logOut = (Button) findViewById(R.id.botaoLogout);
@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
         if(v == logOut){
             firebaseAuth.signOut();
             finish();
-            startActivity(new Intent(this, PreLogin.class));
+            startActivity(new Intent(this, Login.class));
         }
         if(v == perfilUser){
             finish();
