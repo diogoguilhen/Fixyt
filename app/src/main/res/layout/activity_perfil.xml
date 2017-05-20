@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/principal_back"
+        app:srcCompat="@drawable/back_tela"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -28,32 +28,37 @@
     </LinearLayout>
 
     <TextView
-        android:text="Usuario"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:id="@+id/textUsuarioEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:id="@+id/textUsuarioEmail"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Usuario"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/holo_blue_bright" />
 
     <Button
         android:id="@+id/botaoLogout"
-        android:text="Logout"
-        android:layout_width="wrap_content"
+        style="@android:style/Widget.Holo.Button.Inset"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Logout" />
 
     <Button
         android:id="@+id/botaoRedefinirSenha"
-        android:layout_width="wrap_content"
+        style="@android:style/Widget.Holo.Button.Inset"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="102dp"
-        android:text="Redefinir Senha"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="102dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Redefinir Senha" />
 
     <EditText
         android:id="@+id/novaSenha"
@@ -63,6 +68,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="23dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:hint="Nova senha"
+        android:inputType="textPassword"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textColorHighlight="@android:color/holo_blue_bright"
+        android:textColorHint="@android:color/holo_blue_bright"
+        android:textColorLink="@android:color/holo_blue_bright" />
 
 </RelativeLayout>

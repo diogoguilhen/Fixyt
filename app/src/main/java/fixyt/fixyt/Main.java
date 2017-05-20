@@ -48,7 +48,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
             startActivity(new Intent(this, Login.class));
         }
         if(v == perfilUser){
-            finish();
             startActivity(new Intent(this, Perfil.class));
         }
         if(v == pedirAuxilio){

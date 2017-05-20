@@ -127,6 +127,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
     private ArrayList<PartnersProximos> listagemPartnersProximos;
     private Query queryPosPartner;
     private ChildEventListener listener;
+    private RatingBar ratingMec;
 
 
 
@@ -149,6 +150,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         }
         //Inicio Codigo
 
+        ratingMec = (RatingBar) findViewById(R.id.ratingMecanico);
         textoEndereco = (EditText) findViewById(R.id.enderecoAtual);
         pontoReferencia = (EditText) findViewById(R.id.pontoRef);
         solicitarAuxilio = (Button) findViewById(R.id.botSolicitar);
@@ -432,9 +434,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                             DatabaseReference noFinalAtendimento = database.getReference("AtendimentoFinalizado/");
                             notaRank = String.valueOf(ratingBar.getRating());
                             avaliacaoPartner.child(codMot).child(codAt).child("nota").setValue(notaRank);
+                            avaliacaoPartner.child(codMot).child(codAt).child("flProcessado").setValue("0");
                             Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
                             flagEndListenerAvaliacao = 1;
                             rankDialog.dismiss();
+                            ratingMec.setVisibility(View.INVISIBLE);
                             noFinalAtendimento.child(codAt).setValue(null);
                         }
 
@@ -535,7 +539,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
         queryPartners.addListenerForSingleValueEvent(new ValueEventListener() {
 
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.hasChild("vOnline"));
                 if (dataSnapshot.exists() && dataSnapshot.getValue().toString().contains("vEmAtendimento=0")) {
                     //Passar os dados para o objeto
 
@@ -609,6 +612,9 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                             nomePartner = (dataSnapshot.child("nome").getValue() + " " + dataSnapshot.child("sobrenome").getValue());
                             partnerName.setText("O nome do mecanico é : " + nomePartner);
                             partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
+                            ratingMec.setVisibility(View.VISIBLE);
+                            ratingMec.setRating(Float.parseFloat(dataSnapshot.child("Nota/NotaMedia").getValue().toString()) / Float.parseFloat(dataSnapshot.child("Nota/FatorDivisao").getValue().toString()));
+
                             progresso.dismiss();
                             Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
 
