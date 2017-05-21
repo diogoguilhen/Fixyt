@@ -305,6 +305,13 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 solicitarAuxilio.setText("Solicitar Auxilio");
                 partnerName.setText("");
                 partnerETA.setText("");
+                ratingMec.setVisibility(View.INVISIBLE);
+                //limpar no em atendimento
+
+                FirebaseDatabase databaseName = FirebaseDatabase.getInstance();
+                DatabaseReference noAtendimento = databaseName.getReference("EmAtendimento/");
+                noAtendimento.child(codAt).setValue(null);
+
                 gMap.clear();
                 onMapReady(gMap);
                 Toast.makeText(Auxilio.this, "Solicitação cancelada com Sucesso!", Toast.LENGTH_SHORT).show();
@@ -320,7 +327,6 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 progresso.show();
                 capturarPartners(localizacao);
                 flagEndListenerAvaliacao = 0;
-
                 cancel = 0;
                 v.setTag(1);
                 solicitarAuxilio.setText("Cancelar Solicitação");
