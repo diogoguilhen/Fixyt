@@ -143,12 +143,13 @@
     <RatingBar
         android:id="@+id/ratingMecanico"
         style="@android:style/Widget.Holo.RatingBar.Indicator"
-        android:layout_width="185dp"
+        android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/enderecoAtual"
         android:layout_centerHorizontal="true"
         android:background="@android:drawable/editbox_background_normal"
         android:clickable="false"
+        android:isIndicator="true"
         android:numStars="5"
         android:visibility="invisible" />
 

@@ -2,6 +2,7 @@ package fixyt.fixyt;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -71,6 +72,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -413,9 +415,12 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                 rankDialog.setContentView(R.layout.rank_dialog);
                 rankDialog.setCancelable(true);
                 ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
-                rankDialog.show();
+                if(!isFinishing())
+                {
+                    //show dialog
+                    rankDialog.show();
+                }
                 TextView text = (TextView) rankDialog.findViewById(R.id.rank_dialog_text1);
-                text.setText("Motorista");
                 solicitarAuxilio.setTag(0);
                 solicitarAuxilio.setText("Solicitar Auxilio");
                 partnerName.setText("");
@@ -433,8 +438,11 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                             DatabaseReference avaliacaoPartner = database.getReference("Avaliacoes/");
                             DatabaseReference noFinalAtendimento = database.getReference("AtendimentoFinalizado/");
                             notaRank = String.valueOf(ratingBar.getRating());
-                            avaliacaoPartner.child(codMot).child(codAt).child("nota").setValue(notaRank);
-                            avaliacaoPartner.child(codMot).child(codAt).child("flProcessado").setValue("0");
+                            Date curDate = new Date();
+                            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+                            String DateToStr = format.format(curDate);
+                            avaliacaoPartner.child(codMot).child(codAt + DateToStr).child("nota").setValue(notaRank);
+                            avaliacaoPartner.child(codMot).child(codAt + DateToStr).child("flProcessado").setValue("0");
                             Toast.makeText(Auxilio.this, "Obrigado por Avaliar o Mecanico!", Toast.LENGTH_SHORT).show();
                             flagEndListenerAvaliacao = 1;
                             rankDialog.dismiss();
