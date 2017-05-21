@@ -621,7 +621,7 @@ public class Auxilio extends FragmentActivity implements OnMapReadyCallback, Vie
                             partnerName.setText("O nome do mecanico é : " + nomePartner);
                             partnerETA.setText("Tempo estimado de chegada é: " + minutagem + " Minutos.");
                             ratingMec.setVisibility(View.VISIBLE);
-                            ratingMec.setRating(Float.parseFloat(dataSnapshot.child("Nota/NotaMedia").getValue().toString()) / Float.parseFloat(dataSnapshot.child("Nota/FatorDivisao").getValue().toString()));
+                            ratingMec.setRating(Float.parseFloat(dataSnapshot.child("Nota/notaMedia").getValue().toString()) / Float.parseFloat(dataSnapshot.child("Nota/fatorDivisao").getValue().toString()));
 
                             progresso.dismiss();
                             Toast.makeText(Auxilio.this, "Encontramos o seu mecanico!", Toast.LENGTH_SHORT).show();
