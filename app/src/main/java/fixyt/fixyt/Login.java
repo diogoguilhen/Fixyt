@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         if (v == textoRegistrar){
             //Ir para tela de registro;
             finish();
-            startActivity(new Intent(this, Registrar_1.class));
+            startActivity(new Intent(this, Registrar_Termo.class));
         }
     }
 

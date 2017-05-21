@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_registrar_termo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fixyt.fixyt.Registrar_Termo">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/back_tela" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:layout_marginTop="27dp"
+        app:srcCompat="@drawable/icone_fixyt" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView5"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.08"
+            android:text="Termos e Condições de Uso"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_weight="0.06"
+            android:scrollbarStyle="insideInset">
+
+            <TextView
+                android:id="@+id/TextoTermo"
+                android:layout_width="match_parent"
+                android:layout_height="259dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:lineSpacingExtra="10sp"
+                android:scrollbars="vertical"
+                android:text="@string/termo_uso"
+                android:textColor="@android:color/holo_blue_bright" />
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.79"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cienteMotorista"
+                android:layout_width="363dp"
+                android:layout_height="wrap_content"
+                android:text="Estou ciente que os pagamentos deverão ser em cartão de credito ou débito"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:buttonTint="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/botReg1"
+                style="@android:style/Widget.Holo.Button.Inset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="Próximo"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
